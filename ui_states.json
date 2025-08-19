@@ -1,0 +1,256 @@
+{
+  "2": {
+    "output_text_state": {
+      "tag_blocks": [],
+      "text_content": "",
+      "cursor_position": "1.0",
+      "scroll_position": 0.0
+    },
+    "tag_ui_state": {
+      "head_tags": {
+        "visible_tags": [],
+        "selected_tags": [],
+        "scroll_position": 0.0
+      },
+      "tail_tags": {
+        "visible_tags": [],
+        "selected_tags": [],
+        "scroll_position": 0.0
+      }
+    },
+    "layout_state": {
+      "layout_mode": "waterfall",
+      "canvas_width": 0,
+      "canvas_height": 0
+    },
+    "last_updated": "2025-08-19T14:03:21.133677",
+    "tag_ui_states": {
+      "head": {
+        "visible_tags": [
+          "仰视视角"
+        ],
+        "selected_tags": [],
+        "scroll_position": 0.0,
+        "tag_details": {
+          "仰视视角": {
+            "label": "仰视视角",
+            "tab": "视角",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 1
+          }
+        }
+      },
+      "tail": {
+        "visible_tags": [
+          "写实风格",
+          "数码单反"
+        ],
+        "selected_tags": [],
+        "scroll_position": 0.0,
+        "tag_details": {
+          "写实风格": {
+            "label": "写实风格",
+            "tab": "图片质量",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 1
+          },
+          "数码单反": {
+            "label": "数码单反",
+            "tab": "图片质量",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 2
+          }
+        }
+      }
+    }
+  },
+  "1": {
+    "output_text_state": {
+      "tag_blocks": [],
+      "text_content": "\n",
+      "cursor_position": "1.0",
+      "scroll_position": 0.0
+    },
+    "tag_ui_state": {
+      "head_tags": {
+        "visible_tags": [],
+        "selected_tags": [],
+        "scroll_position": 0.0
+      },
+      "tail_tags": {
+        "visible_tags": [],
+        "selected_tags": [],
+        "scroll_position": 0.0
+      }
+    },
+    "layout_state": {
+      "layout_mode": "waterfall",
+      "canvas_width": 0,
+      "canvas_height": 0
+    },
+    "last_updated": "2025-08-19T23:23:00.425833",
+    "tag_ui_states": {
+      "head": {
+        "visible_tags": [
+          "仰视视角",
+          "贴地拍摄",
+          "测试网址标签"
+        ],
+        "selected_tags": [
+          "测试网址标签"
+        ],
+        "scroll_position": 0.0,
+        "tag_details": {
+          "仰视视角": {
+            "label": "仰视视角",
+            "tab": "视角",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 1
+          },
+          "贴地拍摄": {
+            "label": "贴地拍摄",
+            "tab": "视角",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 2
+          },
+          "测试网址标签": {
+            "label": "测试网址标签",
+            "tab": "视角",
+            "is_selected": true,
+            "is_visible": true,
+            "position": 3
+          }
+        }
+      },
+      "tail": {
+        "visible_tags": [
+          "写实风格",
+          "超真实风格",
+          "数码单反"
+        ],
+        "selected_tags": [],
+        "scroll_position": 0.0,
+        "tag_details": {
+          "写实风格": {
+            "label": "写实风格",
+            "tab": "图片质量",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 1
+          },
+          "超真实风格": {
+            "label": "超真实风格",
+            "tab": "图片质量",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 2
+          },
+          "数码单反": {
+            "label": "数码单反",
+            "tab": "图片质量",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 3
+          }
+        }
+      }
+    }
+  },
+  "1": {
+    "output_text_state": {
+      "tag_blocks": [],
+      "text_content": "",
+      "cursor_position": "1.0",
+      "scroll_position": 0.0
+    },
+    "tag_ui_state": {
+      "head_tags": {
+        "visible_tags": [],
+        "selected_tags": [],
+        "scroll_position": 0.0
+      },
+      "tail_tags": {
+        "visible_tags": [],
+        "selected_tags": [],
+        "scroll_position": 0.0
+      }
+    },
+    "layout_state": {
+      "layout_mode": "waterfall",
+      "canvas_width": 0,
+      "canvas_height": 0
+    },
+    "last_updated": "2025-08-19T23:21:17.496043",
+    "tag_ui_states": {
+      "head": {
+        "visible_tags": [
+          "仰视视角",
+          "贴地拍摄",
+          "测试网址标签"
+        ],
+        "selected_tags": [],
+        "scroll_position": 0.0,
+        "tag_details": {
+          "仰视视角": {
+            "label": "仰视视角",
+            "tab": "视角",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 1
+          },
+          "贴地拍摄": {
+            "label": "贴地拍摄",
+            "tab": "视角",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 2
+          },
+          "测试网址标签": {
+            "label": "测试网址标签",
+            "tab": "视角",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 3
+          }
+        }
+      },
+      "tail": {
+        "visible_tags": [
+          "写实风格",
+          "超真实风格",
+          "数码单反"
+        ],
+        "selected_tags": [],
+        "scroll_position": 0.0,
+        "tag_details": {
+          "写实风格": {
+            "label": "写实风格",
+            "tab": "图片质量",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 1
+          },
+          "超真实风格": {
+            "label": "超真实风格",
+            "tab": "图片质量",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 2
+          },
+          "数码单反": {
+            "label": "数码单反",
+            "tab": "图片质量",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 3
+          }
+        }
+      }
+    }
+  }
+}

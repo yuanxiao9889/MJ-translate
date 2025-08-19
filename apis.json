@@ -1,0 +1,35 @@
+{
+  "baidu": [
+    {
+      "app_id": "20250714002405787",
+      "app_key": "snaZX6vT5tsmnLyWVpJa",
+      "disabled": false
+    },
+    {
+      "app_id": "20250520002362075",
+      "app_key": "GzQRUInStr4WqJojm6Tn",
+      "disabled": false
+    },
+    {
+      "app_id": "20250714002406290",
+      "app_key": "7Aq47DNoU3ulWsLQyohE",
+      "disabled": false
+    }
+  ],
+  "zhipu": [
+    {
+      "api_key": "b0b13f4ebaa743e79ba0eb7db2a228ad.0KYAQGG1PeejivAW",
+      "disabled": false
+    },
+    {
+      "api_key": "3bb9c40d6d4f469096984353f417eefa.XUbm2zyWFrJIjP37",
+      "disabled": false
+    }
+  ],
+  "zhipu-glm45": [
+    {
+      "api_key": "dfc0fa924ca848eeaaef00ee3056c4f7.9ewZdTRXO4TLyXqj",
+      "disabled": true
+    }
+  ]
+}

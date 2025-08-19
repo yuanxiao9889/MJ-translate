@@ -1,0 +1,5 @@
+[console_scripts]
+mj-translator = app:main
+
+[gui_scripts]
+mj-translator-gui = app:main
