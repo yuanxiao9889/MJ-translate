@@ -69,8 +69,85 @@
   },
   "1": {
     "output_text_state": {
-      "tag_blocks": [],
-      "text_content": "\n",
+      "tag_blocks": [
+        {
+          "text": "Front angle",
+          "tag_type": "head",
+          "position": "2.0",
+          "style": {
+            "color": "#3776ff",
+            "hover_color": "#1857b6",
+            "font": [
+              "微软雅黑",
+              13,
+              "bold"
+            ],
+            "padding": {
+              "x": 8,
+              "y": 2
+            }
+          },
+          "created_at": "2025-08-21T00:27:45.267734"
+        },
+        {
+          "text": "Side profile",
+          "tag_type": "head",
+          "position": "2.0",
+          "style": {
+            "color": "#3776ff",
+            "hover_color": "#1857b6",
+            "font": [
+              "微软雅黑",
+              13,
+              "bold"
+            ],
+            "padding": {
+              "x": 8,
+              "y": 2
+            }
+          },
+          "created_at": "2025-08-21T00:27:45.269163"
+        },
+        {
+          "text": "Rear view",
+          "tag_type": "head",
+          "position": "2.0",
+          "style": {
+            "color": "#3776ff",
+            "hover_color": "#1857b6",
+            "font": [
+              "微软雅黑",
+              13,
+              "bold"
+            ],
+            "padding": {
+              "x": 8,
+              "y": 2
+            }
+          },
+          "created_at": "2025-08-21T00:27:45.270657"
+        },
+        {
+          "text": "Top-down view",
+          "tag_type": "head",
+          "position": "2.0",
+          "style": {
+            "color": "#3776ff",
+            "hover_color": "#1857b6",
+            "font": [
+              "微软雅黑",
+              13,
+              "bold"
+            ],
+            "padding": {
+              "x": 8,
+              "y": 2
+            }
+          },
+          "created_at": "2025-08-21T00:27:45.272007"
+        }
+      ],
+      "text_content": ", , , , \n",
       "cursor_position": "1.0",
       "scroll_position": 0.0
     },
@@ -91,39 +168,253 @@
       "canvas_width": 0,
       "canvas_height": 0
     },
-    "last_updated": "2025-08-19T23:23:00.425833",
+    "last_updated": "2025-08-21T00:27:45.273153",
     "tag_ui_states": {
       "head": {
         "visible_tags": [
-          "仰视视角",
-          "贴地拍摄",
-          "测试网址标签"
+          "正面角度",
+          "侧视图",
+          "后视图",
+          "自上而下视图",
+          "低角度视图",
+          "高对角线角度",
+          "低对角线仰视",
+          "视线高度拍摄",
+          "鸟瞰图",
+          "极低角度",
+          "四分之三后视",
+          "低头看脚",
+          "荷兰角",
+          "过肩视角",
+          "镜面反射角",
+          "远距低角度仰视",
+          "后对角线角度",
+          "中距低对角",
+          "斜前方微仰视",
+          "脸侧特写",
+          "俯视角度",
+          "膝下仰视",
+          "躺姿仰视",
+          "房间角落视角",
+          "门后偷看",
+          "低低地斜向上爬行",
+          "与屏幕边缘成角",
+          "背后看镜子",
+          "高处远眺",
+          "直视前方"
         ],
-        "selected_tags": [
-          "测试网址标签"
-        ],
+        "selected_tags": [],
         "scroll_position": 0.0,
         "tag_details": {
-          "仰视视角": {
-            "label": "仰视视角",
-            "tab": "视角",
+          "正面角度": {
+            "label": "正面角度",
+            "tab": "拍摄角度",
             "is_selected": false,
             "is_visible": true,
             "position": 1
           },
-          "贴地拍摄": {
-            "label": "贴地拍摄",
-            "tab": "视角",
+          "侧视图": {
+            "label": "侧视图",
+            "tab": "拍摄角度",
             "is_selected": false,
             "is_visible": true,
             "position": 2
           },
-          "测试网址标签": {
-            "label": "测试网址标签",
-            "tab": "视角",
-            "is_selected": true,
+          "后视图": {
+            "label": "后视图",
+            "tab": "拍摄角度",
+            "is_selected": false,
             "is_visible": true,
             "position": 3
+          },
+          "自上而下视图": {
+            "label": "自上而下视图",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 4
+          },
+          "低角度视图": {
+            "label": "低角度视图",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 5
+          },
+          "高对角线角度": {
+            "label": "高对角线角度",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 6
+          },
+          "低对角线仰视": {
+            "label": "低对角线仰视",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 7
+          },
+          "视线高度拍摄": {
+            "label": "视线高度拍摄",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 8
+          },
+          "鸟瞰图": {
+            "label": "鸟瞰图",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 9
+          },
+          "极低角度": {
+            "label": "极低角度",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 10
+          },
+          "四分之三后视": {
+            "label": "四分之三后视",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 11
+          },
+          "低头看脚": {
+            "label": "低头看脚",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 12
+          },
+          "荷兰角": {
+            "label": "荷兰角",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 13
+          },
+          "过肩视角": {
+            "label": "过肩视角",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 14
+          },
+          "镜面反射角": {
+            "label": "镜面反射角",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 15
+          },
+          "远距低角度仰视": {
+            "label": "远距低角度仰视",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 16
+          },
+          "后对角线角度": {
+            "label": "后对角线角度",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 17
+          },
+          "中距低对角": {
+            "label": "中距低对角",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 18
+          },
+          "斜前方微仰视": {
+            "label": "斜前方微仰视",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 19
+          },
+          "脸侧特写": {
+            "label": "脸侧特写",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 20
+          },
+          "俯视角度": {
+            "label": "俯视角度",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 21
+          },
+          "膝下仰视": {
+            "label": "膝下仰视",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 22
+          },
+          "躺姿仰视": {
+            "label": "躺姿仰视",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 23
+          },
+          "房间角落视角": {
+            "label": "房间角落视角",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 24
+          },
+          "门后偷看": {
+            "label": "门后偷看",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 25
+          },
+          "低低地斜向上爬行": {
+            "label": "低低地斜向上爬行",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 26
+          },
+          "与屏幕边缘成角": {
+            "label": "与屏幕边缘成角",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 27
+          },
+          "背后看镜子": {
+            "label": "背后看镜子",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 28
+          },
+          "高处远眺": {
+            "label": "高处远眺",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 29
+          },
+          "直视前方": {
+            "label": "直视前方",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 30
           }
         }
       },
@@ -185,37 +476,258 @@
       "canvas_width": 0,
       "canvas_height": 0
     },
-    "last_updated": "2025-08-19T23:21:17.496043",
+    "last_updated": "2025-08-21T00:27:35.860117",
     "tag_ui_states": {
       "head": {
         "visible_tags": [
-          "仰视视角",
-          "贴地拍摄",
-          "测试网址标签"
+          "正面角度",
+          "侧视图",
+          "后视图",
+          "自上而下视图",
+          "低角度视图",
+          "高对角线角度",
+          "低对角线仰视",
+          "视线高度拍摄",
+          "鸟瞰图",
+          "极低角度",
+          "四分之三后视",
+          "低头看脚",
+          "荷兰角",
+          "过肩视角",
+          "镜面反射角",
+          "远距低角度仰视",
+          "后对角线角度",
+          "中距低对角",
+          "斜前方微仰视",
+          "脸侧特写",
+          "俯视角度",
+          "膝下仰视",
+          "躺姿仰视",
+          "房间角落视角",
+          "门后偷看",
+          "低低地斜向上爬行",
+          "与屏幕边缘成角",
+          "背后看镜子",
+          "高处远眺",
+          "直视前方"
         ],
-        "selected_tags": [],
+        "selected_tags": [
+          "正面角度",
+          "侧视图",
+          "后视图",
+          "自上而下视图"
+        ],
         "scroll_position": 0.0,
         "tag_details": {
-          "仰视视角": {
-            "label": "仰视视角",
-            "tab": "视角",
-            "is_selected": false,
+          "正面角度": {
+            "label": "正面角度",
+            "tab": "拍摄角度",
+            "is_selected": true,
             "is_visible": true,
             "position": 1
           },
-          "贴地拍摄": {
-            "label": "贴地拍摄",
-            "tab": "视角",
-            "is_selected": false,
+          "侧视图": {
+            "label": "侧视图",
+            "tab": "拍摄角度",
+            "is_selected": true,
             "is_visible": true,
             "position": 2
           },
-          "测试网址标签": {
-            "label": "测试网址标签",
-            "tab": "视角",
-            "is_selected": false,
+          "后视图": {
+            "label": "后视图",
+            "tab": "拍摄角度",
+            "is_selected": true,
             "is_visible": true,
             "position": 3
+          },
+          "自上而下视图": {
+            "label": "自上而下视图",
+            "tab": "拍摄角度",
+            "is_selected": true,
+            "is_visible": true,
+            "position": 4
+          },
+          "低角度视图": {
+            "label": "低角度视图",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 5
+          },
+          "高对角线角度": {
+            "label": "高对角线角度",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 6
+          },
+          "低对角线仰视": {
+            "label": "低对角线仰视",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 7
+          },
+          "视线高度拍摄": {
+            "label": "视线高度拍摄",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 8
+          },
+          "鸟瞰图": {
+            "label": "鸟瞰图",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 9
+          },
+          "极低角度": {
+            "label": "极低角度",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 10
+          },
+          "四分之三后视": {
+            "label": "四分之三后视",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 11
+          },
+          "低头看脚": {
+            "label": "低头看脚",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 12
+          },
+          "荷兰角": {
+            "label": "荷兰角",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 13
+          },
+          "过肩视角": {
+            "label": "过肩视角",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 14
+          },
+          "镜面反射角": {
+            "label": "镜面反射角",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 15
+          },
+          "远距低角度仰视": {
+            "label": "远距低角度仰视",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 16
+          },
+          "后对角线角度": {
+            "label": "后对角线角度",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 17
+          },
+          "中距低对角": {
+            "label": "中距低对角",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 18
+          },
+          "斜前方微仰视": {
+            "label": "斜前方微仰视",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 19
+          },
+          "脸侧特写": {
+            "label": "脸侧特写",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 20
+          },
+          "俯视角度": {
+            "label": "俯视角度",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 21
+          },
+          "膝下仰视": {
+            "label": "膝下仰视",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 22
+          },
+          "躺姿仰视": {
+            "label": "躺姿仰视",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 23
+          },
+          "房间角落视角": {
+            "label": "房间角落视角",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 24
+          },
+          "门后偷看": {
+            "label": "门后偷看",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 25
+          },
+          "低低地斜向上爬行": {
+            "label": "低低地斜向上爬行",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 26
+          },
+          "与屏幕边缘成角": {
+            "label": "与屏幕边缘成角",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 27
+          },
+          "背后看镜子": {
+            "label": "背后看镜子",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 28
+          },
+          "高处远眺": {
+            "label": "高处远眺",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 29
+          },
+          "直视前方": {
+            "label": "直视前方",
+            "tab": "拍摄角度",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 30
           }
         }
       },

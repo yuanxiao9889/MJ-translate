@@ -3273,6 +3273,7 @@ def build_ui(root):
     head_tab_frame.pack(fill="x", padx=8, pady=(0, 2))
     
     # 获取当前页面的头部标签Tab列表
+    global head_tab_names, tail_tab_names
     tag_manager = get_page_tag_manager()
     if tag_manager:
         head_tab_names = tag_manager.get_tab_names("head")
@@ -3280,6 +3281,7 @@ def build_ui(root):
         # 向后兼容：如果没有标签管理器，使用全局数据
         tags_data = load_tags()
         head_tab_names = list(tags_data["head"].keys())
+
     
     head_tab = tk.StringVar(value=head_tab_names[0] if head_tab_names else "")
 
@@ -3293,18 +3295,55 @@ def build_ui(root):
     def refresh_head_tabbar():
         for w in head_tab_frame.winfo_children():
             w.destroy()
-        for name in head_tab_names:
-            btn = ctk.CTkButton(head_tab_frame, text=name, font=('微软雅黑', 14, 'bold'),
+        
+        # 创建自动换行的容器
+        current_row_frame = None
+        current_row_width = 0
+        # 强制更新容器尺寸
+        head_tab_frame.update_idletasks()
+        actual_width = head_tab_frame.winfo_width()
+        # 真正的自适应：使用实际容器宽度，减去边距
+        max_width = max(200, actual_width - 20) if actual_width > 50 else 400  # 最小200像素，减去20像素边距
+        # print(f"[DEBUG] refresh_head_tabbar - 实际容器宽度: {actual_width}, 使用宽度: {max_width}, 标签数量: {len(head_tab_names)}")
+        # print(f"[DEBUG] head_tab_names: {head_tab_names}")
+        
+        for i, name in enumerate(head_tab_names):
+            # 动态计算按钮实际宽度（基于文本长度）
+            text_width = len(name) * 12 + 20  # 估算文本宽度，每个字符约12像素，加上内边距
+            btn_width = max(60, text_width) + 2  # 主按钮宽度 + 间距，最小60像素
+            if is_edit_mode.get():
+                btn_width += 20 + 2 + 20 + 7  # 编辑按钮 + 删除按钮 + 间距
+            
+            # print(f"[DEBUG] 标签 '{name}' - 文本长度: {len(name)}, 计算宽度: {btn_width}, 当前行宽度: {current_row_width}")
+            
+            # 如果当前行为空或宽度不够，创建新行
+            if current_row_frame is None or current_row_width + btn_width > max_width:
+                # print(f"[DEBUG] 创建新行 - 需要宽度: {current_row_width + btn_width}, 最大宽度: {max_width}")
+                current_row_frame = ctk.CTkFrame(head_tab_frame, fg_color="transparent")
+                current_row_frame.pack(fill="x", pady=(0, 2))
+                current_row_width = 0
+            
+            # 创建主按钮，使用动态宽度
+            actual_btn_width = max(60, text_width)
+            btn = ctk.CTkButton(current_row_frame, text=name, font=('微软雅黑', 14, 'bold'),
                                 fg_color="#3776ff" if name==head_tab.get() else "#dde6fc",
                                 text_color="white" if name==head_tab.get() else "#3261a3",
-                                width=60, height=24, corner_radius=4,
+                                width=actual_btn_width, height=24, corner_radius=4,
                                 command=lambda n=name: select_head_tab(n))
             btn.pack(side="left", padx=(0, 1), pady=(0,0))
+            current_row_width += actual_btn_width + 1
+            
+            # 编辑模式下添加编辑和删除按钮
             if is_edit_mode.get():
-                ctk.CTkButton(head_tab_frame, text="✏️", width=20, fg_color="#dadada", text_color="black",
-                              command=lambda n=name: add_edit_tab("head", True, n)).pack(side="left", padx=(0, 2))
-                ctk.CTkButton(head_tab_frame, text="❌", width=20, fg_color="red", text_color="white",
-                              command=lambda n=name: delete_tab("head", n)).pack(side="left", padx=(0, 7))
+                edit_btn = ctk.CTkButton(current_row_frame, text="✏️", width=20, fg_color="#dadada", text_color="black",
+                                       command=lambda n=name: add_edit_tab("head", True, n))
+                edit_btn.pack(side="left", padx=(0, 2))
+                current_row_width += 20 + 2
+                
+                del_btn = ctk.CTkButton(current_row_frame, text="❌", width=20, fg_color="red", text_color="white",
+                                      command=lambda n=name: delete_tab("head", n))
+                del_btn.pack(side="left", padx=(0, 7))
+                current_row_width += 20 + 7
 
 
     head_canvas, head_frame = make_scrollable_flow_area(head_content, height=half_height-50)
@@ -3411,6 +3450,7 @@ def build_ui(root):
     tail_tab_frame.pack(fill="x", padx=8, pady=(0, 2))
     
     # 获取当前页面的尾部标签Tab列表
+    global tail_tab_names
     tag_manager = get_page_tag_manager()
     if tag_manager:
         tail_tab_names = tag_manager.get_tab_names("tail")
@@ -3418,6 +3458,7 @@ def build_ui(root):
         # 向后兼容：如果没有标签管理器，使用全局数据
         tags_data = load_tags()
         tail_tab_names = list(tags_data["tail"].keys())
+
     
     tail_tab = tk.StringVar(value=tail_tab_names[0] if tail_tab_names else "")
 
@@ -3430,18 +3471,51 @@ def build_ui(root):
     def refresh_tail_tabbar():
         for w in tail_tab_frame.winfo_children():
             w.destroy()
-        for name in tail_tab_names:
-            btn = ctk.CTkButton(tail_tab_frame, text=name, font=('微软雅黑', 14, 'bold'),
+        
+        # 创建自动换行的容器
+        current_row_frame = None
+        current_row_width = 0
+        # 强制更新容器尺寸
+        tail_tab_frame.update_idletasks()
+        actual_width = tail_tab_frame.winfo_width()
+        # 真正的自适应：使用实际容器宽度，减去边距
+        max_width = max(200, actual_width - 20) if actual_width > 50 else 400  # 最小200像素，减去20像素边距
+        # print(f"[DEBUG] refresh_tail_tabbar - 实际容器宽度: {actual_width}, 使用宽度: {max_width}, 标签数量: {len(tail_tab_names)}")
+        
+        for i, name in enumerate(tail_tab_names):
+            # 动态计算按钮实际宽度（基于文本长度）
+            text_width = len(name) * 12 + 20  # 估算文本宽度，每个字符约12像素，加上内边距
+            btn_width = max(60, text_width) + 2  # 主按钮宽度 + 间距，最小60像素
+            if is_edit_mode.get():
+                btn_width += 20 + 2 + 20 + 7  # 编辑按钮 + 删除按钮 + 间距
+            
+            # 如果当前行为空或宽度不够，创建新行
+            if current_row_frame is None or current_row_width + btn_width > max_width:
+                current_row_frame = ctk.CTkFrame(tail_tab_frame, fg_color="transparent")
+                current_row_frame.pack(fill="x", pady=(0, 2))
+                current_row_width = 0
+            
+            # 创建主按钮，使用动态宽度
+            actual_btn_width = max(60, text_width)
+            btn = ctk.CTkButton(current_row_frame, text=name, font=('微软雅黑', 14, 'bold'),
                                 fg_color='#74e4b6' if name==tail_tab.get() else '#ebf7f0',
                                 text_color='white' if name==tail_tab.get() else '#1a7b51',
-                                width=60, height=24, corner_radius=4,
+                                width=actual_btn_width, height=24, corner_radius=4,
                                 command=lambda n=name: select_tail_tab(n))
             btn.pack(side="left", padx=(0, 2), pady=(0,1))
+            current_row_width += actual_btn_width + 2
+            
+            # 编辑模式下添加编辑和删除按钮
             if is_edit_mode.get():
-                ctk.CTkButton(tail_tab_frame, text="✏️", width=20, fg_color="#dadada", text_color="black",
-                              command=lambda n=name: add_edit_tab("tail", True, n)).pack(side="left", padx=(0, 2))
-                ctk.CTkButton(tail_tab_frame, text="❌", width=20, fg_color="red", text_color="white",
-                              command=lambda n=name: delete_tab("tail", n)).pack(side="left", padx=(0, 7))
+                edit_btn = ctk.CTkButton(current_row_frame, text="✏️", width=20, fg_color="#dadada", text_color="black",
+                                       command=lambda n=name: add_edit_tab("tail", True, n))
+                edit_btn.pack(side="left", padx=(0, 2))
+                current_row_width += 20 + 2
+                
+                del_btn = ctk.CTkButton(current_row_frame, text="❌", width=20, fg_color="red", text_color="white",
+                                      command=lambda n=name: delete_tab("tail", n))
+                del_btn.pack(side="left", padx=(0, 7))
+                current_row_width += 20 + 7
 
 
     tail_canvas, tail_frame = make_scrollable_flow_area(tail_content, height=half_height-50)
@@ -3692,10 +3766,49 @@ def build_ui(root):
 
     def delete_tab(tag_type, tabname):
         if messagebox.askyesno("确认", f"确定要删除{('头部' if tag_type=='head' else '尾部')}Tab【{tabname}】及其标签吗？"):
+            # 从全局标签库删除标签页数据
             tags_data[tag_type].pop(tabname, None)
             save_tags(tags_data)
+            
+            # 同步删除到所有分页的标签数据
+            if page_manager:
+                for page in page_manager.pages.values():
+                    tag_manager = page.get_tag_manager()
+                    if tag_manager and tag_type in tag_manager.tags:
+                        if tabname in tag_manager.tags[tag_type]:
+                            tag_manager.tags[tag_type].pop(tabname, None)
+                # 保存分页数据
+                page_manager.save_pages_data()
+            
+            # 更新全局变量
+            global head_tab_names, tail_tab_names
+            head_tab_names = list(tags_data["head"].keys())
+            tail_tab_names = list(tags_data["tail"].keys())
+            
+            # 如果删除的是当前选中的标签页，切换到第一个可用的标签页
+            current_tab = head_tab.get() if tag_type == "head" else tail_tab.get()
+            if current_tab == tabname:
+                available_tabs = head_tab_names if tag_type == "head" else tail_tab_names
+                if available_tabs:
+                    new_tab = available_tabs[0]
+                    if tag_type == "head":
+                        head_tab.set(new_tab)
+                    else:
+                        tail_tab.set(new_tab)
+            
+            # 刷新UI
             if 'global_root' in globals() and hasattr(global_root, 'refresh_tab_list'):
                 global_root.refresh_tab_list()
+            
+            # 刷新标签页内容显示
+            if tag_type == "head":
+                if 'global_root' in globals() and hasattr(global_root, 'refresh_head_tags'):
+                    global_root.refresh_head_tags()
+            else:
+                if 'global_root' in globals() and hasattr(global_root, 'refresh_tail_tags'):
+                    global_root.refresh_tail_tags()
+            
+            print(f"已删除{('头部' if tag_type=='head' else '尾部')}标签页: {tabname}")
 
     def delete_tag(tag_type, label):
         """
@@ -3944,14 +4057,43 @@ def build_ui(root):
                 return
             if edit:
                 # 重命名Tab时保留原有标签
-                old_data = tags_data[tag_type].pop(tabname, {})
-                tags_data[tag_type][t] = old_data
+                if t != tabname:  # 只有在名称真正改变时才进行重命名
+                    old_data = tags_data[tag_type].pop(tabname, {})
+                    tags_data[tag_type][t] = old_data
+                    
+                    # 同步更新所有分页中的标签页名称
+                    if page_manager:
+                        for page in page_manager.pages.values():
+                            if tag_type in page.tags and tabname in page.tags[tag_type]:
+                                # 重命名分页中的标签页
+                                page_tab_data = page.tags[tag_type].pop(tabname, {})
+                                page.tags[tag_type][t] = page_tab_data
+                                print(f"[add_edit_tab] 已更新分页{page.page_id}中的标签页: {tabname} -> {t}")
+                        # 保存分页数据
+                        page_manager.save_pages_data()
+                # 如果名称没有改变，不需要做任何操作
             else:
                 # 新建Tab
                 tags_data[tag_type][t] = {}
             save_tags(tags_data)
+            
+            # 更新全局变量
+            global head_tab_names, tail_tab_names
+            head_tab_names = list(tags_data["head"].keys())
+            tail_tab_names = list(tags_data["tail"].keys())
+            
+            # 刷新UI
             if 'global_root' in globals() and hasattr(global_root, 'refresh_tab_list'):
                 global_root.refresh_tab_list()
+            
+            # 刷新标签页内容显示
+            if tag_type == "head":
+                if 'global_root' in globals() and hasattr(global_root, 'refresh_head_tags'):
+                    global_root.refresh_head_tags()
+            else:
+                if 'global_root' in globals() and hasattr(global_root, 'refresh_tail_tags'):
+                    global_root.refresh_tail_tags()
+            
             win.destroy()
         ctk.CTkButton(win, text="确定", fg_color="#19a8b9", command=save_).pack(pady=12)
 
@@ -4196,6 +4338,8 @@ def build_ui(root):
             global_root.after_cancel(resize_timer)
         # 200毫秒后执行刷新，避免频繁触发
         resize_timer = global_root.after(200, lambda: (
+            refresh_head_tabbar(),  # 刷新头部标签页换行布局
+            refresh_tail_tabbar(),  # 刷新尾部标签页换行布局
             global_root.refresh_head_tags() if hasattr(global_root, 'refresh_head_tags') else None, 
             global_root.refresh_tail_tags() if hasattr(global_root, 'refresh_tail_tags') else None
         ))

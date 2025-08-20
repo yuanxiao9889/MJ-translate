@@ -5,7 +5,7 @@
       "name": "默认分页",
       "created_time": "2025-08-19 23:05:05",
       "input_text": "请输入要翻译的英文或中文内容...\n支持快捷键：\nCtrl+Enter 翻译\nCtrl+D 清空\nCtrl+T 创建标签",
-      "output_text": "",
+      "output_text": ", , , , ,",
       "last_translation": "",
       "inserted_tags": {
         "head": [],
@@ -25,12 +25,18 @@
               "usage_count": 0,
               "image": "images/这张生活方式照片_515ca902.png",
               "selected": false
+            },
+            "111": {
+              "en": "1111",
+              "image": "images/111_1755704588.png",
+              "usage_count": 0,
+              "selected": false
             }
           },
           "镜头": {
             "一张20岁女子脸上裸露皮肤的照片。": {
               "en": "A photo capturing the bare skin of a 20-year-old woman's face.",
-              "usage_count": 0,
+              "usage_count": 1,
               "image": "images/一张20岁女子脸上裸露皮肤的照片。_fef2252f.png",
               "selected": false
             }
@@ -38,27 +44,27 @@
           "拍摄角度": {
             "正面角度": {
               "en": "Front angle",
-              "usage_count": 0,
-              "selected": false
+              "usage_count": 1,
+              "selected": true
             },
             "侧视图": {
               "en": "Side profile",
-              "usage_count": 0,
-              "selected": false
+              "usage_count": 1,
+              "selected": true
             },
             "后视图": {
               "en": "Rear view",
-              "usage_count": 0,
-              "selected": false
+              "usage_count": 1,
+              "selected": true
             },
             "自上而下视图": {
               "en": "Top-down view",
-              "usage_count": 0,
-              "selected": false
+              "usage_count": 1,
+              "selected": true
             },
             "低角度视图": {
               "en": "Low-angle view",
-              "usage_count": 0,
+              "usage_count": 1,
               "selected": false
             },
             "高对角线角度": {
@@ -187,35 +193,43 @@
               "selected": false
             }
           },
-          "相机距离与构图": {
+          "视角": {
+            "仰视视角": {
+              "en": "low angle view",
+              "image": "images/仰视视角_1755367891.png",
+              "usage_count": 14,
+              "selected": false
+            }
+          },
+          "相机距离": {
             "正面脸部特写": {
               "en": "Front facial close-up",
-              "usage_count": 0,
+              "usage_count": 2,
               "selected": false
             },
             "角度脸部特写": {
               "en": "Angled facial close-up",
-              "usage_count": 0,
+              "usage_count": 2,
               "selected": false
             },
             "眼睛特写": {
               "en": "Eyes close-up",
-              "usage_count": 0,
+              "usage_count": 1,
               "selected": false
             },
             "嘴唇特写": {
               "en": "Lips close-up",
-              "usage_count": 0,
+              "usage_count": 1,
               "selected": false
             },
             "头部特写（发丝飞扬）": {
               "en": "Head close-up with hair",
-              "usage_count": 0,
+              "usage_count": 1,
               "selected": false
             },
             "半身照（胸部以上）": {
               "en": "Medium close-up (chest up)",
-              "usage_count": 0,
+              "usage_count": 1,
               "selected": false
             },
             "腰部以上中景": {
@@ -344,13 +358,13 @@
           "图片质量": {
             "写实风格": {
               "en": "photorealistic",
-              "usage_count": 4,
+              "usage_count": 5,
               "image": "images/写实风格_29a12b8f.png",
               "selected": false
             },
             "超真实风格": {
               "en": "ultra-realistic",
-              "usage_count": 1,
+              "usage_count": 2,
               "image": "images/超真实风格_7c152b7b.png",
               "selected": false
             },
