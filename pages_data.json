@@ -5,7 +5,7 @@
       "name": "默认分页",
       "created_time": "2025-08-19 23:05:05",
       "input_text": "请输入要翻译的英文或中文内容...\n支持快捷键：\nCtrl+Enter 翻译\nCtrl+D 清空\nCtrl+T 创建标签",
-      "output_text": ", , , , ,",
+      "output_text": ",",
       "last_translation": "",
       "inserted_tags": {
         "head": [],
@@ -16,13 +16,13 @@
           "照片风格": {
             "用iPhone拍摄": {
               "en": "captured with an iPhone",
-              "usage_count": 0,
+              "usage_count": 1,
               "image": "images/用iPhone拍摄_df36e463.png",
               "selected": false
             },
             "这张生活方式照片": {
               "en": "This lifestyle photo",
-              "usage_count": 0,
+              "usage_count": 1,
               "image": "images/这张生活方式照片_515ca902.png",
               "selected": false
             },
@@ -36,7 +36,7 @@
           "镜头": {
             "一张20岁女子脸上裸露皮肤的照片。": {
               "en": "A photo capturing the bare skin of a 20-year-old woman's face.",
-              "usage_count": 1,
+              "usage_count": 0,
               "image": "images/一张20岁女子脸上裸露皮肤的照片。_fef2252f.png",
               "selected": false
             }
@@ -44,27 +44,27 @@
           "拍摄角度": {
             "正面角度": {
               "en": "Front angle",
-              "usage_count": 1,
-              "selected": true
+              "usage_count": 0,
+              "selected": false
             },
             "侧视图": {
               "en": "Side profile",
-              "usage_count": 1,
-              "selected": true
+              "usage_count": 0,
+              "selected": false
             },
             "后视图": {
               "en": "Rear view",
-              "usage_count": 1,
-              "selected": true
+              "usage_count": 0,
+              "selected": false
             },
             "自上而下视图": {
               "en": "Top-down view",
-              "usage_count": 1,
-              "selected": true
+              "usage_count": 0,
+              "selected": false
             },
             "低角度视图": {
               "en": "Low-angle view",
-              "usage_count": 1,
+              "usage_count": 0,
               "selected": false
             },
             "高对角线角度": {
@@ -358,7 +358,7 @@
           "图片质量": {
             "写实风格": {
               "en": "photorealistic",
-              "usage_count": 5,
+              "usage_count": 4,
               "image": "images/写实风格_29a12b8f.png",
               "selected": false
             },
