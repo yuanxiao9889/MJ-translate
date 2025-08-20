@@ -1,0 +1,31 @@
+{
+  "_comment": "GitHub一键上传脚本配置文件模板",
+  "_usage": "复制此文件为 git_upload_config.json 并修改相应配置",
+  "defaultRemote": "origin",
+  "defaultBranch": "main",
+  "autoCommitMessage": {
+    "enabled": true,
+    "template": "自动提交 - {timestamp} [{user}@{computer}]",
+    "includeFileCount": true
+  },
+  "networkCheck": {
+    "enabled": true,
+    "timeout": 5000
+  },
+  "pushOptions": {
+    "alwaysConfirm": true,
+    "showPushDetails": true,
+    "handleConflicts": "prompt"
+  },
+  "ui": {
+    "language": "zh-CN",
+    "colorOutput": true,
+    "pauseOnComplete": true
+  },
+  "backup": {
+    "createBackupBeforePush": false,
+    "backupDirectory": "./backups",
+    "maxBackups": 5
+  },
+  "lastUpdate": null
+}
