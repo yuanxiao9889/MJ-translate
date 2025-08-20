@@ -1929,12 +1929,18 @@ def open_settings_popup(root):
     def check_update_thread():
         try:
             from services.update_manager import UpdateManager
+            import semver
             updater = UpdateManager()
             latest_version, release_notes = updater.check_for_updates()
             if latest_version:
                 latest_version_var.set(f"最新版本: {latest_version}")
+                
+                # 构建版本对比信息
+                version_info = f"版本对比:\n当前版本: {updater.current_version}\nGitHub版本: {latest_version}\n\n"
+                
                 if updater.is_new_version_available(latest_version):
-                    if messagebox.askyesno("发现新版本", f"发现新版本 {latest_version}！\n\n{release_notes}\n\n是否立即下载并安装更新？\n\n注意：更新过程中会自动备份当前版本，如果更新失败会自动回滚。"):
+                    version_info += "状态: 🔄 有新版本可用"
+                    if messagebox.askyesno("发现新版本", f"{version_info}\n\n{release_notes}\n\n是否立即下载并安装更新？\n\n注意：更新过程中会自动备份当前版本，如果更新失败会自动回滚。"):
                         # 显示更新进度
                         progress_msg = messagebox.showinfo("正在更新", "正在下载并安装更新，请稍候...\n\n更新过程中请勿关闭程序。")
                         
@@ -1945,12 +1951,33 @@ def open_settings_popup(root):
                             messagebox.showinfo("更新成功", f"更新到版本 {latest_version} 成功！\n\n程序将在您下次启动时使用新版本。\n\n建议现在重启程序以使用新功能。")
                         else:
                             messagebox.showerror("更新失败", "更新过程中发生错误，已自动回滚到之前版本。\n\n请检查网络连接或稍后重试。")
+                elif semver.compare(updater.current_version, latest_version) > 0:
+                    version_info += "状态: 🚀 当前版本较新（开发版本）"
+                    messagebox.showinfo("版本信息", version_info)
                 else:
-                    messagebox.showinfo("已是最新版", "您当前使用的已是最新版本。")
+                    version_info += "状态: ✅ 已是最新版本"
+                    messagebox.showinfo("已是最新版", version_info)
             else:
-                messagebox.showinfo("检查更新", "未检测到新版本或网络连接失败。")
+                # 检查是否是404错误（仓库没有发布版本）
+                version_info_404 = f"版本对比:\n当前版本: {updater.current_version}\nGitHub版本: 无发布版本\n\n状态: 📦 使用开发版本\n\n"
+                if "404" in str(updater.check_for_updates()):
+                    messagebox.showinfo("检查更新", version_info_404 + "当前项目尚未发布正式版本。\n\n这可能是因为：\n1. 项目仍在开发中\n2. 仓库为私有仓库\n3. 尚未创建发布版本\n\n您正在使用的是最新开发版本。")
+                else:
+                    messagebox.showinfo("检查更新", f"当前版本: {updater.current_version}\n\n未检测到新版本或网络连接失败。")
         except Exception as e:
-            messagebox.showerror("更新错误", f"检查更新失败: {e}\n\n请检查网络连接和GitHub仓库配置。")
+            error_msg = str(e)
+            try:
+                from services.update_manager import UpdateManager
+                updater = UpdateManager()
+                current_ver = updater.current_version
+            except:
+                current_ver = "未知"
+                
+            if "404" in error_msg:
+                version_info_error = f"版本对比:\n当前版本: {current_ver}\nGitHub版本: 无发布版本\n\n状态: 📦 使用开发版本\n\n"
+                messagebox.showinfo("检查更新", version_info_error + "当前项目尚未发布正式版本。\n\n这可能是因为：\n1. 项目仍在开发中\n2. 仓库为私有仓库\n3. 尚未创建发布版本\n\n您正在使用的是最新开发版本。")
+            else:
+                messagebox.showerror("更新错误", f"当前版本: {current_ver}\n\n检查更新失败: {e}\n\n请检查网络连接和GitHub仓库配置。")
 
     def start_update_check():
         import threading

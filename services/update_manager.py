@@ -32,11 +32,50 @@ class UpdateManager:
         api_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/latest"
         try:
             response = requests.get(api_url)
+            if response.status_code == 404:
+                print(f"Repository {repo_owner}/{repo_name} not found or has no releases.")
+                print("This may be because:")
+                print("1. The repository is private")
+                print("2. The repository doesn't exist")
+                print("3. No releases have been published yet")
+                print(f"\n当前版本: {self.current_version}")
+                print("GitHub版本: 无发布版本")
+                return None, None
             response.raise_for_status()
             latest_release = response.json()
             latest_version = latest_release['tag_name'].lstrip('v')
             release_notes = latest_release['body']
+            
+            # 显示版本对比信息
+            print(f"\n版本对比:")
+            print(f"当前版本: {self.current_version}")
+            print(f"GitHub版本: {latest_version}")
+            
+            # 判断版本状态
+            if self.is_new_version_available(latest_version):
+                print("状态: 🔄 有新版本可用")
+            elif semver.compare(self.current_version, latest_version) > 0:
+                print("状态: 🚀 当前版本较新（开发版本）")
+            else:
+                print("状态: ✅ 已是最新版本")
+            
             return latest_version, release_notes
+        except requests.exceptions.SSLError as e:
+            print(f"SSL connection error: {e}")
+            print("This may be due to:")
+            print("1. Network firewall or proxy settings")
+            print("2. Outdated SSL certificates")
+            print("3. Corporate network restrictions")
+            print("Try checking your network connection or contact your IT administrator.")
+            return None, None
+        except requests.exceptions.ConnectionError as e:
+            print(f"Network connection error: {e}")
+            print("Please check your internet connection and try again.")
+            return None, None
+        except requests.exceptions.Timeout as e:
+            print(f"Request timeout: {e}")
+            print("The request took too long. Please try again later.")
+            return None, None
         except requests.exceptions.RequestException as e:
             print(f"Error checking for updates: {e}")
             return None, None
