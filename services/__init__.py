@@ -7,4 +7,6 @@ to understand and maintain. See ``bridge.py`` for the browser‑bridge service
 implementation.
 """
 
+__version__ = "1.0.0"
+
 __all__ = ["bridge"]
