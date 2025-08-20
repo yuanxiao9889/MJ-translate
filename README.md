@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # MJ 提示词翻译工具
 
 <div align="center">
