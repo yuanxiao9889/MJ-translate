@@ -4,9 +4,9 @@
       "page_id": 1,
       "name": "默认分页",
       "created_time": "2025-08-19 23:05:05",
-      "input_text": "请输入要翻译的英文或中文内容...\n支持快捷键：\nCtrl+Enter 翻译\nCtrl+D 清空\nCtrl+T 创建标签",
-      "output_text": ",",
-      "last_translation": "",
+      "input_text": "女狙击手，表情冷漠，沉着冷静，精英隐秘特工，前卫未来派装扮，成熟动漫风格，八头身比例，红色眼妆，蓝色的眼睛，灰色白色长马尾辫至大腿，以黑色和灰色为主色调，配以蓝色腰带装饰的服装，围巾，戴着黑色的战术手套，单耳耳机，短款迷彩风衣（略微敞开，可见下方不平整的方形马赛克图案战术背心），修身服装，紧身裤子带有逼真的皱纹，单腿护膝，灰色军靴，大腿带上有手枪，腰间有一把蝴蝶刀，自信而指挥的姿态，冷静却迷人，严肃的表情，美少女动漫角色设计，动漫光影，全身站立姿态，中性背景，干净的线条，高细节，锐利焦点",
+      "output_text": "Female sniper, expression cold, calm and collected, elite secret agent, futuristic avant-garde attire, mature anime style, 8-head proportion, red eye makeup, blue eyes, long gray and white ponytails reaching to the thighs, dressed in clothing mainly in black and gray, decorated with a blue belt, scarf, wearing black tactical gloves, one-ear headphones, a short camouflage windbreaker (slightly open, showing the uneven square mosaic pattern tactical vest below), slender clothing, tight pants with realistic creases, kneepads on one leg, gray military boots, a gun on the thigh, a butterfly knife at the waist, confident and commanding posture, calm yet charming, serious expression, anime-style beautiful girl character design, anime lighting effects, standing posture, neutral background, clean lines, high detail, sharp focus",
+      "last_translation": "Female sniper, expression cold, calm and collected, elite secret agent, futuristic avant-garde attire, mature anime style, 8-head proportion, red eye makeup, blue eyes, long gray and white ponytails reaching to the thighs, dressed in clothing mainly in black and gray, decorated with a blue belt, scarf, wearing black tactical gloves, one-ear headphones, a short camouflage windbreaker (slightly open, showing the uneven square mosaic pattern tactical vest below), slender clothing, tight pants with realistic creases, kneepads on one leg, gray military boots, a gun on the thigh, a butterfly knife at the waist, confident and commanding posture, calm yet charming, serious expression, anime-style beautiful girl character design, anime lighting effects, standing posture, neutral background, clean lines, high detail, sharp focus",
       "inserted_tags": {
         "head": [],
         "tail": []
@@ -16,20 +16,14 @@
           "照片风格": {
             "用iPhone拍摄": {
               "en": "captured with an iPhone",
-              "usage_count": 1,
+              "usage_count": 0,
               "image": "images/用iPhone拍摄_df36e463.png",
               "selected": false
             },
             "这张生活方式照片": {
               "en": "This lifestyle photo",
-              "usage_count": 1,
-              "image": "images/这张生活方式照片_515ca902.png",
-              "selected": false
-            },
-            "111": {
-              "en": "1111",
-              "image": "images/111_1755704588.png",
               "usage_count": 0,
+              "image": "images/这张生活方式照片_515ca902.png",
               "selected": false
             }
           },

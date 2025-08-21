@@ -5,6 +5,7 @@ import oss2
 from PIL import Image
 import io
 from typing import Optional, Tuple
+import re
 
 # 导入凭据管理器
 from services.credentials_manager import CredentialsManager
@@ -30,6 +31,57 @@ REMOTE_HISTORY_FILE = "history.json"
 _bucket = None
 _cred_manager = None
 
+
+def _normalize_region(region_raw: str) -> Optional[str]:
+    """将地域/端点字段标准化为合法的 OSS Endpoint Host（不含协议）。
+    支持以下输入：
+    - 纯主机名，例如 oss-cn-shenzhen.aliyuncs.com
+    - 含协议的完整 URL，例如 https://oss-cn-shenzhen.aliyuncs.com
+    - 地域代号，例如 oss-cn-shenzhen（自动补齐 .aliyuncs.com）
+    - 误存为中文标签，例如 华南1（深圳），会根据凭据类型选项映射到正确主机名
+    返回值：主机名（如 oss-cn-shenzhen.aliyuncs.com），无法识别时返回 None
+    """
+    if not region_raw:
+        return None
+    r = region_raw.strip()
+    # 去掉协议
+    r = re.sub(r"^https?://", "", r, flags=re.IGNORECASE)
+
+    # 已经是完整主机名
+    if r.endswith(".aliyuncs.com") and "." in r:
+        return r
+
+    # 地域代号（例如 oss-cn-shenzhen）
+    if r.startswith("oss-") and not r.endswith(".aliyuncs.com"):
+        return f"{r}.aliyuncs.com"
+
+    # 可能是中文标签，尝试映射
+    try:
+        mgr = _cred_manager or CredentialsManager()
+        cred_types = mgr.get_credential_types()
+        ali = cred_types.get("aliyun_oss", {})
+        for field in ali.get("fields", []):
+            if field.get("key") == "region":
+                options = field.get("options", [])
+                # 完全匹配标签
+                for opt in options:
+                    if r == opt.get("label"):
+                        return opt.get("value")
+                # 模糊匹配（防止包含多余字符）
+                for opt in options:
+                    label = opt.get("label", "")
+                    if r in label or label in r:
+                        return opt.get("value")
+                break
+    except Exception as e:
+        logger.error(f"标准化OSS地域失败: {e}")
+
+    # 兜底：如果看起来不像合法主机名，返回 None
+    if "aliyuncs.com" not in r:
+        return None
+    return r
+
+
 def get_oss_credentials() -> Optional[Tuple[str, str, str, str]]:
     """获取OSS凭据
     
@@ -49,18 +101,24 @@ def get_oss_credentials() -> Optional[Tuple[str, str, str, str]]:
         if not cred.get("disabled", False):
             access_key_id = cred.get("access_key_id")
             access_key_secret = cred.get("access_key_secret")
-            region = cred.get("region", "oss-cn-shenzhen.aliyuncs.com")
+            region_field = cred.get("region", "oss-cn-shenzhen.aliyuncs.com")
             bucket_name = cred.get("bucket_name")
+
+            # 规范化地域/端点
+            endpoint_host = _normalize_region(region_field)
+            if not endpoint_host:
+                logger.error(f"无效的OSS地域/端点值: {region_field}")
+                continue
             
             if access_key_id and access_key_secret and bucket_name:
                 # 确保endpoint格式正确
-                if not region.startswith("https://"):
-                    endpoint = f"https://{region}"
-                else:
-                    endpoint = region
+                endpoint = endpoint_host
+                if not endpoint.startswith("http://") and not endpoint.startswith("https://"):
+                    endpoint = f"https://{endpoint}"
                 return access_key_id, access_key_secret, endpoint, bucket_name
     
     return None
+
 
 def get_oss_bucket():
     """获取OSS bucket对象
@@ -88,6 +146,7 @@ def get_oss_bucket():
     except Exception as e:
         logger.error(f"创建OSS bucket失败: {e}")
         return None
+
 
 def prompt_for_oss_credentials():
     """提示用户提供OSS凭据"""

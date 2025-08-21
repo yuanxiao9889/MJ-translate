@@ -32,50 +32,11 @@ class UpdateManager:
         api_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/latest"
         try:
             response = requests.get(api_url)
-            if response.status_code == 404:
-                print(f"Repository {repo_owner}/{repo_name} not found or has no releases.")
-                print("This may be because:")
-                print("1. The repository is private")
-                print("2. The repository doesn't exist")
-                print("3. No releases have been published yet")
-                print(f"\n当前版本: {self.current_version}")
-                print("GitHub版本: 无发布版本")
-                return None, None
             response.raise_for_status()
             latest_release = response.json()
             latest_version = latest_release['tag_name'].lstrip('v')
             release_notes = latest_release['body']
-            
-            # 显示版本对比信息
-            print(f"\n版本对比:")
-            print(f"当前版本: {self.current_version}")
-            print(f"GitHub版本: {latest_version}")
-            
-            # 判断版本状态
-            if self.is_new_version_available(latest_version):
-                print("状态: 🔄 有新版本可用")
-            elif semver.compare(self.current_version, latest_version) > 0:
-                print("状态: 🚀 当前版本较新（开发版本）")
-            else:
-                print("状态: ✅ 已是最新版本")
-            
             return latest_version, release_notes
-        except requests.exceptions.SSLError as e:
-            print(f"SSL connection error: {e}")
-            print("This may be due to:")
-            print("1. Network firewall or proxy settings")
-            print("2. Outdated SSL certificates")
-            print("3. Corporate network restrictions")
-            print("Try checking your network connection or contact your IT administrator.")
-            return None, None
-        except requests.exceptions.ConnectionError as e:
-            print(f"Network connection error: {e}")
-            print("Please check your internet connection and try again.")
-            return None, None
-        except requests.exceptions.Timeout as e:
-            print(f"Request timeout: {e}")
-            print("The request took too long. Please try again later.")
-            return None, None
         except requests.exceptions.RequestException as e:
             print(f"Error checking for updates: {e}")
             return None, None
@@ -86,7 +47,7 @@ class UpdateManager:
             return False
         return semver.compare(latest_version, self.current_version) > 0
 
-    def download_and_apply_update(self):
+    def download_and_apply_update(self, progress_callback=None):
         """Downloads and applies the latest update with backup and rollback support."""
         repo_owner = self.config.get('github_owner')
         repo_name = self.config.get('github_repo')
@@ -105,24 +66,69 @@ class UpdateManager:
             response.raise_for_status()
             latest_release = response.json()
             
-            if not latest_release.get('assets'):
-                print("No assets found in the latest release.")
-                return False
-
-            asset = latest_release['assets'][0]
-            download_url = asset['browser_download_url']
-            file_name = asset['name']
+            # 智能选择下载源：优先用户上传的ZIP文件，其次其他assets，最后使用GitHub自动生成的源代码ZIP
+            asset = None
+            download_url = None
+            file_name = None
+            file_size = 0
+            
+            # 1. 优先选择用户上传的ZIP文件
+            assets = latest_release.get('assets', [])
+            if assets:
+                zip_assets = [a for a in assets if a['name'].lower().endswith('.zip')]
+                if zip_assets:
+                    asset = zip_assets[0]  # 选择第一个ZIP文件
+                    download_url = asset['browser_download_url']
+                    file_name = asset['name']
+                    file_size = asset.get('size', 0)
+                    if progress_callback:
+                        progress_callback(10, "准备更新", f"使用用户上传的ZIP文件: {file_name}")
+                    else:
+                        print(f"使用用户上传的ZIP文件: {file_name}")
+                else:
+                    # 2. 如果没有ZIP文件，选择第一个可用的asset
+                    asset = assets[0]
+                    download_url = asset['browser_download_url']
+                    file_name = asset['name']
+                    file_size = asset.get('size', 0)
+                    if progress_callback:
+                        progress_callback(10, "准备更新", f"使用其他类型文件: {file_name}")
+                    else:
+                        print(f"使用其他类型文件: {file_name}")
+            else:
+                # 3. 如果没有用户上传的assets，使用GitHub自动生成的源代码ZIP
+                zipball_url = latest_release.get('zipball_url')
+                if zipball_url:
+                    download_url = zipball_url
+                    file_name = f"{repo_name}-{latest_release.get('tag_name', 'latest')}.zip"
+                    file_size = 0  # zipball_url不提供文件大小信息
+                    if progress_callback:
+                        progress_callback(10, "准备更新", f"使用GitHub自动生成的源代码ZIP: {file_name}")
+                    else:
+                        print(f"使用GitHub自动生成的源代码ZIP: {file_name}")
+                else:
+                    if progress_callback:
+                        progress_callback(100, "更新失败", "GitHub Release中没有找到可下载的文件")
+                    else:
+                        print("没有找到可下载的文件")
+                    return False
             
             # Create backup directory
             project_root = Path(__file__).parent.parent
             backup_dir = project_root / "backup_before_update"
             backup_dir.mkdir(exist_ok=True)
             
-            print("Creating backup of current version...")
+            if progress_callback:
+                progress_callback(20, "创建备份", "正在备份当前版本...")
+            else:
+                print("Creating backup of current version...")
             self._backup_current_version(backup_dir)
             
             # Download the update
-            print(f"Downloading {file_name} from {download_url}...")
+            if progress_callback:
+                progress_callback(30, "下载更新", f"正在下载 {file_name}...")
+            else:
+                print(f"Downloading {file_name} from {download_url}...")
             download_response = requests.get(download_url, stream=True)
             download_response.raise_for_status()
 
@@ -133,22 +139,39 @@ class UpdateManager:
                 for chunk in download_response.iter_content(chunk_size=8192):
                     f.write(chunk)
             
-            print(f"Downloaded update to {download_path}")
+            if progress_callback:
+                progress_callback(70, "下载完成", f"文件已下载到 {download_path}")
+            else:
+                print(f"Downloaded update to {download_path}")
             
             # Extract and apply update
-            print("Extracting and applying update...")
+            if progress_callback:
+                progress_callback(80, "应用更新", "正在解压和应用更新...")
+            else:
+                print("Extracting and applying update...")
             self._extract_and_apply_update(download_path, project_root)
             
-            print("Update applied successfully!")
+            if progress_callback:
+                progress_callback(95, "清理文件", "正在清理临时文件...")
+            else:
+                print("Update applied successfully!")
             
             # Clean up
             self._cleanup_after_update(backup_dir, temp_dir)
             
+            if progress_callback:
+                progress_callback(100, "更新完成", "更新已成功应用！")
+            else:
+                print("Update completed successfully!")
+            
             return True
             
         except Exception as e:
-            print(f"Error during update: {e}")
-            print("Rolling back to previous version...")
+            if progress_callback:
+                progress_callback(100, "更新失败", f"更新过程中发生错误: {str(e)}")
+            else:
+                print(f"Error during update: {e}")
+                print("Rolling back to previous version...")
             
             if backup_dir and backup_dir.exists():
                 self._rollback_update(backup_dir)

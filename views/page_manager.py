@@ -192,8 +192,8 @@ class TranslationPage:
                 output_text.insert(tk.END, ", ")  # 添加逗号和空格
                 insert_tag_block(tag, "tail", output_text)
             
-            # 禁用文本框编辑以确保标签块正确显示
-            output_text.config(state="disabled")
+            # 保持输出框可编辑
+            output_text.config(state="normal")
             
             # 最终保存完整的输出文本状态
             try:
@@ -232,8 +232,8 @@ class TranslationPage:
                 output_text.insert(tk.END, ", ")  # 添加逗号和空格
                 insert_tag_block(tag, "tail", output_text)
             
-            # 禁用文本框编辑以确保标签块正确显示
-            output_text.config(state="disabled")
+            # 保持输出框可编辑
+            output_text.config(state="normal")
             
             # 最终保存完整的输出文本状态
             try:
@@ -275,8 +275,9 @@ class TranslationPage:
             result = ", ".join(parts)
             if result:
                 self.output_widget.insert("1.0", result)
-            # 禁用文本框编辑以确保正确显示
-            self.output_widget.config(state="disabled")
+            # 保持输出框可编辑
+            self.self_output_edit_state = "normal"
+            self.output_widget.config(state="normal")
     
     def show_ui(self, with_animation=True):
         """显示UI组件（支持动画效果）"""
