@@ -1924,40 +1924,8 @@ def open_settings_popup(root):
 
     ctk.CTkLabel(update_frame, text=f"当前版本: {current_version}", font=default_font).pack(anchor="w", padx=20, pady=5)
     
-    latest_version_var = tk.StringVar(value="最新版本: -")
-    ctk.CTkLabel(update_frame, textvariable=latest_version_var, font=default_font).pack(anchor="w", padx=20, pady=5)
-
-    def check_update_thread():
-        try:
-            from services.update_manager import UpdateManager
-            updater = UpdateManager()
-            latest_version, release_notes = updater.check_for_updates()
-            if latest_version:
-                latest_version_var.set(f"最新版本: {latest_version}")
-                if updater.is_new_version_available(latest_version):
-                    if messagebox.askyesno("发现新版本", f"发现新版本 {latest_version}！\n\n{release_notes}\n\n是否立即下载并安装更新？\n\n注意：更新过程中会自动备份当前版本，如果更新失败会自动回滚。"):
-                        # 显示更新进度
-                        progress_msg = messagebox.showinfo("正在更新", "正在下载并安装更新，请稍候...\n\n更新过程中请勿关闭程序。")
-                        
-                        # 执行更新
-                        update_success = updater.download_and_apply_update()
-                        
-                        if update_success:
-                            messagebox.showinfo("更新成功", f"更新到版本 {latest_version} 成功！\n\n程序将在您下次启动时使用新版本。\n\n建议现在重启程序以使用新功能。")
-                        else:
-                            messagebox.showerror("更新失败", "更新过程中发生错误，已自动回滚到之前版本。\n\n请检查网络连接或稍后重试。")
-                else:
-                    messagebox.showinfo("已是最新版", "您当前使用的已是最新版本。")
-            else:
-                messagebox.showinfo("检查更新", "未检测到新版本或网络连接失败。")
-        except Exception as e:
-            messagebox.showerror("更新错误", f"检查更新失败: {e}\n\n请检查网络连接和GitHub仓库配置。")
-
-    def start_update_check():
-        import threading
-        threading.Thread(target=check_update_thread, daemon=True).start()
-
-    ctk.CTkButton(update_frame, text="检查更新", command=start_update_check, font=default_font, height=35).pack(anchor="w", padx=20, pady=20)
+    # 使用新的模块化更新对话框
+    ctk.CTkButton(update_frame, text="🔄 检查更新", command=lambda: open_update_dialog(root), font=default_font, height=35, fg_color="#28a745").pack(anchor="w", padx=20, pady=20)
     
     # === 标签页1: 基础设置 ===
     # 布局模式设置
@@ -3025,9 +2993,6 @@ def build_ui(root):
 
     # 设置按钮（整合多个功能）
     ctk.CTkButton(topbar, text="⚙️ 设置", font=default_font, fg_color="#6c757d", command=lambda: open_settings_popup(root)).pack(side="left", padx=8)
-    
-    # 更新按钮
-    ctk.CTkButton(topbar, text="🔄 检查更新", font=default_font, fg_color="#28a745", command=lambda: open_update_dialog(root)).pack(side="left", padx=8)
 
     # 原有独立按钮已整合到设置弹窗中
     # 刷新云端
