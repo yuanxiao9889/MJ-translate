@@ -2611,22 +2611,19 @@ def open_add_credential_dialog(parent, cred_manager, refresh_callback):
                 option_values = [opt["value"] for opt in options]
                 option_labels = [opt["label"] for opt in options]
                 
+                # 使用单独的显示变量，field_var 始终保存真实值
+                display_var = tk.StringVar()
                 if option_values:
-                    field_var.set(option_values[0])  # 设置默认值
+                    field_var.set(option_values[0])  # 默认真实值
+                    display_var.set(option_labels[0])  # 默认显示标签
                 
-                select_menu = ctk.CTkOptionMenu(field_frame, variable=field_var, values=option_labels)
+                select_menu = ctk.CTkOptionMenu(field_frame, variable=display_var, values=option_labels)
                 
-                # 创建值映射函数
-                def create_value_mapper(labels, values):
+                def on_select(selected_label, labels=option_labels, values=option_values, target_var=field_var, disp_var=display_var):
                     label_to_value = dict(zip(labels, values))
-                    value_to_label = dict(zip(values, labels))
-                    
-                    def on_select(selected_label):
-                        field_var.set(label_to_value.get(selected_label, selected_label))
-                    
-                    return on_select, value_to_label
+                    target_var.set(label_to_value.get(selected_label, selected_label))
+                    disp_var.set(selected_label)
                 
-                on_select, value_to_label = create_value_mapper(option_labels, option_values)
                 select_menu.configure(command=on_select)
                 
                 select_menu.pack(fill="x", pady=(5, 0))
@@ -2782,18 +2779,18 @@ def open_edit_credential_dialog(parent, cred_manager, cred_type, credential, ref
                     current_label = opt["label"]
                     break
             
-            select_menu = ctk.CTkOptionMenu(field_frame, variable=field_var, values=option_labels)
+            # 使用单独的显示变量，field_var 保持真实值不被覆盖
+            display_var = tk.StringVar(value=current_label if current_label in option_labels else (option_labels[0] if option_labels else ""))
             
-            # 设置当前值
-            if current_label in option_labels:
-                select_menu.set(current_label)
+            select_menu = ctk.CTkOptionMenu(field_frame, variable=display_var, values=option_labels)
             
             # 创建值映射函数
-            def create_value_mapper_edit(labels, values):
+            def create_value_mapper_edit(labels, values, target_var=field_var, disp_var=display_var):
                 label_to_value = dict(zip(labels, values))
                 
                 def on_select(selected_label):
-                    field_var.set(label_to_value.get(selected_label, selected_label))
+                    target_var.set(label_to_value.get(selected_label, selected_label))
+                    disp_var.set(selected_label)
                 
                 return on_select
             
@@ -4321,8 +4318,8 @@ def build_ui(root):
                 for tag in tail_tags:
                     output_text.insert(tk.END, ", ")  # 添加逗号和空格
                     insert_tag_block(tag, "tail", output_text)
-                # 禁用文本框编辑以确保标签块正确显示
-                output_text.config(state="disabled")
+                # 允许直接编辑结果框
+                output_text.config(state="normal")
 
 
 

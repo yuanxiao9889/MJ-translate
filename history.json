@@ -1,5 +1,40 @@
 [
   {
+    "timestamp": "2025-08-21 16:25:10",
+    "input": "女狙击手，表情冷漠，沉着冷静，精英隐秘特工，前卫未来派装扮，成熟动漫风格，八头身比例，红色眼妆，蓝色的眼睛，灰色白色长马尾辫至大腿，以黑色和灰色为主色调，配以蓝色腰带装饰的服装，围巾，戴着黑色的战术手套，单耳耳机，短款迷彩风衣（略微敞开，可见下方不平整的方形马赛克图案战术背心），修身服装，紧身裤子带有逼真的皱纹，单腿护膝，灰色军靴，大腿带上有手枪，腰间有一把蝴蝶刀，自信而指挥的姿态，冷静却迷人，严肃的表情，美少女动漫角色设计，动漫光影，全身站立姿态，中性背景，干净的线条，高细节，锐利焦点",
+    "output": "Female sniper, expression cold, calm and collected, elite secret agent, futuristic avant-garde attire, mature anime style, 8-head proportion, red eye makeup, blue eyes, long gray and white ponytails reaching to the thighs, dressed in clothing mainly in black and gray, decorated with a blue belt, scarf, wearing black tactical gloves, one-ear headphones, a short camouflage windbreaker (slightly open, showing the uneven square mosaic pattern tactical vest below), slender clothing, tight pants with realistic creases, kneepads on one leg, gray military boots, a gun on the thigh, a butterfly knife at the waist, confident and commanding posture, calm yet charming, serious expression, anime-style beautiful girl character design, anime lighting effects, standing posture, neutral background, clean lines, high detail, sharp focus"
+  },
+  {
+    "timestamp": "2025-08-21 14:42:09",
+    "input": "女狙击手，表情冷漠，沉着冷静，精英隐秘特工，前卫未来派装扮，成熟动漫风格，八头身比例，红色眼妆，蓝色的眼睛，灰色白色长马尾辫至大腿，以黑色和灰色为主色调，配以蓝色腰带装饰的服装，围巾，戴着黑色的战术手套，单耳耳机，短款迷彩风衣（略微敞开，可见下方不平整的方形马赛克图案战术背心），修身服装，紧身裤子带有逼真的皱纹，单腿护膝，灰色军靴，大腿带，自信而指挥的姿态，冷静却迷人，严肃的表情，美少女动漫角色设计，动漫光影，全身站立姿态，中性背景，干净的线条，高细节，锐利焦点",
+    "output": "Female sniper, expression cold, calm, elite secret agent, futuristic fashion, mature anime style, 8-head proportion, red eye makeup, blue eyes, long braid of gray and white hair down to the thigh, dressed in clothes with black and gray as the main color, decorated with a blue belt, scarf, wearing black tactical gloves, single-ear headphones, short camouflage windbreaker (slightly open, revealing the uneven square mosaic pattern tactical vest below), slim clothing, tight pants with realistic creases, knee guard on one leg, gray military boots, thigh strap, confident and commanding posture, calm yet charming, serious expression, beautiful girl anime character design, anime lighting, full-body standing posture, neutral background, clean lines, high detail, sharp focus"
+  },
+  {
+    "timestamp": "2025-08-21 14:40:16",
+    "input": "女狙击手，表情冷漠，沉着冷静，精英隐秘特工，前卫未来派装扮，成熟动漫风格，八头身比例，红色眼妆，蓝色的眼睛，灰色白色长马尾辫至大腿，以黑色和灰色为主色调，配以蓝色腰带装饰的服装，围巾，戴着战术手套，单耳耳机，短款迷彩风衣（略微敞开，可见下方不平整的方形马赛克图案战术背心），修身服装，紧身裤子带有逼真的皱纹，单腿护膝，灰色军靴，大腿带，自信而指挥的姿态，冷静却迷人，严肃的表情，美少女动漫角色设计，动漫光影，全身站立姿态，中性背景，干净的线条，高细节，锐利焦点",
+    "output": "Female sniper, expression cold, calm, elite covert agent, futuristic style, mature anime style, eight-head proportion, red eye makeup, blue eyes, gray and white long ponytail to the thigh, clothing in black and gray tones, decorated with a blue belt, scarf, wearing tactical gloves, single-ear headphones, short camouflage windbreaker (slightly open, revealing the uneven square mosaic pattern tactical vest below), slimming clothing, tight pants with realistic creases, single-leg kneepad, gray military boots, thigh strap, confident and commanding posture, calm yet charming, serious expression, beautiful girl anime character design, anime lighting, full-body standing posture, neutral background, clean lines, high detail, sharp focus"
+  },
+  {
+    "timestamp": "2025-08-21 13:54:53",
+    "input": "女狙击手，表情冷漠，沉着冷静，精英隐秘特工，前卫未来派装扮，成熟动漫风格，八头身比例，红色眼妆，蓝色的眼睛，灰色白色长马尾辫至大腿，以黑色和灰色为主色调，配以蓝色腰带装饰的服装，围巾，单耳耳机，短款迷彩风衣（略微敞开，可见下方不平整的方形马赛克图案战术背心），修身服装，紧身裤子带有逼真的皱纹，单腿护膝，灰色军靴，大腿带，自信而指挥的姿态，冷静却迷人，严肃的表情，美少女动漫角色设计，动漫光影，全身站立姿态，中性背景，干净的线条，高细节，锐利焦点",
+    "output": "Female sniper, expression cold, calm, elite secret agent, futuristic avant-garde attire, mature anime style, eight-head proportion, red eye makeup, blue eyes, gray and white long ponytail to the thigh, clothing predominantly in black and gray, decorated with blue belt, scarf, single-ear headphones, short camouflage windbreaker (slightly open, revealing the uneven square mosaic pattern tactical vest below), slim clothing, tight pants with realistic creases, single-leg kneepad, gray military boots, thigh strap, confident and commanding posture, calm yet charming, serious expression, beautiful girl anime character design, anime lighting, full-body standing posture, neutral background, clean lines, high detail, sharp focus"
+  },
+  {
+    "timestamp": "2025-08-21 10:33:48",
+    "input": "female sniper, emotionless and composed, elite covert operative, fashion-forward futuristic outfit, mature anime style, eight-heads-tall proportion, grey-white long ponytail reaching thigh, black and grey primary palette with blue strap accents on clothing, neck scarf, single-ear headset, short cropped camouflage windbreaker with uneven square mosaic pattern (slightly open, fitted tactical vest visible underneath), form-fitting outfit, tight pants with realistic wrinkles, one-leg knee guard, grey military boots, thigh strap, confident and commanding posture, calm yet alluring presence, serious expression, bishoujo anime character design, anime lighting, full-body standing pose, neutral background, clean linework, high detail, sharp focus",
+    "output": "女狙击手，表情冷漠，沉着冷静，精英隐秘特工，前卫未来派装扮，成熟动漫风格，八头身比例，灰色白色长马尾辫至大腿，以黑色和灰色为主色调，配以蓝色腰带装饰的服装，围巾，单耳耳机，短款迷彩风衣（略微敞开，可见下方不平整的方形马赛克图案战术背心），修身服装，紧身裤子带有逼真的皱纹，单腿护膝，灰色军靴，大腿带，自信而指挥的姿态，冷静却迷人，严肃的表情，美少女动漫角色设计，动漫光影，全身站立姿态，中性背景，干净的线条，高细节，锐利焦点"
+  },
+  {
+    "timestamp": "2025-08-21 09:38:39",
+    "input": "female sniper, cool and emotionless, elite secret agent, mature anime style, 8-heads body proportion, grey-white long ponytail reaching thigh, neck scarf, single earpiece headset, short cropped camouflage windbreaker (slightly open, fitted tactical vest visible underneath), form–fitting outfit, tight pants with realistic wrinkles, grey military boots, thigh strap, confident and commanding posture, calm but seductive aura, serious expression, bishoujo anime character design, anime lighting, full body standing pose, high detail, toon shading",
+    "output": "女性狙击手，冷静且无表情，精英秘密特工，成熟动漫风格，8头身比例，灰白色长马尾延伸至大腿，颈巾，单耳耳机头戴式，短裁剪迷彩风衣（略微敞开，可见下面的合身战术背心），紧身服装，紧身的裤子带有逼真的皱纹，灰色军用靴，大腿带，自信且指挥的姿态，平静但诱人的气息，严肃的表情，美少女动漫角色设计，动漫光影，全身站立姿态，高细节，卡通阴影"
+  },
+  {
+    "timestamp": "2025-08-21 09:36:28",
+    "input": "female sniper, cool and emotionless, elite secret agent, mature anime style, 8-heads body proportion, grey-white long ponytail reaching thigh, neck scarf, single earpiece headset, camouflage cropped windbreaker (slightly open, fitted tactical vest visible underneath), form–fitting outfit, tight pants with realistic wrinkles, grey military boots, thigh strap, confident and commanding posture, calm but seductive aura, serious expression, bishoujo anime illustration, high detail, strong and stylish composition, anime lighting, full body, toon shading, japanese anime character design",
+    "output": "女性狙击手，冷静且无情，精英秘密特工，成熟动漫风格，8头身比例，灰白色长马尾延伸至大腿，颈巾，单耳耳机，迷彩短夹克（略开，可见下方贴合战术背心），紧身服装，紧身的带真实皱纹的裤子，灰色军用靴，大腿带，自信且指挥的姿势，平静但诱惑的气质，严肃的表情，美女动漫插图，高清晰度，强大且时尚的构图，动漫照明，全身，卡通阴影，日本动漫角色设计"
+  },
+  {
     "timestamp": "2025-08-16 21:29:19",
     "input": "嘻嘻嘻",
     "output": "Hehehe"
