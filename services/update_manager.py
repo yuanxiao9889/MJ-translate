@@ -30,22 +30,77 @@ class UpdateManager:
             return None, None
 
         api_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/latest"
-        try:
-            response = requests.get(api_url)
-            response.raise_for_status()
-            latest_release = response.json()
-            latest_version = latest_release['tag_name'].lstrip('v')
-            release_notes = latest_release['body']
-            return latest_version, release_notes
-        except requests.exceptions.RequestException as e:
-            print(f"Error checking for updates: {e}")
-            return None, None
+        
+        # 配置请求参数，禁用代理并设置超时
+        session = requests.Session()
+        session.trust_env = False  # 禁用环境变量中的代理设置
+        session.proxies = {}  # 清空代理设置
+        
+        headers = {
+            'User-Agent': 'MJ-Translator-Update-Checker/1.0',
+            'Accept': 'application/vnd.github.v3+json'
+        }
+        
+        # 重试机制
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                print(f"正在检查更新... (尝试 {attempt + 1}/{max_retries})")
+                response = session.get(
+                    api_url, 
+                    headers=headers,
+                    timeout=30,  # 30秒超时
+                    proxies={}  # 确保不使用代理
+                )
+                response.raise_for_status()
+                latest_release = response.json()
+                latest_version = latest_release['tag_name'].lstrip('v')
+                release_notes = latest_release['body']
+                print(f"成功获取最新版本信息: {latest_version}")
+                return latest_version, release_notes
+                
+            except requests.exceptions.ProxyError as e:
+                print(f"代理连接错误 (尝试 {attempt + 1}/{max_retries}): {e}")
+                if attempt < max_retries - 1:
+                    print("正在重试...")
+                    continue
+                else:
+                    print("所有重试均失败，请检查网络连接或禁用代理")
+                    
+            except requests.exceptions.Timeout as e:
+                print(f"请求超时 (尝试 {attempt + 1}/{max_retries}): {e}")
+                if attempt < max_retries - 1:
+                    print("正在重试...")
+                    continue
+                    
+            except requests.exceptions.ConnectionError as e:
+                print(f"连接错误 (尝试 {attempt + 1}/{max_retries}): {e}")
+                if attempt < max_retries - 1:
+                    print("正在重试...")
+                    continue
+                    
+            except requests.exceptions.RequestException as e:
+                print(f"请求错误 (尝试 {attempt + 1}/{max_retries}): {e}")
+                if attempt < max_retries - 1:
+                    print("正在重试...")
+                    continue
+                    
+        print("无法连接到GitHub API，请检查网络连接")
+        return None, None
 
     def is_new_version_available(self, latest_version):
         """Compares the latest version with the current version."""
         if not latest_version:
             return False
-        return semver.compare(latest_version, self.current_version) > 0
+        
+        try:
+            # 尝试使用语义化版本比较
+            return semver.compare(latest_version, self.current_version) > 0
+        except ValueError:
+            # 如果版本号不符合语义化版本规范，使用字符串比较
+            print(f"警告: 版本号 '{latest_version}' 不符合语义化版本规范，使用字符串比较")
+            # 简单的字符串比较，如果不同就认为有新版本
+            return latest_version != self.current_version
 
     def download_and_apply_update(self, progress_callback=None):
         """Downloads and applies the latest update with backup and rollback support."""
@@ -61,8 +116,19 @@ class UpdateManager:
         download_path = None
         
         try:
+            # 配置网络请求参数
+            session = requests.Session()
+            session.trust_env = False
+            session.proxies = {}
+            headers = {
+                'User-Agent': 'MJ-Translator-Update-Checker/1.0',
+                'Accept': 'application/vnd.github.v3+json'
+            }
+            
             # Get latest release info
-            response = requests.get(api_url)
+            if progress_callback:
+                progress_callback(5, "获取更新信息", "正在连接GitHub API...")
+            response = session.get(api_url, headers=headers, timeout=30, proxies={})
             response.raise_for_status()
             latest_release = response.json()
             
@@ -129,7 +195,7 @@ class UpdateManager:
                 progress_callback(30, "下载更新", f"正在下载 {file_name}...")
             else:
                 print(f"Downloading {file_name} from {download_url}...")
-            download_response = requests.get(download_url, stream=True)
+            download_response = session.get(download_url, stream=True, headers=headers, timeout=60, proxies={})
             download_response.raise_for_status()
 
             # Save to temp location

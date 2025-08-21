@@ -23,6 +23,7 @@ from services.history_favorites import save_to_history, save_to_favorites
 from services.page_tag_manager import PageTagManager
 from services.tag_template_manager import TagTemplateManager
 from services.ui_state_manager import ui_state_manager
+from views.update_dialog import open_update_dialog
 # 收藏夹和历史记录函数现在在本文件中定义
 
 # 全局分页管理器
@@ -3024,6 +3025,9 @@ def build_ui(root):
 
     # 设置按钮（整合多个功能）
     ctk.CTkButton(topbar, text="⚙️ 设置", font=default_font, fg_color="#6c757d", command=lambda: open_settings_popup(root)).pack(side="left", padx=8)
+    
+    # 更新按钮
+    ctk.CTkButton(topbar, text="🔄 检查更新", font=default_font, fg_color="#28a745", command=lambda: open_update_dialog(root)).pack(side="left", padx=8)
 
     # 原有独立按钮已整合到设置弹窗中
     # 刷新云端
