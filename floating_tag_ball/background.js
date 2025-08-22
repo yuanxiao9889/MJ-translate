@@ -131,12 +131,21 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         await clearCachedSchema(); sendResponse({ ok: true });
       } else if (msg.type === "CAPTURE") {
         const { settings } = await getSettings();
-        chrome.tabs.captureVisibleTab(sender.tab.windowId, {
-          format: "jpeg", quality: Math.round((settings.jpegQuality ?? 0.85) * 100)
-        }, (dataUrl) => {
-          if (chrome.runtime.lastError) sendResponse({ ok: false, error: chrome.runtime.lastError.message });
-          else sendResponse({ ok: true, dataUrl });
-        });
+        try {
+          const winId = (sender && sender.tab && sender.tab.windowId) || chrome.windows && chrome.windows.WINDOW_ID_CURRENT;
+          chrome.tabs.captureVisibleTab(winId, {
+            format: "jpeg",
+            quality: Math.round((settings.jpegQuality ?? 0.85) * 100)
+          }, (dataUrl) => {
+            if (chrome.runtime.lastError || !dataUrl) {
+              sendResponse({ ok: false, error: (chrome.runtime.lastError && chrome.runtime.lastError.message) || 'captureVisibleTab 失败' });
+            } else {
+              sendResponse({ ok: true, dataUrl });
+            }
+          });
+        } catch (e) {
+          sendResponse({ ok: false, error: String(e) });
+        }
         return true;
       } else if (msg.type === "TRANSLATE") {
         const { settings } = await getSettings();
@@ -195,6 +204,11 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       } else if (msg.type === "PING_SERVER") {
         const { settings } = await getSettings();
         const r = await pingServer(settings); sendResponse(r);
+      } else if (msg.type === "REQUEST_DESKTOP_CAPTURE") {
+        // 直接返回成功，让content script使用标准API
+        // 这样可以避免额外的权限弹窗
+        sendResponse({ ok: true, useStandardAPI: true });
+        return true;
       }
     } catch (err) {
       sendResponse({ ok: false, error: String(err) });

@@ -69,28 +69,8 @@
   },
   "1": {
     "output_text_state": {
-      "tag_blocks": [
-        {
-          "text": "low angle view",
-          "tag_type": "head",
-          "position": "2.0",
-          "style": {
-            "color": "#3776ff",
-            "hover_color": "#1857b6",
-            "font": [
-              "微软雅黑",
-              13,
-              "bold"
-            ],
-            "padding": {
-              "x": 8,
-              "y": 2
-            }
-          },
-          "created_at": "2025-08-21T09:35:25.591595"
-        }
-      ],
-      "text_content": ", \n",
+      "tag_blocks": [],
+      "text_content": "Female sniper, expression cold, calm and collected, elite secret agent, futuristic avant-garde attire, mature anime style, 8-head proportion, red eye makeup, blue eyes, long gray and white ponytails reaching to the thighs, dressed in clothing mainly in black and gray, decorated with a blue belt, scarf, wearing black tactical gloves, one-ear headphones, a short camouflage windbreaker (slightly open, showing the uneven square mosaic pattern tactical vest below), slender clothing, tight pants with realistic creases, kneepads on one leg, gray military boots, a gun on the thigh, a butterfly knife at the waist, confident and commanding posture, calm yet charming, serious expression, anime-style beautiful girl character design, anime lighting effects, standing posture, neutral background, clean lines, high detail, sharp focus\n",
       "cursor_position": "1.0",
       "scroll_position": 0.0
     },
@@ -111,37 +91,23 @@
       "canvas_width": 0,
       "canvas_height": 0
     },
-    "last_updated": "2025-08-21T09:35:25.592302",
+    "last_updated": "2025-08-22T15:23:14.309672",
     "tag_ui_states": {
       "head": {
         "visible_tags": [
-          "用iPhone拍摄",
-          "这张生活方式照片",
-          "111"
+          "仰视视角"
         ],
-        "selected_tags": [],
+        "selected_tags": [
+          "仰视视角"
+        ],
         "scroll_position": 0.0,
         "tag_details": {
-          "用iPhone拍摄": {
-            "label": "用iPhone拍摄",
-            "tab": "照片风格",
-            "is_selected": false,
+          "仰视视角": {
+            "label": "仰视视角",
+            "tab": "视角",
+            "is_selected": true,
             "is_visible": true,
             "position": 1
-          },
-          "这张生活方式照片": {
-            "label": "这张生活方式照片",
-            "tab": "照片风格",
-            "is_selected": false,
-            "is_visible": true,
-            "position": 2
-          },
-          "111": {
-            "label": "111",
-            "tab": "照片风格",
-            "is_selected": false,
-            "is_visible": true,
-            "position": 3
           }
         }
       },
@@ -203,23 +169,29 @@
       "canvas_width": 0,
       "canvas_height": 0
     },
-    "last_updated": "2025-08-21T09:34:51.906469",
+    "last_updated": "2025-08-22T15:21:52.197357",
     "tag_ui_states": {
       "head": {
         "visible_tags": [
-          "仰视视角"
+          "仰视视角",
+          "女孩"
         ],
-        "selected_tags": [
-          "仰视视角"
-        ],
+        "selected_tags": [],
         "scroll_position": 0.0,
         "tag_details": {
           "仰视视角": {
             "label": "仰视视角",
             "tab": "视角",
-            "is_selected": true,
+            "is_selected": false,
             "is_visible": true,
             "position": 1
+          },
+          "女孩": {
+            "label": "女孩",
+            "tab": "视角",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 2
           }
         }
       },

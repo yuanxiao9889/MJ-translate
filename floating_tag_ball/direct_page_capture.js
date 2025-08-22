@@ -40,66 +40,68 @@
     /**
      * 检查是否支持原生截图API
      */
-    isNativeCaptureSupported: function() {
-      return !!(navigator.mediaDevices && 
-                navigator.mediaDevices.getDisplayMedia &&
-                window.MediaRecorder);
-    },
+     isNativeCaptureSupported: function() {
+       // 使用后台 service worker 的 tabs.captureVisibleTab 能力
+       try {
+         return !!(typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.sendMessage);
+       } catch (_) {
+         return false;
+       }
+     },
     
     /**
      * 使用浏览器原生API截图
      */
     captureWithNativeAPI: async function(rect) {
       try {
-        // 使用屏幕捕获，但限制为当前标签页
-        const stream = await navigator.mediaDevices.getDisplayMedia({
-          video: {
-            mediaSource: 'window',
-            width: { ideal: window.screen.width },
-            height: { ideal: window.screen.height }
-          },
-          audio: false,
-          preferCurrentTab: true
+        // 使用后台的 captureVisibleTab 获取当前标签页截图（无权限弹窗）
+        const resp = await new Promise((resolve) => {
+          try {
+            chrome.runtime.sendMessage({ type: 'CAPTURE' }, resolve);
+          } catch (e) {
+            resolve({ ok: false, error: String(e) });
+          }
         });
-        
-        const video = document.createElement('video');
-        video.srcObject = stream;
-        video.autoplay = true;
-        
-        await new Promise(resolve => {
-          video.onloadedmetadata = resolve;
+
+        if (!resp || !resp.ok || !resp.dataUrl) {
+          throw new Error((resp && resp.error) || '标签页截图失败');
+        }
+
+        // 加载截图为图像以便裁剪指定区域
+        const img = new Image();
+        img.src = resp.dataUrl;
+        await new Promise((resolve, reject) => {
+          img.onload = resolve;
+          img.onerror = () => reject(new Error('截图图像加载失败'));
         });
-        
-        // 创建canvas进行截图
+
+        // 根据设备像素比/截图分辨率计算裁剪比例
+        const scaleX = img.naturalWidth / window.innerWidth;
+        const scaleY = img.naturalHeight / window.innerHeight;
+
+        const sx = Math.round(rect.x * scaleX);
+        const sy = Math.round(rect.y * scaleY);
+        const sw = Math.round(rect.w * scaleX);
+        const sh = Math.round(rect.h * scaleY);
+
+        // 在前端进行裁剪
         const canvas = document.createElement('canvas');
-        canvas.width = rect.w;
-        canvas.height = rect.h;
+        canvas.width = sw;
+        canvas.height = sh;
         const ctx = canvas.getContext('2d');
-        
-        // 绘制视频帧到canvas
-        ctx.drawImage(video, 
-          rect.x, rect.y, rect.w, rect.h,
-          0, 0, rect.w, rect.h
-        );
-        
-        // 获取图像数据
+        ctx.drawImage(img, sx, sy, sw, sh, 0, 0, sw, sh);
+
         const imageDataUrl = canvas.toDataURL('image/png');
-        
-        // 停止屏幕捕获
-        stream.getTracks().forEach(track => track.stop());
-        
-        console.log('[DirectPageCapture] 原生API截图成功');
-        
+
         return {
           success: true,
-          imageDataUrl: imageDataUrl,
+          imageDataUrl,
           pageUrl: location.href,
           pageTitle: document.title
         };
-        
-      } catch (error) {
+      } catch (e) {
         console.log('[DirectPageCapture] 原生API失败，降级到DOM截图');
-        throw new Error('原生截图API不可用');
+        throw new Error(e.message || '原生截图API不可用');
       }
     },
     

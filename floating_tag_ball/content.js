@@ -195,24 +195,6 @@
     console.log("[tagball] 开始直接网页截图，区域:", rect);
     
     try {
-      // 显示加载提示
-      const loadingTip = createEl('div', {
-        style: {
-          position: 'fixed',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          backgroundColor: 'rgba(0, 123, 255, 0.9)',
-          color: 'white',
-          padding: '12px 24px',
-          borderRadius: '6px',
-          fontSize: '14px',
-          zIndex: '10000000',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
-        }
-      }, '正在截取网页...');
-      
-      document.body.appendChild(loadingTip);
       
       try {
         // 使用直接网页截图API
@@ -220,8 +202,6 @@
           const result = await window.directPageCapture.capture(rect);
           
           if (result.success) {
-            loadingTip.remove();
-            
             console.log("[tagball] 网页截图成功，数据大小:", result.imageDataUrl.length);
             
             // 打开标签弹窗
@@ -298,7 +278,6 @@
         }
         
         const imageDataUrl = canvas.toDataURL('image/png');
-        loadingTip.remove();
         
         console.log("[tagball] DOM降级截图成功，数据大小:", imageDataUrl.length);
         
@@ -310,7 +289,6 @@
         });
         
       } catch (error) {
-        loadingTip.remove();
         throw error;
       }
       
