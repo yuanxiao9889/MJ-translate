@@ -1,87 +1,92 @@
 @echo off
 chcp 65001 >nul
 title MJ Translator - AI翻译工具
-echo 正在启动 MJ Translator...
+echo Starting MJ Translator...
 echo.
 
-:: 检查并激活虚拟环境
+REM Check and activate virtual environment
 if exist "venv\Scripts\activate.bat" (
-    echo 发现本地虚拟环境，正在激活...
+    echo Found local virtual environment, activating...
     call venv\Scripts\activate.bat
-    echo 虚拟环境已激活
+    if errorlevel 1 (
+        echo Warning: Failed to activate virtual environment, using system Python
+    ) else (
+        echo Virtual environment activated successfully
+    )
 ) else (
-    echo 未发现本地虚拟环境，使用系统Python
+    echo No local virtual environment found, using system Python
+    echo To create virtual environment, run: python -m venv venv
 )
 echo.
 
-:: 检查Python是否可用
-echo 检查Python环境...
+REM Check if Python is available
+echo Checking Python environment...
 python --version >nul 2>&1
 if errorlevel 1 (
-    echo 错误：未检测到Python，请先安装Python
-    echo 下载地址：https://www.python.org/downloads/
+    echo Error: Python not detected, please install Python first
+    echo Download: https://www.python.org/downloads/
     pause
     exit /b 1
 )
 
-:: 检查并安装依赖
-echo 检查依赖库...
+REM Check and install dependencies
+echo Checking dependencies...
 python -c "import tkinter" >nul 2>&1
 if errorlevel 1 (
-    echo 正在安装tkinter...
+    echo Installing tkinter...
     python -m pip install tk
 )
 
 python -c "import customtkinter" >nul 2>&1
 if errorlevel 1 (
-    echo 正在安装customtkinter...
+    echo Installing customtkinter...
     python -m pip install customtkinter
 )
 
 python -c "import PIL" >nul 2>&1
 if errorlevel 1 (
-    echo 正在安装Pillow...
+    echo Installing Pillow...
     python -m pip install Pillow
 )
 
 python -c "import requests" >nul 2>&1
 if errorlevel 1 (
-    echo 正在安装requests...
+    echo Installing requests...
     python -m pip install requests
 )
 
 python -c "import pyperclip" >nul 2>&1
 if errorlevel 1 (
-    echo 正在安装pyperclip...
+    echo Installing pyperclip...
     python -m pip install pyperclip
 )
 
 python -c "import tkcalendar" >nul 2>&1
 if errorlevel 1 (
-    echo 正在安装tkcalendar...
+    echo Installing tkcalendar...
     python -m pip install tkcalendar
 )
 
 python -c "import pystray" >nul 2>&1
 if errorlevel 1 (
-    echo 正在安装pystray...
+    echo Installing pystray...
     python -m pip install pystray
 )
 
 python -c "import oss2" >nul 2>&1
 if errorlevel 1 (
-    echo 正在安装oss2...
+    echo Installing oss2...
     python -m pip install oss2
 )
 
 echo.
-echo 依赖检查完成，正在启动程序...
+echo Dependencies check completed, starting program...
 echo.
 
 python main.py
 if errorlevel 1 (
     echo.
-    echo 启动失败！请检查错误信息
-    echo 如果是依赖问题，请手动运行: pip install customtkinter Pillow requests pyperclip tkcalendar pystray oss2
+    echo Startup failed! Please check error messages
+    echo If dependency issues, manually run: pip install customtkinter Pillow requests pyperclip tkcalendar pystray oss2
     pause
 )
