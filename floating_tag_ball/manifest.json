@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "标签悬浮球助手 (Edge版)",
+  "version": "0.2.5",
+  "description": "网页截屏打标签 → 翻译 → 发送到本地翻译程序。支持Edge浏览器，动态分类同步、断线重试、连接自检。",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "tabs",
+    "alarms"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "direct_page_capture.js",
+        "content.js"
+      ],
+      "css": [
+        "overlay.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["options.html"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "options_page": "options.html",
+  "action": {
+    "default_title": "标签悬浮球助手"
+  }
+}

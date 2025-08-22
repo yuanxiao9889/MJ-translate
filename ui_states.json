@@ -1,0 +1,232 @@
+{
+  "2": {
+    "output_text_state": {
+      "tag_blocks": [],
+      "text_content": "",
+      "cursor_position": "1.0",
+      "scroll_position": 0.0
+    },
+    "tag_ui_state": {
+      "head_tags": {
+        "visible_tags": [],
+        "selected_tags": [],
+        "scroll_position": 0.0
+      },
+      "tail_tags": {
+        "visible_tags": [],
+        "selected_tags": [],
+        "scroll_position": 0.0
+      }
+    },
+    "layout_state": {
+      "layout_mode": "waterfall",
+      "canvas_width": 0,
+      "canvas_height": 0
+    },
+    "last_updated": "2025-08-19T14:03:21.133677",
+    "tag_ui_states": {
+      "head": {
+        "visible_tags": [
+          "仰视视角"
+        ],
+        "selected_tags": [],
+        "scroll_position": 0.0,
+        "tag_details": {
+          "仰视视角": {
+            "label": "仰视视角",
+            "tab": "视角",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 1
+          }
+        }
+      },
+      "tail": {
+        "visible_tags": [
+          "写实风格",
+          "数码单反"
+        ],
+        "selected_tags": [],
+        "scroll_position": 0.0,
+        "tag_details": {
+          "写实风格": {
+            "label": "写实风格",
+            "tab": "图片质量",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 1
+          },
+          "数码单反": {
+            "label": "数码单反",
+            "tab": "图片质量",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 2
+          }
+        }
+      }
+    }
+  },
+  "1": {
+    "output_text_state": {
+      "tag_blocks": [],
+      "text_content": "Female sniper, expression cold, calm and collected, elite secret agent, futuristic avant-garde attire, mature anime style, 8-head proportion, red eye makeup, blue eyes, long gray and white ponytails reaching to the thighs, dressed in clothing mainly in black and gray, decorated with a blue belt, scarf, wearing black tactical gloves, one-ear headphones, a short camouflage windbreaker (slightly open, showing the uneven square mosaic pattern tactical vest below), slender clothing, tight pants with realistic creases, kneepads on one leg, gray military boots, a gun on the thigh, a butterfly knife at the waist, confident and commanding posture, calm yet charming, serious expression, anime-style beautiful girl character design, anime lighting effects, standing posture, neutral background, clean lines, high detail, sharp focus\n",
+      "cursor_position": "1.0",
+      "scroll_position": 0.0
+    },
+    "tag_ui_state": {
+      "head_tags": {
+        "visible_tags": [],
+        "selected_tags": [],
+        "scroll_position": 0.0
+      },
+      "tail_tags": {
+        "visible_tags": [],
+        "selected_tags": [],
+        "scroll_position": 0.0
+      }
+    },
+    "layout_state": {
+      "layout_mode": "waterfall",
+      "canvas_width": 0,
+      "canvas_height": 0
+    },
+    "last_updated": "2025-08-22T15:23:14.309672",
+    "tag_ui_states": {
+      "head": {
+        "visible_tags": [
+          "仰视视角"
+        ],
+        "selected_tags": [
+          "仰视视角"
+        ],
+        "scroll_position": 0.0,
+        "tag_details": {
+          "仰视视角": {
+            "label": "仰视视角",
+            "tab": "视角",
+            "is_selected": true,
+            "is_visible": true,
+            "position": 1
+          }
+        }
+      },
+      "tail": {
+        "visible_tags": [
+          "写实风格",
+          "超真实风格",
+          "数码单反"
+        ],
+        "selected_tags": [],
+        "scroll_position": 0.0,
+        "tag_details": {
+          "写实风格": {
+            "label": "写实风格",
+            "tab": "图片质量",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 1
+          },
+          "超真实风格": {
+            "label": "超真实风格",
+            "tab": "图片质量",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 2
+          },
+          "数码单反": {
+            "label": "数码单反",
+            "tab": "图片质量",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 3
+          }
+        }
+      }
+    }
+  },
+  "1": {
+    "output_text_state": {
+      "tag_blocks": [],
+      "text_content": "",
+      "cursor_position": "1.0",
+      "scroll_position": 0.0
+    },
+    "tag_ui_state": {
+      "head_tags": {
+        "visible_tags": [],
+        "selected_tags": [],
+        "scroll_position": 0.0
+      },
+      "tail_tags": {
+        "visible_tags": [],
+        "selected_tags": [],
+        "scroll_position": 0.0
+      }
+    },
+    "layout_state": {
+      "layout_mode": "waterfall",
+      "canvas_width": 0,
+      "canvas_height": 0
+    },
+    "last_updated": "2025-08-22T15:21:52.197357",
+    "tag_ui_states": {
+      "head": {
+        "visible_tags": [
+          "仰视视角",
+          "女孩"
+        ],
+        "selected_tags": [],
+        "scroll_position": 0.0,
+        "tag_details": {
+          "仰视视角": {
+            "label": "仰视视角",
+            "tab": "视角",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 1
+          },
+          "女孩": {
+            "label": "女孩",
+            "tab": "视角",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 2
+          }
+        }
+      },
+      "tail": {
+        "visible_tags": [
+          "写实风格",
+          "超真实风格",
+          "数码单反"
+        ],
+        "selected_tags": [],
+        "scroll_position": 0.0,
+        "tag_details": {
+          "写实风格": {
+            "label": "写实风格",
+            "tab": "图片质量",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 1
+          },
+          "超真实风格": {
+            "label": "超真实风格",
+            "tab": "图片质量",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 2
+          },
+          "数码单反": {
+            "label": "数码单反",
+            "tab": "图片质量",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 3
+          }
+        }
+      }
+    }
+  }
+}

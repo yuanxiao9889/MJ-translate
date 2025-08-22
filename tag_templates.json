@@ -1,0 +1,464 @@
+{
+  "templates": {
+    "default": {
+      "name": "默认模板（从旧数据迁移）",
+      "description": "从现有标签数据自动生成的默认模板",
+      "created_time": 1755370415,
+      "tags": {
+        "head": {
+          "视角": {
+            "贴地拍摄": {
+              "en": "Ground shot",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "我的请问": {
+              "en": "My question",
+              "image": "images\\My question_1755367298.png",
+              "url": "https://www.bilibili.com/",
+              "title": "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili"
+            },
+            "仰视视角": {
+              "en": "low angle view",
+              "image": "images/仰视视角_1755367891.png",
+              "url": "",
+              "title": ""
+            }
+          },
+          "照片风格": {
+            "用iPhone拍摄": {
+              "en": "captured with an iPhone",
+              "image": "images/用iPhone拍摄_df36e463.png",
+              "url": "",
+              "title": ""
+            },
+            "Instagram自拍": {
+              "en": "It looks as if it was taken straight from an Instagram selfie",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "这张生活方式照片": {
+              "en": "This lifestyle photo",
+              "image": "images/这张生活方式照片_515ca902.png",
+              "url": "",
+              "title": ""
+            }
+          },
+          "镜头": {
+            "一张20岁女子脸上裸露皮肤的照片。": {
+              "en": "A photo capturing the bare skin of a 20-year-old woman's face.",
+              "image": "images/一张20岁女子脸上裸露皮肤的照片。_fef2252f.png",
+              "url": "",
+              "title": ""
+            }
+          },
+          "拍摄角度": {
+            "正面角度": {
+              "en": "Front angle",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "侧视图": {
+              "en": "Side profile",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "后视图": {
+              "en": "Rear view",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "自上而下视图": {
+              "en": "Top-down view",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "低角度视图": {
+              "en": "Low-angle view",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "高对角线角度": {
+              "en": "High diagonal angle",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "低对角线仰视": {
+              "en": "Upward low diagonal",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "视线高度拍摄": {
+              "en": "Eye-level shot",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "鸟瞰图": {
+              "en": "Bird’s-eye view",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "极低角度": {
+              "en": "Worm’s-eye view",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "四分之三后视": {
+              "en": "Three-quarter rear view",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "低头看脚": {
+              "en": "Looking-down POV",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "荷兰角": {
+              "en": "Dutch tilt",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "过肩视角": {
+              "en": "Over-the-shoulder",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "镜面反射角": {
+              "en": "Mirror reflection angle",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "远距低角度仰视": {
+              "en": "Distant low-angle",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "后对角线角度": {
+              "en": "Rear diagonal angle",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "中距低对角": {
+              "en": "Mid-shot low diagonal",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "斜前方微仰视": {
+              "en": "Oblique-front upward",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "脸侧特写": {
+              "en": "Profile close-up",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "俯视角度": {
+              "en": "Overhead angle",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "膝下仰视": {
+              "en": "Upward below-knees",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "躺姿仰视": {
+              "en": "Reclining upward angle",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "房间角落视角": {
+              "en": "Corner-room viewpoint",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "门后偷看": {
+              "en": "Peek from behind door",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "低低地斜向上爬行": {
+              "en": "Floor-crawl low angle",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "与屏幕边缘成角": {
+              "en": "Angled-to-frame edge",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "背后看镜子": {
+              "en": "Mirror-from-behind",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "高处远眺": {
+              "en": "Vantage look-out",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "直视前方": {
+              "en": "Focused straight gaze",
+              "image": "",
+              "url": "",
+              "title": ""
+            }
+          },
+          "相机距离与构图": {
+            "正面脸部特写": {
+              "en": "Front facial close-up",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "角度脸部特写": {
+              "en": "Angled facial close-up",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "眼睛特写": {
+              "en": "Eyes close-up",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "嘴唇特写": {
+              "en": "Lips close-up",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "头部特写（发丝飞扬）": {
+              "en": "Head close-up with hair",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "半身照（胸部以上）": {
+              "en": "Medium close-up (chest up)",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "腰部以上中景": {
+              "en": "Medium shot (waist up)",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "大腿四分之三镜头": {
+              "en": "Three-quarter thigh shot",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "膝盖长度镜头": {
+              "en": "Medium-long shot (knee)",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "全身照正面": {
+              "en": "Full-body front",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "全身照背面": {
+              "en": "Full-body rear",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "全身侧面照": {
+              "en": "Full-body profile",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "远景": {
+              "en": "Long shot",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "极远景": {
+              "en": "Extreme long shot",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "脚部低机位": {
+              "en": "Foot-level shot",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "手部动作特写": {
+              "en": "Hands-in-action close-up",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "半身照含背景": {
+              "en": "Medium shot with background",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "整个场景定场镜头": {
+              "en": "Establishing wide shot",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "服装细节特写": {
+              "en": "Costume detail close-up",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "远处小身影": {
+              "en": "Tiny distant figure",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "后脑勺特写": {
+              "en": "Back-of-head close-up",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "前臂与手特写": {
+              "en": "Forearm & hand close-up",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "背景中小人物": {
+              "en": "Small figure in background",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "肩脸局部": {
+              "en": "Partial shoulder/face view",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "仅见头发构图": {
+              "en": "Hair-only frame",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "群体范围取景": {
+              "en": "Group-size frame",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "反射中的小身影": {
+              "en": "Reflected miniature figure",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "内外平衡镜头": {
+              "en": "Interior�Cexterior balanced shot",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "自然中长景 (头-膝)": {
+              "en": "Natural medium-long",
+              "image": "",
+              "url": "",
+              "title": ""
+            },
+            "楼梯全身": {
+              "en": "Full-body on staircase",
+              "image": "",
+              "url": "",
+              "title": ""
+            }
+          }
+        },
+        "tail": {
+          "图片质量": {
+            "写实风格": {
+              "en": "photorealistic",
+              "image": "images/写实风格_29a12b8f.png",
+              "url": "",
+              "title": ""
+            },
+            "超真实风格": {
+              "en": "ultra-realistic",
+              "image": "images/超真实风格_7c152b7b.png",
+              "url": "",
+              "title": ""
+            },
+            "数码单反": {
+              "en": "high-resolution DSLR",
+              "image": "images/高分辨率数码单反_a9023196.png",
+              "url": "",
+              "title": ""
+            }
+          },
+          "视角": {
+            "踩到了下面": {
+              "en": "stepping on tiny viewer below",
+              "image": "images/踩到了下面_2d5c8493.png",
+              "url": "",
+              "title": ""
+            }
+          },
+          "否定词": {
+            "不要模糊背景": {
+              "en": "-no blurred background",
+              "image": "images/不要模糊背景_22f50b3e.png",
+              "url": "",
+              "title": ""
+            }
+          }
+        }
+      }
+    }
+  },
+  "last_updated": 1755370415
+}

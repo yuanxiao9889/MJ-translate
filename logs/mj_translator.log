@@ -1,0 +1,92 @@
+2025-08-16 21:45:21 - mj_translator - WARNING - Failed to load platform config: No module named 'utils.config'; 'utils' is not a package
+2025-08-16 21:45:21 - mj_translator - WARNING - Failed to load platform config: No module named 'utils.config'; 'utils' is not a package
+2025-08-16 23:52:50 - mj_translator - INFO - 从 F:\mj_translato\mj_translato\apis.json 加载旧API配置
+2025-08-16 23:52:50 - mj_translator - INFO - 成功从旧配置迁移凭据
+2025-08-16 23:55:30 - mj_translator - INFO - 从 F:\mj_translato\mj_translato\apis.json 加载旧API配置
+2025-08-16 23:55:30 - mj_translator - INFO - 从 F:\mj_translato\mj_translato\oss_config.json 加载旧OSS配置
+2025-08-16 23:55:30 - mj_translator - INFO - 成功从旧配置迁移凭据
+2025-08-17 00:21:37 - mj_translator - INFO - 从 f:\mj_translato\mj_translato\apis.json 加载旧API配置
+2025-08-17 00:21:37 - mj_translator - INFO - 从 f:\mj_translato\mj_translato\oss_config.json 加载旧OSS配置
+2025-08-17 00:48:40 - mj_translator - INFO - 从 f:\mj_translato\mj_translato\apis.json 加载旧API配置
+2025-08-17 00:48:40 - mj_translator - INFO - 从 f:\mj_translato\mj_translato\oss_config.json 加载旧OSS配置
+2025-08-17 00:52:18 - mj_translator - INFO - 从 F:\mj_translato\mj_translato\apis.json 加载旧API配置
+2025-08-17 00:52:18 - mj_translator - INFO - 从 F:\mj_translato\mj_translato\oss_config.json 加载旧OSS配置
+2025-08-17 00:55:01 - mj_translator - INFO - 从 F:\mj_translato\mj_translato\apis.json 加载旧API配置
+2025-08-17 00:55:01 - mj_translator - INFO - 从 F:\mj_translato\mj_translato\oss_config.json 加载旧OSS配置
+2025-08-17 00:58:09 - mj_translator - INFO - 从 f:\mj_translato\mj_translato\apis.json 加载旧API配置
+2025-08-17 00:58:09 - mj_translator - INFO - 从 f:\mj_translato\mj_translato\oss_config.json 加载旧OSS配置
+2025-08-17 01:13:14 - mj_translator - INFO - 从 f:\mj_translato\mj_translato\apis.json 加载旧API配置
+2025-08-17 01:13:14 - mj_translator - INFO - 从 f:\mj_translato\mj_translato\oss_config.json 加载旧OSS配置
+2025-08-17 01:14:17 - mj_translator - INFO - 从 F:\mj_translato\mj_translato\apis.json 加载旧API配置
+2025-08-17 01:14:17 - mj_translator - INFO - 从 F:\mj_translato\mj_translato\oss_config.json 加载旧OSS配置
+2025-08-17 01:15:59 - mj_translator - INFO - 从 F:\mj_translato\mj_translato\apis.json 加载旧API配置
+2025-08-17 01:15:59 - mj_translator - INFO - 从 F:\mj_translato\mj_translato\oss_config.json 加载旧OSS配置
+2025-08-17 01:16:38 - mj_translator - INFO - 从 F:\mj_translato\mj_translato\apis.json 加载旧API配置
+2025-08-17 01:16:38 - mj_translator - INFO - 从 F:\mj_translato\mj_translato\oss_config.json 加载旧OSS配置
+2025-08-17 01:18:34 - mj_translator - INFO - 从 F:\mj_translato\mj_translato\apis.json 加载旧API配置
+2025-08-17 01:18:34 - mj_translator - INFO - 从 F:\mj_translato\mj_translato\oss_config.json 加载旧OSS配置
+2025-08-17 01:24:35 - mj_translator - INFO - 从 F:\mj_translato\mj_translato\apis.json 加载旧API配置
+2025-08-17 01:24:35 - mj_translator - INFO - 从 F:\mj_translato\mj_translato\oss_config.json 加载旧OSS配置
+2025-08-17 01:32:41 - mj_translator - INFO - 从 F:\mj_translato\mj_translato\apis.json 加载旧API配置
+2025-08-17 01:32:41 - mj_translator - INFO - 从 F:\mj_translato\mj_translato\oss_config.json 加载旧OSS配置
+2025-08-17 01:34:50 - mj_translator - INFO - 从 F:\mj_translato\mj_translato\apis.json 加载旧API配置
+2025-08-17 01:34:50 - mj_translator - INFO - 从 F:\mj_translato\mj_translato\oss_config.json 加载旧OSS配置
+2025-08-17 02:51:28 - mj_translator - ERROR - 迁移过程中发生异常: 'DataMigration' object has no attribute 'migrate_all_data'
+Traceback (most recent call last):
+  File "F:\mj_translato\mj_translato\migrate_to_independent_tags.py", line 53, in main
+    report = migration.migrate_all_data()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataMigration' object has no attribute 'migrate_all_data'. Did you mean: 'migrate_data'?
+2025-08-17 02:51:42 - mj_translator - ERROR - 迁移过程中发生异常: 'bool' object is not subscriptable
+Traceback (most recent call last):
+  File "F:\mj_translato\mj_translato\migrate_to_independent_tags.py", line 60, in main
+    print(f"✅ 迁移状态: {'成功' if report['success'] else '失败'}")
+                                    ~~~~~~^^^^^^^^^^^
+TypeError: 'bool' object is not subscriptable
+2025-08-18 20:02:25 - mj_translator - INFO - 从 F:\mj_translato\mj_translato\apis.json 加载旧API配置
+2025-08-18 20:02:25 - mj_translator - INFO - 从 F:\mj_translato\mj_translato\oss_config.json 加载旧OSS配置
+2025-08-19 23:05:05 - mj_translator - ERROR - 加载分页数据失败: Invalid control character at: line 7 column 38 (char 153)
+Traceback (most recent call last):
+  File "J:\下载\MJ--main\views\page_manager.py", line 483, in load_pages_data
+    data = json.load(f)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python313\Lib\json\__init__.py", line 293, in load
+    return loads(fp.read(),
+        cls=cls, object_hook=object_hook,
+        parse_float=parse_float, parse_int=parse_int,
+        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python313\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python313\Lib\json\decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python313\Lib\json\decoder.py", line 361, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ~~~~~~~~~~~~~~^^^^^^^^
+json.decoder.JSONDecodeError: Invalid control character at: line 7 column 38 (char 153)
+2025-08-21 10:46:24 - mj_translator - INFO - 从 g:\MJ-translate\apis.json 加载旧API配置
+2025-08-21 10:46:24 - mj_translator - INFO - 成功从旧配置迁移凭据
+2025-08-21 10:52:29 - mj_translator - INFO - 从 g:\MJ-translate\apis.json 加载旧API配置
+2025-08-21 10:52:34 - mj_translator - ERROR - 创建OSS bucket失败: {'status': -1, 'x-oss-request-id': '', 'details': 'ClientError: The endpoint you has specified is not valid, endpoint: https://华南1（深圳）'}
+Traceback (most recent call last):
+  File "g:\MJ-translate\oss_sync.py", line 86, in get_oss_bucket
+    _bucket = oss2.Bucket(auth, endpoint, bucket_name)
+  File "C:\Users\YXX\AppData\Local\Programs\Python\Python313\Lib\site-packages\oss2\api.py", line 689, in __init__
+    super(Bucket, self).__init__(auth, endpoint, is_cname, session, connect_timeout,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                 app_name=app_name, enable_crc=enable_crc, proxies=proxies,
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                 region=region, cloudbox_id=cloudbox_id, is_path_style=is_path_style, is_verify_object_strict=is_verify_object_strict)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\YXX\AppData\Local\Programs\Python\Python313\Lib\site-packages\oss2\api.py", line 210, in __init__
+    raise ClientError('The endpoint you has specified is not valid, endpoint: {0}'.format(endpoint))
+oss2.exceptions.ClientError: {'status': -1, 'x-oss-request-id': '', 'details': 'ClientError: The endpoint you has specified is not valid, endpoint: https://华南1（深圳）'}
+2025-08-21 11:14:22 - mj_translator - INFO - 从 g:\MJ-translate\apis.json 加载旧API配置
+2025-08-21 11:14:38 - mj_translator - ERROR - 创建OSS bucket失败: {'status': -1, 'x-oss-request-id': '', 'details': 'ClientError: The bucket_name is invalid, please check it.'}
+Traceback (most recent call last):
+  File "g:\MJ-translate\oss_sync.py", line 144, in get_oss_bucket
+    _bucket = oss2.Bucket(auth, endpoint, bucket_name)
+  File "C:\Users\YXX\AppData\Local\Programs\Python\Python313\Lib\site-packages\oss2\api.py", line 695, in __init__
+    raise ClientError("The bucket_name is invalid, please check it.")
+oss2.exceptions.ClientError: {'status': -1, 'x-oss-request-id': '', 'details': 'ClientError: The bucket_name is invalid, please check it.'}
+2025-08-21 11:18:39 - mj_translator - INFO - 从 g:\MJ-translate\apis.json 加载旧API配置
