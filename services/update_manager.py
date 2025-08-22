@@ -451,7 +451,11 @@ class UpdateManager:
             if os.path.exists(cache_file):
                 with open(cache_file, 'r', encoding='utf-8') as f:
                     release_data = json.load(f)
+<<<<<<< HEAD
             
+=======
+                
+>>>>>>> b65871cec006ab24254b566ffc8d1b7c10f83630
                 latest_version = release_data.get('tag_name', '').lstrip('v')
                 release_notes = release_data.get('body', '')
                 
