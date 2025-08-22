@@ -7,10 +7,6 @@ import shutil
 import tempfile
 from pathlib import Path
 from services import __version__ as current_version
-import stat
-import ctypes
-import gc
-import time
 
 class UpdateManager:
     def __init__(self):
@@ -155,6 +151,7 @@ class UpdateManager:
     
     def _download_with_retry(self, url, file_path, headers=None, max_retries=3):
         """带重试机制的下载"""
+        import time
         session = requests.Session()
         session.trust_env = False
         session.proxies = {}
@@ -256,9 +253,6 @@ class UpdateManager:
                 progress_callback(70, "下载完成", f"文件已下载到 {download_path}")
             else:
                 print(f"Downloaded update to {download_path}")
-                
-            # 在应用更新之前尽可能释放日志文件句柄，避免 Windows 下文件占用
-            self._release_file_locks()
             
             # Extract and apply update
             if progress_callback:
@@ -279,7 +273,7 @@ class UpdateManager:
                 progress_callback(100, "更新完成", "更新已成功应用！")
             else:
                 print("Update completed successfully!")
-                
+            
             return True
             
         except Exception as e:
@@ -313,7 +307,7 @@ class UpdateManager:
                 shutil.rmtree(temp_dir, ignore_errors=True)
                 
             return False
-
+    
     def _backup_current_version(self, backup_dir):
         """Creates a backup of critical files before update."""
         project_root = Path(__file__).parent.parent
@@ -341,8 +335,6 @@ class UpdateManager:
     
     def _extract_and_apply_update(self, zip_path, project_root):
         """Extracts the update zip and applies it to the project."""
-        project_root = Path(project_root)  # 确保project_root是Path对象
-        
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
             # Extract to temporary directory first
             temp_extract_dir = tempfile.mkdtemp()
@@ -359,50 +351,23 @@ class UpdateManager:
             
             # Copy files from extracted directory to project root
             skip_files = {"config.json"}
-            skip_dirs = {"backup_before_update", "manual_update", ".update_cache", "logs", "__pycache__", ".git"}
-            
+            skip_dirs = {"backup_before_update", "manual_update", ".update_cache"}
             for item in os.listdir(source_dir):
                 # 跳过不应覆盖的文件/目录
                 if item in skip_files or item in skip_dirs:
                     continue
-            
                 source_item = os.path.join(source_dir, item)
                 dest_item = project_root / item
                 
-                try:
-                    if os.path.isfile(source_item):
-                        # 直接覆盖写入（若失败则跳过该文件，避免整体失败）
-                        shutil.copy2(source_item, dest_item)
-                    elif os.path.isdir(source_item):
-                        # 优先尝试就地覆盖，避免删除正在被占用的文件导致失败
-                        try:
-                            shutil.copytree(source_item, dest_item, dirs_exist_ok=True)
-                        except Exception:
-                            # 覆盖失败时再尝试删除并复制（带 onerror 处理）
-                            if dest_item.exists():
-                                try:
-                                    shutil.rmtree(dest_item, onerror=self._on_rm_error)
-                                except Exception:
-                                    # 最后退路：跳过该目录，避免整体更新失败
-                                    print(f"警告: 无法删除目录 {dest_item}，已跳过")
-                                    continue
-                                try:
-                                    shutil.copytree(source_item, dest_item)
-                                except Exception as e:
-                                    print(f"警告: 无法复制目录 {source_item} -> {dest_item}: {e}")
-                                    continue
-                except PermissionError as e:
-                    print(f"警告: 文件被占用，已跳过 {dest_item}: {e}")
-                    continue
-                except Exception as e:
-                    print(f"警告: 处理 {source_item} 时发生错误，已跳过: {e}")
-                    continue
+                if os.path.isfile(source_item):
+                    shutil.copy2(source_item, dest_item)
+                elif os.path.isdir(source_item):
+                    if dest_item.exists():
+                        shutil.rmtree(dest_item)
+                    shutil.copytree(source_item, dest_item)
             
-            # Clean up temp extraction directory after all operations
-            try:
-                shutil.rmtree(temp_extract_dir, ignore_errors=True)
-            except Exception:
-                pass
+            # Clean up temp extraction directory
+            shutil.rmtree(temp_extract_dir, ignore_errors=True)
     
     def _rollback_update(self, backup_dir):
         """Rolls back to the backed up version."""
@@ -451,7 +416,7 @@ class UpdateManager:
             if os.path.exists(cache_file):
                 with open(cache_file, 'r', encoding='utf-8') as f:
                     release_data = json.load(f)
-            
+                
                 latest_version = release_data.get('tag_name', '').lstrip('v')
                 release_notes = release_data.get('body', '')
                 
@@ -460,10 +425,11 @@ class UpdateManager:
                     self.offline_mode = True
                     self.manual_download_info = self._prepare_manual_download_info(release_data)
                     return latest_version, release_notes
+            
+            return None, None
         except Exception as e:
-            print(f"警告: 检查离线更新失败: {e}")
-        
-        return None, None
+            print(f"离线检查失败: {e}")
+            return None, None
     
     def _prepare_manual_download_info(self, release_data):
         """准备手动下载信息"""
@@ -523,60 +489,3 @@ class UpdateManager:
         print("  - 检查防火墙和杀毒软件设置")
         print("  - 尝试使用移动热点网络")
         print("  - 如在企业网络中，联系网络管理员")
-
-    def _release_file_locks(self):
-        """释放日志等文件句柄，减少"另一个程序正在使用文件"的情况"""
-        try:
-            import logging
-            root_logger = logging.getLogger()
-            # 复制列表以避免迭代过程中修改
-            for handler in list(root_logger.handlers):
-                try:
-                    handler.flush()
-                except Exception:
-                    pass
-                try:
-                    handler.close()
-                except Exception:
-                    pass
-                try:
-                    root_logger.removeHandler(handler)
-                except Exception:
-                    pass
-            
-            # 强制垃圾回收
-            gc.collect()
-            
-            # Windows特定：尝试释放更多文件句柄
-            if os.name == 'nt':
-                try:
-                    import sys
-                    sys.stdout.flush()
-                    sys.stderr.flush()
-                except Exception:
-                    pass
-                    
-        except Exception as e:
-            print(f"警告: 释放文件句柄失败: {e}")
-
-    def _on_rm_error(self, func, path, exc_info):
-        """Helper for shutil.rmtree to handle read-only or locked files on Windows."""
-        try:
-            # Try to make the path writable
-            os.chmod(path, stat.S_IWRITE)
-        except Exception:
-            pass
-        try:
-            # Retry the original operation
-            func(path)
-            return
-        except Exception:
-            pass
-        # As a last resort on Windows, schedule deletion on reboot
-        try:
-            if os.name == 'nt':
-                MOVEFILE_DELAY_UNTIL_REBOOT = 0x00000004
-                ctypes.windll.kernel32.MoveFileExW(ctypes.c_wchar_p(path), None, MOVEFILE_DELAY_UNTIL_REBOOT)
-        except Exception:
-            # Give up silently, we'll just skip this path
-            pass
