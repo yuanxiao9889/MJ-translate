@@ -1,0 +1,10 @@
+{
+  "browser_extension": {
+    "image_directory": "images",
+    "naming_pattern": "{label}_{hash}.png"
+  },
+  "main_program": {
+    "image_directory": "images",
+    "naming_pattern": "{label}_{hash}.png"
+  }
+}

@@ -1,0 +1,10 @@
+__pycache__
+*.pyc
+*.pyo
+images/
+tags_backup_*
+apis.json
+config.json
+oss_config.json
+credentials.json
+.key

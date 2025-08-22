@@ -1,0 +1,22 @@
+{
+  "sync_settings": {
+    "image_directory": "images",
+    "use_hash_filenames": true,
+    "naming_pattern": "{label}_{hash}.png",
+    "supported_extensions": [
+      "png",
+      "jpg",
+      "jpeg"
+    ]
+  },
+  "api_endpoints": {
+    "push": "/api/push",
+    "pull": "/api/pull",
+    "sync": "/sync/images"
+  },
+  "compatibility": {
+    "main_program_path": "images/",
+    "browser_extension_path": "images/",
+    "unified_storage": true
+  }
+}
