@@ -7,6 +7,7 @@ param(
     [string]$Message = "",
     [string]$Remote = "origin",
     [string]$Branch = "",
+    [string]$ProxyPort = "4780",
     [switch]$Help,
     [switch]$Config,
     [switch]$Force
@@ -38,6 +39,7 @@ function Show-Help {
     Write-ColorOutput "  -Message [string]    Custom commit message" "White"
     Write-ColorOutput "  -Remote [string]     Remote repository name (default: origin)" "White"
     Write-ColorOutput "  -Branch [string]     Target branch (default: current branch)" "White"
+    Write-ColorOutput "  -ProxyPort [string]  HTTP proxy port (default: 4780)" "White"
     Write-ColorOutput "  -Help               Show this help information" "White"
     Write-ColorOutput "  -Config             Configure remote repository" "White"
     Write-ColorOutput "  -Force              Force push (use with caution)" "White"
@@ -46,6 +48,7 @@ function Show-Help {
     Write-ColorOutput "  .\git_upload.ps1" "Green"
     Write-ColorOutput "  .\git_upload.ps1 -Message 'Fix bug'" "Green"
     Write-ColorOutput "  .\git_upload.ps1 -Remote upstream -Branch develop" "Green"
+    Write-ColorOutput "  .\git_upload.ps1 -ProxyPort 8080" "Green"
     Write-ColorOutput ""
 }
 
@@ -76,10 +79,16 @@ function Set-GitConfig {
         "lastUpdate" = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
         "defaultRemote" = $Remote
         "defaultBranch" = $Branch
+        "proxy" = @{
+            "enabled" = $true
+            "port" = $script:ProxyPort
+            "host" = "127.0.0.1"
+            "autoDetect" = $true
+        }
     }
     
-    $config | ConvertTo-Json | Set-Content -Path $ConfigFile -Encoding UTF8
-    Write-ColorOutput "Configuration saved" "Green"
+    $config | ConvertTo-Json -Depth 3 | Set-Content -Path $ConfigFile -Encoding UTF8
+    Write-ColorOutput "Configuration saved with proxy settings" "Green"
 }
 
 # Test Git environment
@@ -117,6 +126,35 @@ function Test-GitEnvironment {
     return $true
 }
 
+# Configure Git proxy settings
+function Set-GitProxy {
+    param([string]$Port = "4780")
+    
+    $ProxyUrl = "http://127.0.0.1:$Port"
+    Write-ColorOutput "Configuring Git proxy settings..." "Yellow"
+    Write-ColorOutput "Using proxy: $ProxyUrl" "Cyan"
+    
+    # Set HTTP proxy for Git
+    git config --global http.proxy $ProxyUrl
+    if ($LASTEXITCODE -eq 0) {
+        Write-ColorOutput "Git HTTP proxy configured: $ProxyUrl" "Green"
+    } else {
+        Write-ColorOutput "Failed to configure Git HTTP proxy" "Red"
+        return $false
+    }
+    
+    # Set HTTPS proxy for Git
+    git config --global https.proxy $ProxyUrl
+    if ($LASTEXITCODE -eq 0) {
+        Write-ColorOutput "Git HTTPS proxy configured: $ProxyUrl" "Green"
+    } else {
+        Write-ColorOutput "Failed to configure Git HTTPS proxy" "Red"
+        return $false
+    }
+    
+    return $true
+}
+
 # Test network connection
 function Test-NetworkConnection {
     param([string]$RemoteUrl)
@@ -124,13 +162,21 @@ function Test-NetworkConnection {
     Write-ColorOutput "Testing network connection..." "Yellow"
     
     if ($RemoteUrl -match "github\.com|gitlab\.com|bitbucket\.org") {
+        # First try to connect directly
         $testResult = Test-NetConnection -ComputerName "github.com" -Port 443 -InformationLevel Quiet -WarningAction SilentlyContinue
         if ($testResult) {
-            Write-ColorOutput "Network connection is normal" "Green"
+            Write-ColorOutput "Direct network connection is normal" "Green"
             return $true
         } else {
-            Write-ColorOutput "Cannot connect to remote repository" "Red"
-            return $false
+            Write-ColorOutput "Direct connection failed, using proxy configuration" "Yellow"
+            # Configure proxy and test again
+            if (Set-GitProxy -Port $script:ProxyPort) {
+                Write-ColorOutput "Proxy configured, network should work through proxy" "Green"
+                return $true
+            } else {
+                Write-ColorOutput "Cannot connect to remote repository" "Red"
+                return $false
+            }
         }
     }
     
@@ -269,8 +315,12 @@ function Invoke-GitUpload {
 
 # Main function
 function Main {
+    # Set script-level proxy port variable
+    $script:ProxyPort = $ProxyPort
+    
     Write-ColorOutput "=== GitHub Auto Upload Script ===" "Cyan"
     Write-ColorOutput "Current directory: $(Get-Location)" "Gray"
+    Write-ColorOutput "Proxy port: $ProxyPort" "Gray"
     Write-ColorOutput ""
     
     # Show help
@@ -289,6 +339,12 @@ function Main {
     if (-not (Test-GitEnvironment)) {
         Write-ColorOutput "Environment test failed, script exiting" "Red"
         return
+    }
+    
+    # Configure proxy settings at startup
+    Write-ColorOutput "Initializing proxy configuration..." "Yellow"
+    if (-not (Set-GitProxy -Port $ProxyPort)) {
+        Write-ColorOutput "Warning: Failed to configure proxy, continuing with default settings" "Yellow"
     }
     
     # Get current branch

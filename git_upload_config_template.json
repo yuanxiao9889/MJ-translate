@@ -12,6 +12,12 @@
     "enabled": true,
     "timeout": 5000
   },
+  "proxy": {
+    "enabled": true,
+    "port": "4780",
+    "host": "127.0.0.1",
+    "autoDetect": true
+  },
   "pushOptions": {
     "alwaysConfirm": true,
     "showPushDetails": true,
