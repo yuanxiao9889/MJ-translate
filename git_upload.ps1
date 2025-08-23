@@ -63,14 +63,30 @@ function Set-GitConfig {
         $remotes | ForEach-Object { Write-ColorOutput "  $_" "White" }
         Write-ColorOutput ""
     }
-    
+
+    # Check existing remote URL for target remote (default: origin)
+    $existingUrl = git remote get-url $Remote 2>$null
+
     $remoteUrl = Read-Host "Enter remote repository URL (leave empty to keep current)"
     if ($remoteUrl) {
-        git remote set-url origin $remoteUrl
-        if ($LASTEXITCODE -eq 0) {
-            Write-ColorOutput "Remote repository URL updated" "Green"
+        if ($existingUrl) {
+            git remote set-url $Remote $remoteUrl
+            if ($LASTEXITCODE -eq 0) {
+                Write-ColorOutput "Remote repository URL updated" "Green"
+            } else {
+                Write-ColorOutput "Failed to update remote repository URL" "Red"
+            }
         } else {
-            Write-ColorOutput "Failed to update remote repository URL" "Red"
+            git remote add $Remote $remoteUrl
+            if ($LASTEXITCODE -eq 0) {
+                Write-ColorOutput "Remote '$Remote' added" "Green"
+            } else {
+                Write-ColorOutput "Failed to add remote '$Remote'" "Red"
+            }
+        }
+    } else {
+        if (-not $existingUrl) {
+            Write-ColorOutput "No remote configured. You can run -Config again to add one or set it manually." "Yellow"
         }
     }
     
@@ -128,14 +144,19 @@ function Test-GitEnvironment {
 
 # Configure Git proxy settings
 function Set-GitProxy {
-    param([string]$Port = "4780")
+    param(
+        [string]$Port = "4780",
+        [switch]$Global
+    )
     
     $ProxyUrl = "http://127.0.0.1:$Port"
     Write-ColorOutput "Configuring Git proxy settings..." "Yellow"
     Write-ColorOutput "Using proxy: $ProxyUrl" "Cyan"
+
+    $scope = if ($Global.IsPresent) { "--global" } else { "" }
     
-    # Set HTTP proxy for Git
-    git config --global http.proxy $ProxyUrl
+    # Set HTTP proxy for Git (repository-local by default)
+    if ($scope) { git config $scope http.proxy $ProxyUrl } else { git config http.proxy $ProxyUrl }
     if ($LASTEXITCODE -eq 0) {
         Write-ColorOutput "Git HTTP proxy configured: $ProxyUrl" "Green"
     } else {
@@ -143,8 +164,8 @@ function Set-GitProxy {
         return $false
     }
     
-    # Set HTTPS proxy for Git
-    git config --global https.proxy $ProxyUrl
+    # Set HTTPS proxy for Git (repository-local by default)
+    if ($scope) { git config $scope https.proxy $ProxyUrl } else { git config https.proxy $ProxyUrl }
     if ($LASTEXITCODE -eq 0) {
         Write-ColorOutput "Git HTTPS proxy configured: $ProxyUrl" "Green"
     } else {
@@ -282,7 +303,14 @@ function Invoke-GitUpload {
     # Push to remote repository
     Write-ColorOutput "Pushing to remote repository..." "Yellow"
     
-    $pushCmd = "git push $RemoteName"
+    # Detect if upstream is set; if not, set it on first push for cross-machine convenience
+    $hasUpstream = $true
+    git rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>$null
+    if ($LASTEXITCODE -ne 0) { $hasUpstream = $false }
+    
+    $pushCmd = "git push"
+    if (-not $hasUpstream -and $BranchName) { $pushCmd += " -u" }
+    $pushCmd += " $RemoteName"
     if ($BranchName) {
         $pushCmd += " $BranchName"
     }
@@ -343,15 +371,27 @@ function Main {
     
     # Configure proxy settings at startup
     Write-ColorOutput "Initializing proxy configuration..." "Yellow"
-    if (-not (Set-GitProxy -Port $ProxyPort)) {
-        Write-ColorOutput "Warning: Failed to configure proxy, continuing with default settings" "Yellow"
-    }
+    # if (-not (Set-GitProxy -Port $ProxyPort)) {
+    #     Write-ColorOutput "Warning: Failed to configure proxy, continuing with default settings" "Yellow"
+    # }
     
     # Get current branch
     if (-not $Branch) {
         $Branch = git branch --show-current 2>$null
         if (-not $Branch) {
-            $Branch = "main"
+            # Prefer existing local branch name between master/main
+            git show-ref --verify --quiet refs/heads/master
+            if ($LASTEXITCODE -eq 0) {
+                $Branch = "master"
+            } else {
+                git show-ref --verify --quiet refs/heads/main
+                if ($LASTEXITCODE -eq 0) {
+                    $Branch = "main"
+                } else {
+                    # Fallback to master for historical repos
+                    $Branch = "master"
+                }
+            }
         }
     }
     
@@ -372,7 +412,43 @@ function Main {
             }
         }
     } else {
-        Write-ColorOutput "Cannot get remote repository information" "Yellow"
+        Write-ColorOutput "No remote '$Remote' configured." "Yellow"
+        $setNow = Read-Host "Configure remote now? (y/N)"
+        if ($setNow -eq "y" -or $setNow -eq "Y") {
+            Set-GitConfig
+            $remoteUrl = git remote get-url $Remote 2>$null
+            if ($remoteUrl) {
+                Write-ColorOutput "Remote repository URL: $remoteUrl" "Cyan"
+                if (-not (Test-NetworkConnection -RemoteUrl $remoteUrl)) {
+                    $continue = Read-Host "Network connection abnormal, continue? (y/N)"
+                    if ($continue -ne "y" -and $continue -ne "Y") {
+                        return
+                    }
+                }
+            } else {
+                Write-ColorOutput "Cannot get remote repository information" "Yellow"
+            }
+        } else {
+            Write-ColorOutput "Cannot get remote repository information" "Yellow"
+        }
+    }
+
+    # Ensure credential helper on Windows for cross-machine usage
+    $isWindows = $true
+    try { $os = (Get-CimInstance Win32_OperatingSystem).Caption } catch { $os = "Windows" }
+    if ($isWindows) {
+        $credHelper = git config --global credential.helper 2>$null
+        if (-not $credHelper) {
+            $setCred = Read-Host "No global Git credential helper found. Configure Windows Credential Manager now? (Y/n)"
+            if ($setCred -ne "n" -and $setCred -ne "N") {
+                git config --global credential.helper manager-core
+                if ($LASTEXITCODE -eq 0) {
+                    Write-ColorOutput "Configured credential.helper=manager-core" "Green"
+                } else {
+                    Write-ColorOutput "Failed to configure credential helper" "Yellow"
+                }
+            }
+        }
     }
     
     # Check Git status
