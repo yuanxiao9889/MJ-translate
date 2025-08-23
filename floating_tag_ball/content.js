@@ -370,9 +370,24 @@
 
     modal = createEl("div",{id:"tagball-modal"});
     const header = createEl("header",{},[ createEl("h3",{},"添加标签"), createEl("button",{id:"tagball-close",onclick:()=>modal.remove()},"✕") ]);
-    const left = createEl("div",{},[
-      prefill.imageDataUrl ? createEl("img",{id:"tagball-preview",src:prefill.imageDataUrl}) : createEl("div",{style:{padding:"24px",border:"1px dashed #d3d7ef",borderRadius:"10px",color:"#666",textAlign:"center"}}, "（无截图）")
-    ]);
+    // 图片预览和裁剪按钮容器
+    const imageContainer = createEl("div",{style:{display:"flex",flexDirection:"column",gap:"10px"}});
+    const imagePreview = prefill.imageDataUrl ? 
+      createEl("img",{id:"tagball-preview",src:prefill.imageDataUrl,style:{maxWidth:"100%",borderRadius:"10px",border:"1px solid #e4e6f3"}}) : 
+      createEl("div",{style:{padding:"24px",border:"1px dashed #d3d7ef",borderRadius:"10px",color:"#666",textAlign:"center"}}, "（无截图）");
+    
+    // 裁剪按钮（仅在有图片时显示）
+    const cropButton = prefill.imageDataUrl ? 
+      createEl("button",{
+        class:"tagball-btn ghost",
+        style:{width:"100%",fontSize:"14px"},
+        onclick: () => openCropModal(prefill.imageDataUrl)
+      }, "✂️ 裁剪图片") : null;
+    
+    imageContainer.appendChild(imagePreview);
+    if (cropButton) imageContainer.appendChild(cropButton);
+    
+    const left = createEl("div",{},[imageContainer]);
 
     let currentType="head";
     const tabbarHolder = createEl("div",{});
@@ -462,6 +477,684 @@
     }
     
     document.documentElement.appendChild(modal); modal.style.display="block";
+  }
+
+  // 监听来自background的消息
+  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.type === "CREATE_TAG_FROM_IMAGE") {
+      handleImageTagCreation(message);
+      sendResponse({ success: true });
+    }
+  });
+
+  // 处理从右键菜单创建标签
+  async function handleImageTagCreation(data) {
+    console.log("[tagball] 从右键菜单创建标签", data);
+    
+    try {
+      // 加载图片并转换为base64
+      const imageDataUrl = await loadImageAsDataUrl(data.imageUrl);
+      
+      // 打开标签弹窗，预填图片数据
+      openTagModal({
+        imageDataUrl: imageDataUrl,
+        pageUrl: data.pageUrl || location.href,
+        pageTitle: data.pageTitle || document.title
+      });
+      
+    } catch (error) {
+      console.error("[tagball] 加载图片失败:", error);
+      
+      // 显示错误提示
+      const errorTip = createEl('div', {
+        style: {
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          backgroundColor: '#f8d7da',
+          border: '1px solid #f5c6cb',
+          borderRadius: '8px',
+          padding: '20px',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+          zIndex: '10000000',
+          maxWidth: '300px',
+          textAlign: 'center',
+          color: '#721c24'
+        }
+      });
+      
+      errorTip.innerHTML = `
+        <h3 style="margin: 0 0 10px 0;">图片加载失败</h3>
+        <p style="margin: 0 0 15px 0; font-size: 14px;">
+          ${error.message || '无法加载选中的图片'}
+        </p>
+        <button onclick="this.parentElement.remove();" 
+                style="padding: 8px 16px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">
+          确定
+        </button>
+      `;
+      
+      document.body.appendChild(errorTip);
+      
+      // 3秒后自动移除
+      setTimeout(() => {
+        if (errorTip.parentElement) {
+          errorTip.remove();
+        }
+      }, 3000);
+    }
+  }
+
+  // 将图片URL转换为base64 data URL
+  function loadImageAsDataUrl(imageUrl) {
+    return new Promise((resolve, reject) => {
+      // 创建图片元素
+      const img = new Image();
+      
+      // 设置跨域属性
+      img.crossOrigin = 'anonymous';
+      
+      img.onload = function() {
+        try {
+          // 创建canvas
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          
+          // 设置canvas尺寸
+          canvas.width = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+          
+          // 绘制图片到canvas
+          ctx.drawImage(img, 0, 0);
+          
+          // 转换为base64
+          const dataUrl = canvas.toDataURL('image/png');
+          resolve(dataUrl);
+          
+        } catch (error) {
+          reject(new Error('图片转换失败: ' + error.message));
+        }
+      };
+      
+      img.onerror = function() {
+        reject(new Error('图片加载失败，可能是跨域限制或图片不存在'));
+      };
+      
+      // 开始加载图片
+      img.src = imageUrl;
+      
+      // 设置超时
+      setTimeout(() => {
+        reject(new Error('图片加载超时'));
+      }, 10000);
+    });
+  }
+
+  // 图片裁剪功能
+  let cropModal = null;
+  let cropData = {
+    startX: 0, startY: 0,
+    cropX: 0, cropY: 0,
+    cropWidth: 200, cropHeight: 200,
+    isDragging: false,
+    isResizing: false,
+    isDrawing: false,
+    resizeHandle: null,
+    imageWidth: 0, imageHeight: 0,
+    containerWidth: 0, containerHeight: 0,
+    scale: 1
+  };
+
+  function openCropModal(imageDataUrl) {
+    if (cropModal) cropModal.remove();
+    
+    // 打开裁剪时，暂时隐藏标签弹窗，避免任何站点叠层上下文和 z-index 差异导致的遮挡
+    if (typeof modal !== 'undefined' && modal) {
+      modal.style.display = 'none';
+      modal.style.pointerEvents = 'none';
+      modal.style.visibility = 'hidden';
+    }
+
+    cropModal = createEl("div", {
+      id: "tagball-crop-modal",
+      style: {
+        position: "fixed",
+        inset: "0",
+        background: "rgba(0,0,0,0.8)",
+        zIndex: "2147483647",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontFamily: "system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial",
+        backdropFilter: "blur(5px)"
+      }
+    });
+
+    // 动态抬高裁剪层的 z-index 到标签弹窗之上（+1）
+    try {
+      if (typeof modal !== 'undefined' && modal) {
+        const z = window.getComputedStyle(modal).zIndex;
+        const base = parseInt(z, 10);
+        if (!Number.isNaN(base)) {
+          const safeMax = 2147483647;
+          let target = base + 1;
+          if (target > safeMax) target = safeMax;
+          cropModal.style.zIndex = String(target);
+        }
+      }
+    } catch (_) { /* 忽略 */ }
+
+    const cropContainer = createEl("div", {
+      style: {
+        background: "#fff",
+        borderRadius: "12px",
+        padding: "20px",
+        maxWidth: "95vw",
+        maxHeight: "95vh",
+        display: "flex",
+        flexDirection: "column",
+        gap: "16px",
+        boxShadow: "0 24px 64px rgba(0,0,0,0.3)",
+        overflow: "hidden"
+      }
+    });
+
+    // 标题栏
+    const header = createEl("div", {
+      style: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingBottom: "12px",
+        borderBottom: "1px solid #eee"
+      }
+    }, [
+      createEl("h3", {style: {margin: "0", fontSize: "18px", color: "#333"}}, "裁剪图片"),
+      createEl("button", {
+        style: {
+          border: "none",
+          background: "transparent",
+          fontSize: "20px",
+          cursor: "pointer",
+          padding: "4px"
+        },
+        onclick: () => closeCropModal()
+      }, "✕")
+    ]);
+
+    // 主要内容区域
+    const mainContent = createEl("div", {
+      style: {
+        display: "flex",
+        gap: "20px",
+        alignItems: "flex-start"
+      }
+    });
+
+    // 左侧：裁剪区域
+    const cropArea = createEl("div", {
+      id: "crop-area",
+      style: {
+        position: "relative",
+        border: "2px solid #ddd",
+        borderRadius: "8px",
+        overflow: "hidden",
+        background: "#f9f9f9",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+      }
+    });
+
+    // 图片元素
+    const cropImage = createEl("img", {
+      id: "crop-image",
+      src: imageDataUrl,
+      style: {
+        display: "block",
+        userSelect: "none",
+        pointerEvents: "none",
+        objectFit: "contain"
+      },
+      onload: function() {
+        initializeCrop(this, cropArea);
+      }
+    });
+
+    // 裁剪框
+    const cropBox = createEl("div", {
+      id: "crop-box",
+      style: {
+        position: "absolute",
+        border: "2px solid #2a6df4",
+        background: "rgba(42, 109, 244, 0.1)",
+        cursor: "move",
+        boxSizing: "border-box"
+      }
+    });
+
+    // 添加8个调整手柄
+    const handles = ['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'];
+    handles.forEach(handle => {
+      const handleEl = createEl("div", {
+        class: `crop-handle crop-handle-${handle}`,
+        style: {
+          position: "absolute",
+          width: "8px",
+          height: "8px",
+          background: "#2a6df4",
+          border: "1px solid #fff",
+          borderRadius: "50%",
+          cursor: getCursorForHandle(handle),
+          ...getHandlePosition(handle)
+        },
+        onmousedown: (e) => startResize(e, handle)
+      });
+      cropBox.appendChild(handleEl);
+    });
+
+    cropArea.appendChild(cropImage);
+    cropArea.appendChild(cropBox);
+
+    // 右侧：预览和控制
+    const rightPanel = createEl("div", {
+      style: {
+        display: "flex",
+        flexDirection: "column",
+        gap: "16px",
+        minWidth: "200px"
+      }
+    });
+
+    // 预览区域
+    const previewArea = createEl("div", {
+      style: {
+        border: "1px solid #ddd",
+        borderRadius: "8px",
+        padding: "12px",
+        background: "#f9f9f9"
+      }
+    }, [
+      createEl("div", {style: {marginBottom: "8px", fontWeight: "600", fontSize: "14px"}}, "预览"),
+      createEl("canvas", {
+        id: "crop-preview",
+        style: {
+          maxWidth: "150px",
+          maxHeight: "150px",
+          border: "1px solid #ccc",
+          borderRadius: "4px",
+          background: "#fff"
+        }
+      })
+    ]);
+
+    // 操作按钮
+    const buttonArea = createEl("div", {
+      style: {
+        display: "flex",
+        flexDirection: "column",
+        gap: "8px"
+      }
+    }, [
+      createEl("button", {
+        class: "tagball-btn primary",
+        style: {width: "100%"},
+        onclick: () => applyCrop()
+      }, "应用裁剪"),
+      createEl("button", {
+        class: "tagball-btn ghost",
+        style: {width: "100%"},
+        onclick: () => resetCrop()
+      }, "重置"),
+      createEl("button", {
+        class: "tagball-btn",
+        style: {width: "100%"},
+        onclick: () => closeCropModal()
+      }, "取消")
+    ]);
+
+    rightPanel.appendChild(previewArea);
+    rightPanel.appendChild(buttonArea);
+    mainContent.appendChild(cropArea);
+    mainContent.appendChild(rightPanel);
+    cropContainer.appendChild(header);
+    cropContainer.appendChild(mainContent);
+    cropModal.appendChild(cropContainer);
+    // 使用 document.documentElement 作为挂载点，避免部分站点在 body 上创建的叠层上下文导致层级被压制
+    document.documentElement.appendChild(cropModal);
+
+    // 添加事件监听
+    setupCropEvents(cropBox, cropArea);
+  }
+
+  function initializeCrop(img, container) {
+    // 获取图片原始尺寸
+    cropData.imageWidth = img.naturalWidth;
+    cropData.imageHeight = img.naturalHeight;
+    
+    // 计算最佳显示尺寸，保持图片比例
+    const maxWidth = Math.min(800, window.innerWidth * 0.6);
+    const maxHeight = Math.min(600, window.innerHeight * 0.6);
+    
+    const imageRatio = cropData.imageWidth / cropData.imageHeight;
+    const containerRatio = maxWidth / maxHeight;
+    
+    let displayWidth, displayHeight;
+    
+    if (imageRatio > containerRatio) {
+      // 图片更宽，以宽度为准
+      displayWidth = maxWidth;
+      displayHeight = maxWidth / imageRatio;
+    } else {
+      // 图片更高，以高度为准
+      displayHeight = maxHeight;
+      displayWidth = maxHeight * imageRatio;
+    }
+    
+    // 设置图片显示尺寸
+    img.style.width = displayWidth + 'px';
+    img.style.height = displayHeight + 'px';
+    
+    // 设置容器尺寸以匹配图片
+    container.style.width = displayWidth + 'px';
+    container.style.height = displayHeight + 'px';
+    
+    // 更新裁剪数据
+    cropData.containerWidth = displayWidth;
+    cropData.containerHeight = displayHeight;
+    cropData.scale = displayWidth / cropData.imageWidth;
+
+    // 初始裁剪框位置（居中，60%大小，但不小于50px）
+    const initialWidth = Math.max(50, Math.min(displayWidth * 0.6, 300));
+    const initialHeight = Math.max(50, Math.min(displayHeight * 0.6, 300));
+    
+    cropData.cropX = (displayWidth - initialWidth) / 2;
+    cropData.cropY = (displayHeight - initialHeight) / 2;
+    cropData.cropWidth = initialWidth;
+    cropData.cropHeight = initialHeight;
+
+    updateCropBox();
+    updatePreview();
+  }
+
+  function setupCropEvents(cropBox, cropArea) {
+    // 在空白区域按下开始绘制新裁剪框
+    cropArea.addEventListener('mousedown', (e) => {
+      // 若点击的是裁剪框或其手柄，则由其它逻辑处理
+      if (e.target.id === 'crop-box' || (e.target.classList && e.target.classList.contains('crop-handle'))) {
+        return;
+      }
+      startNewSelection(e);
+    });
+
+    // 拖拽移动现有裁剪框
+    cropBox.addEventListener('mousedown', (e) => {
+      // 如果点击的不是调整手柄，则开始拖拽
+      if (!e.target.classList.contains('crop-handle')) {
+        startDrag(e);
+      }
+    });
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  }
+
+  function startDrag(e) {
+    cropData.isDragging = true;
+    cropData.startX = e.clientX - cropData.cropX;
+    cropData.startY = e.clientY - cropData.cropY;
+    e.preventDefault();
+  }
+
+  function startNewSelection(e) {
+    const area = document.getElementById('crop-area');
+    if (!area) return;
+    const rect = area.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    cropData.isDrawing = true;
+    cropData.startX = Math.max(0, Math.min(x, cropData.containerWidth));
+    cropData.startY = Math.max(0, Math.min(y, cropData.containerHeight));
+
+    // 初始化为一个点
+    cropData.cropX = cropData.startX;
+    cropData.cropY = cropData.startY;
+    cropData.cropWidth = 0;
+    cropData.cropHeight = 0;
+
+    updateCropBox();
+    updatePreview();
+    e.preventDefault();
+  }
+
+  function startResize(e, handle) {
+    cropData.isResizing = true;
+    cropData.resizeHandle = handle;
+    cropData.startX = e.clientX;
+    cropData.startY = e.clientY;
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  function handleMouseMove(e) {
+    if (cropData.isDrawing) {
+      const area = document.getElementById('crop-area');
+      if (!area) return;
+      const rect = area.getBoundingClientRect();
+      let x = e.clientX - rect.left;
+      let y = e.clientY - rect.top;
+
+      // 约束在容器范围内
+      x = Math.max(0, Math.min(x, cropData.containerWidth));
+      y = Math.max(0, Math.min(y, cropData.containerHeight));
+
+      const left = Math.min(cropData.startX, x);
+      const top = Math.min(cropData.startY, y);
+      const width = Math.abs(x - cropData.startX);
+      const height = Math.abs(y - cropData.startY);
+
+      // 最小尺寸1px，防止看不见
+      cropData.cropX = left;
+      cropData.cropY = top;
+      cropData.cropWidth = Math.max(1, width);
+      cropData.cropHeight = Math.max(1, height);
+
+      updateCropBox();
+      updatePreview();
+    } else if (cropData.isDragging) {
+      const newX = e.clientX - cropData.startX;
+      const newY = e.clientY - cropData.startY;
+      
+      // 边界检查
+      cropData.cropX = Math.max(0, Math.min(newX, cropData.containerWidth - cropData.cropWidth));
+      cropData.cropY = Math.max(0, Math.min(newY, cropData.containerHeight - cropData.cropHeight));
+      
+      updateCropBox();
+      updatePreview();
+    } else if (cropData.isResizing) {
+      handleResize(e);
+    }
+  }
+
+  function handleResize(e) {
+    const deltaX = e.clientX - cropData.startX;
+    const deltaY = e.clientY - cropData.startY;
+    const handle = cropData.resizeHandle;
+    
+    let newX = cropData.cropX;
+    let newY = cropData.cropY;
+    let newWidth = cropData.cropWidth;
+    let newHeight = cropData.cropHeight;
+
+    // 根据手柄位置调整尺寸
+    if (handle.includes('w')) {
+      newX = Math.max(0, cropData.cropX + deltaX);
+      newWidth = cropData.cropWidth - (newX - cropData.cropX);
+    }
+    if (handle.includes('e')) {
+      newWidth = Math.min(cropData.containerWidth - cropData.cropX, cropData.cropWidth + deltaX);
+    }
+    if (handle.includes('n')) {
+      newY = Math.max(0, cropData.cropY + deltaY);
+      newHeight = cropData.cropHeight - (newY - cropData.cropY);
+    }
+    if (handle.includes('s')) {
+      newHeight = Math.min(cropData.containerHeight - cropData.cropY, cropData.cropHeight + deltaY);
+    }
+
+    // 最小尺寸限制
+    if (newWidth >= 20 && newHeight >= 20) {
+      cropData.cropX = newX;
+      cropData.cropY = newY;
+      cropData.cropWidth = newWidth;
+      cropData.cropHeight = newHeight;
+      
+      updateCropBox();
+      updatePreview();
+    }
+  }
+
+  function handleMouseUp() {
+    cropData.isDragging = false;
+    cropData.isResizing = false;
+    cropData.isDrawing = false;
+    cropData.resizeHandle = null;
+  }
+
+  function updateCropBox() {
+    const cropBox = document.getElementById('crop-box');
+    if (cropBox) {
+      cropBox.style.left = cropData.cropX + 'px';
+      cropBox.style.top = cropData.cropY + 'px';
+      cropBox.style.width = cropData.cropWidth + 'px';
+      cropBox.style.height = cropData.cropHeight + 'px';
+    }
+  }
+
+  function updatePreview() {
+    const canvas = document.getElementById('crop-preview');
+    const img = document.getElementById('crop-image');
+    if (!canvas || !img) return;
+
+    const ctx = canvas.getContext('2d');
+    
+    // 计算实际图片上的裁剪区域
+    const scaleX = cropData.imageWidth / cropData.containerWidth;
+    const scaleY = cropData.imageHeight / cropData.containerHeight;
+    
+    const sourceX = cropData.cropX * scaleX;
+    const sourceY = cropData.cropY * scaleY;
+    const sourceWidth = cropData.cropWidth * scaleX;
+    const sourceHeight = cropData.cropHeight * scaleY;
+
+    // 设置canvas尺寸
+    const previewSize = Math.min(150, Math.max(cropData.cropWidth, cropData.cropHeight));
+    canvas.width = previewSize;
+    canvas.height = previewSize;
+    
+    // 清空canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // 绘制裁剪预览
+    const scale = previewSize / Math.max(sourceWidth, sourceHeight);
+    const drawWidth = sourceWidth * scale;
+    const drawHeight = sourceHeight * scale;
+    const offsetX = (previewSize - drawWidth) / 2;
+    const offsetY = (previewSize - drawHeight) / 2;
+    
+    ctx.drawImage(
+      img,
+      sourceX, sourceY, sourceWidth, sourceHeight,
+      offsetX, offsetY, drawWidth, drawHeight
+    );
+  }
+
+  function applyCrop() {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const img = document.getElementById('crop-image');
+    
+    if (!img) return;
+
+    // 计算实际裁剪区域
+    const scaleX = cropData.imageWidth / cropData.containerWidth;
+    const scaleY = cropData.imageHeight / cropData.containerHeight;
+    
+    const sourceX = cropData.cropX * scaleX;
+    const sourceY = cropData.cropY * scaleY;
+    const sourceWidth = cropData.cropWidth * scaleX;
+    const sourceHeight = cropData.cropHeight * scaleY;
+
+    // 设置canvas尺寸为裁剪区域尺寸
+    canvas.width = sourceWidth;
+    canvas.height = sourceHeight;
+    
+    // 绘制裁剪后的图片
+    ctx.drawImage(
+      img,
+      sourceX, sourceY, sourceWidth, sourceHeight,
+      0, 0, sourceWidth, sourceHeight
+    );
+    
+    // 获取裁剪后的图片数据
+    const croppedDataUrl = canvas.toDataURL('image/png');
+    
+    // 更新原始标签弹窗中的图片
+    const originalPreview = document.getElementById('tagball-preview');
+    if (originalPreview) {
+      originalPreview.src = croppedDataUrl;
+    }
+    
+    // 关闭裁剪弹窗
+    // 关闭裁剪弹窗并恢复标签弹窗
+    closeCropModal();
+   }
+
+  function resetCrop() {
+    // 重置到初始状态
+    const img = document.getElementById('crop-image');
+    const container = document.getElementById('crop-area');
+    if (img && container) {
+      initializeCrop(img, container);
+    }
+  }
+
+  function getCursorForHandle(handle) {
+    const cursors = {
+      'nw': 'nw-resize', 'n': 'n-resize', 'ne': 'ne-resize',
+      'e': 'e-resize', 'se': 'se-resize', 's': 's-resize',
+      'sw': 'sw-resize', 'w': 'w-resize'
+    };
+    return cursors[handle] || 'default';
+  }
+
+  function getHandlePosition(handle) {
+    const positions = {
+      'nw': { top: '-4px', left: '-4px' },
+      'n': { top: '-4px', left: '50%', transform: 'translateX(-50%)' },
+      'ne': { top: '-4px', right: '-4px' },
+      'e': { top: '50%', right: '-4px', transform: 'translateY(-50%)' },
+      'se': { bottom: '-4px', right: '-4px' },
+      's': { bottom: '-4px', left: '50%', transform: 'translateX(-50%)' },
+      'sw': { bottom: '-4px', left: '-4px' },
+      'w': { top: '50%', left: '-4px', transform: 'translateY(-50%)' }
+    };
+    return positions[handle] || {};
+  }
+
+  // 统一关闭裁剪弹窗并恢复标签弹窗显示
+  function closeCropModal() {
+    if (cropModal) {
+      cropModal.remove();
+      cropModal = null;
+    }
+    if (typeof modal !== 'undefined' && modal) {
+      modal.style.display = 'block';
+      modal.style.pointerEvents = '';
+      modal.style.visibility = '';
+    }
   }
 
 })();

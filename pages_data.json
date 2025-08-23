@@ -4,7 +4,7 @@
       "page_id": 1,
       "name": "默认分页",
       "created_time": "2025-08-19 23:05:05",
-      "input_text": "女狙击手，表情冷漠，沉着冷静，精英隐秘特工，前卫未来派装扮，成熟动漫风格，八头身比例，红色眼妆，蓝色的眼睛，灰色白色长马尾辫至大腿，以黑色和灰色为主色调，配以蓝色腰带装饰的服装，围巾，戴着黑色的战术手套，单耳耳机，短款迷彩风衣，风衣上有着方形的灰白迷彩图案，修身服装，紧身裤子带有逼真的皱纹，单腿护膝，灰色军靴，大腿带上有手枪，腰间有一把蝴蝶刀，自信而指挥的姿态，冷静却迷人，严肃的表情，美少女动漫角色设计，动漫光影，全身站立姿态，中性背景，干净的线条，高细节，锐利焦点",
+      "input_text": "captured with an iPhone, Female sniper, expression cold, calm, elite secret agent, avant-garde futuristic attire, mature anime style, eight-body proportions, red eye makeup, blue eyes, gray and white long buns down to the thigh, clothing predominantly in black and gray with blue belt decoration, scarf, wearing black tactical gloves, single-ear headphones, short camouflage windbreaker, with square gray and white camouflage patterns, slimming clothing, tight pants with realistic creases, one knee guard, gray military boots, a handgun on the thigh, a butterfly knife at the waist, confident and commanding posture, calm yet charming, serious expression, beautiful girl anime character design, anime lighting and shadows, full-body standing posture, neutral background, clean lines, high detail, sharp focus.",
       "output_text": "Female sniper, expression cold, calm, elite secret agent, avant-garde futuristic attire, mature anime style, eight-body proportions, red eye makeup, blue eyes, gray and white long buns down to the thigh, clothing predominantly in black and gray with blue belt decoration, scarf, wearing black tactical gloves, single-ear headphones, short camouflage windbreaker, with square gray and white camouflage patterns, slimming clothing, tight pants with realistic creases, one knee guard, gray military boots, a handgun on the thigh, a butterfly knife at the waist, confident and commanding posture, calm yet charming, serious expression, beautiful girl anime character design, anime lighting and shadows, full-body standing posture, neutral background, clean lines, high detail, sharp focus.",
       "last_translation": "Female sniper, expression cold, calm, elite secret agent, avant-garde futuristic attire, mature anime style, eight-body proportions, red eye makeup, blue eyes, gray and white long buns down to the thigh, clothing predominantly in black and gray with blue belt decoration, scarf, wearing black tactical gloves, single-ear headphones, short camouflage windbreaker, with square gray and white camouflage patterns, slimming clothing, tight pants with realistic creases, one knee guard, gray military boots, a handgun on the thigh, a butterfly knife at the waist, confident and commanding posture, calm yet charming, serious expression, beautiful girl anime character design, anime lighting and shadows, full-body standing posture, neutral background, clean lines, high detail, sharp focus.",
       "inserted_tags": {
@@ -387,8 +387,239 @@
           }
         }
       }
+    },
+    {
+      "page_id": 2,
+      "name": "分页 2",
+      "created_time": "2025-08-23 01:00:06",
+      "input_text": "请输入要翻译的英文或中文内容...\n支持快捷键：\nCtrl+Enter 翻译\nCtrl+D 清空\nCtrl+T 创建标签",
+      "output_text": "",
+      "last_translation": "",
+      "inserted_tags": {
+        "head": [],
+        "tail": []
+      },
+      "tags": {
+        "head": {
+          "视角": {
+            "仰视视角": {
+              "en": "low angle view",
+              "image": "images/仰视视角_1755367891.png",
+              "usage_count": 14,
+              "selected": false
+            }
+          },
+          "照片风格": {
+            "用iPhone拍摄": {
+              "en": "captured with an iPhone",
+              "usage_count": 0,
+              "image": "images/用iPhone拍摄_df36e463.png",
+              "selected": false
+            },
+            "这张生活方式照片": {
+              "en": "This lifestyle photo",
+              "usage_count": 0,
+              "image": "images/这张生活方式照片_515ca902.png",
+              "selected": false
+            }
+          },
+          "镜头": {
+            "一张20岁女子脸上裸露皮肤的照片。": {
+              "en": "A photo capturing the bare skin of a 20-year-old woman's face.",
+              "usage_count": 0,
+              "image": "images/一张20岁女子脸上裸露皮肤的照片。_fef2252f.png",
+              "selected": false
+            }
+          },
+          "拍摄角度": {
+            "正面角度": {
+              "en": "Front angle",
+              "usage_count": 0,
+              "selected": false
+            },
+            "侧视图": {
+              "en": "Side profile",
+              "usage_count": 0,
+              "selected": false
+            },
+            "后视图": {
+              "en": "Rear view",
+              "usage_count": 0,
+              "selected": false
+            },
+            "自上而下视图": {
+              "en": "Top-down view",
+              "usage_count": 0,
+              "selected": false
+            },
+            "低角度视图": {
+              "en": "Low-angle view",
+              "usage_count": 0,
+              "selected": false
+            },
+            "高对角线角度": {
+              "en": "High diagonal angle",
+              "usage_count": 0,
+              "selected": false
+            },
+            "低对角线仰视": {
+              "en": "Upward low diagonal",
+              "usage_count": 0,
+              "selected": false
+            },
+            "视线高度拍摄": {
+              "en": "Eye-level shot",
+              "usage_count": 0,
+              "selected": false
+            },
+            "鸟瞰图": {
+              "en": "Bird’s-eye view",
+              "usage_count": 0,
+              "selected": false
+            },
+            "极低角度": {
+              "en": "Worm’s-eye view",
+              "usage_count": 0,
+              "selected": false
+            },
+            "四分之三后视": {
+              "en": "Three-quarter rear view",
+              "usage_count": 0,
+              "selected": false
+            },
+            "低头看脚": {
+              "en": "Looking-down POV",
+              "usage_count": 0,
+              "selected": false
+            },
+            "荷兰角": {
+              "en": "Dutch tilt",
+              "usage_count": 0,
+              "selected": false
+            },
+            "过肩视角": {
+              "en": "Over-the-shoulder",
+              "usage_count": 0,
+              "selected": false
+            },
+            "镜面反射角": {
+              "en": "Mirror reflection angle",
+              "usage_count": 0,
+              "selected": false
+            },
+            "远距低角度仰视": {
+              "en": "Distant low-angle",
+              "usage_count": 0,
+              "selected": false
+            },
+            "后对角线角度": {
+              "en": "Rear diagonal angle",
+              "usage_count": 0,
+              "selected": false
+            },
+            "中距低对角": {
+              "en": "Mid-shot low diagonal",
+              "usage_count": 0,
+              "selected": false
+            },
+            "斜前方微仰视": {
+              "en": "Oblique-front upward",
+              "usage_count": 0,
+              "selected": false
+            },
+            "脸侧特写": {
+              "en": "Profile close-up",
+              "usage_count": 0,
+              "selected": false
+            },
+            "俯视角度": {
+              "en": "Overhead angle",
+              "usage_count": 0,
+              "selected": false
+            },
+            "膝下仰视": {
+              "en": "Upward below-knees",
+              "usage_count": 0,
+              "selected": false
+            },
+            "躺姿仰视": {
+              "en": "Reclining upward angle",
+              "usage_count": 0,
+              "selected": false
+            },
+            "房间角落视角": {
+              "en": "Corner-room viewpoint",
+              "usage_count": 0,
+              "selected": false
+            },
+            "门后偷看": {
+              "en": "Peek from behind door",
+              "usage_count": 0,
+              "selected": false
+            },
+            "低低地斜向上爬行": {
+              "en": "Floor-crawl low angle",
+              "usage_count": 0,
+              "selected": false
+            },
+            "与屏幕边缘成角": {
+              "en": "Angled-to-frame edge",
+              "usage_count": 0,
+              "selected": false
+            },
+            "背后看镜子": {
+              "en": "Mirror-from-behind",
+              "usage_count": 0,
+              "selected": false
+            },
+            "高处远眺": {
+              "en": "Vantage look-out",
+              "usage_count": 0,
+              "selected": false
+            },
+            "直视前方": {
+              "en": "Focused straight gaze",
+              "usage_count": 0,
+              "selected": false
+            }
+          },
+          "相机距离": {}
+        },
+        "tail": {
+          "图片质量": {
+            "写实风格": {
+              "en": "photorealistic",
+              "usage_count": 4,
+              "image": "images/写实风格_29a12b8f.png",
+              "selected": false
+            },
+            "数码单反": {
+              "en": "high-resolution DSLR",
+              "usage_count": 1,
+              "image": "images/高分辨率数码单反_a9023196.png",
+              "selected": false
+            }
+          },
+          "视角": {
+            "踩到了下面": {
+              "en": "stepping on tiny viewer below",
+              "usage_count": 0,
+              "image": "images/踩到了下面_2d5c8493.png",
+              "selected": false
+            }
+          },
+          "否定词": {
+            "不要模糊背景": {
+              "en": "-no blurred background",
+              "usage_count": 0,
+              "image": "images/不要模糊背景_22f50b3e.png",
+              "selected": false
+            }
+          }
+        }
+      }
     }
   ],
   "current_page_id": 1,
-  "next_page_id": 2
+  "next_page_id": 3
 }
