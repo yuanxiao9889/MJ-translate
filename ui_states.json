@@ -23,64 +23,12 @@
       "canvas_width": 0,
       "canvas_height": 0
     },
-    "last_updated": "2025-08-23T14:12:04.302076",
-    "tag_ui_states": {
-      "head": {
-        "visible_tags": [
-          "仰视视角",
-          "111"
-        ],
-        "selected_tags": [
-          "111"
-        ],
-        "scroll_position": 0.0,
-        "tag_details": {
-          "仰视视角": {
-            "label": "仰视视角",
-            "tab": "视角",
-            "is_selected": false,
-            "is_visible": true,
-            "position": 1
-          },
-          "111": {
-            "label": "111",
-            "tab": "视角",
-            "is_selected": true,
-            "is_visible": true,
-            "position": 2
-          }
-        }
-      },
-      "tail": {
-        "visible_tags": [
-          "写实风格",
-          "数码单反"
-        ],
-        "selected_tags": [],
-        "scroll_position": 0.0,
-        "tag_details": {
-          "写实风格": {
-            "label": "写实风格",
-            "tab": "图片质量",
-            "is_selected": false,
-            "is_visible": true,
-            "position": 1
-          },
-          "数码单反": {
-            "label": "数码单反",
-            "tab": "图片质量",
-            "is_selected": false,
-            "is_visible": true,
-            "position": 2
-          }
-        }
-      }
-    }
+    "last_updated": "2025-08-24T01:52:21.000931"
   },
   "1": {
     "output_text_state": {
       "tag_blocks": [],
-      "text_content": "Female sniper, expression cold, calm, elite secret agent, avant-garde futuristic attire, mature anime style, eight-body proportions, red eye makeup, blue eyes, gray and white long buns down to the thigh, clothing predominantly in black and gray with blue belt decoration, scarf, wearing black tactical gloves, single-ear headphones, short camouflage windbreaker, with square gray and white camouflage patterns, slimming clothing, tight pants with realistic creases, one knee guard, gray military boots, a handgun on the thigh, a butterfly knife at the waist, confident and commanding posture, calm yet charming, serious expression, beautiful girl anime character design, anime lighting and shadows, full-body standing posture, neutral background, clean lines, high detail, sharp focus.\n",
+      "text_content": "",
       "cursor_position": "1.0",
       "scroll_position": 0.0
     },
@@ -101,22 +49,104 @@
       "canvas_width": 0,
       "canvas_height": 0
     },
-    "last_updated": "2025-08-23T14:12:05.219398",
+    "last_updated": "2025-08-24T01:44:39.561619",
     "tag_ui_states": {
       "head": {
         "visible_tags": [
           "用iPhone拍摄",
           "这张生活方式照片"
         ],
-        "selected_tags": [
-          "用iPhone拍摄"
-        ],
+        "selected_tags": [],
         "scroll_position": 0.0,
         "tag_details": {
           "用iPhone拍摄": {
             "label": "用iPhone拍摄",
             "tab": "照片风格",
-            "is_selected": true,
+            "is_selected": false,
+            "is_visible": true,
+            "position": 1
+          },
+          "这张生活方式照片": {
+            "label": "这张生活方式照片",
+            "tab": "照片风格",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 2
+          }
+        }
+      },
+      "tail": {
+        "visible_tags": [
+          "写实风格",
+          "超真实风格",
+          "数码单反"
+        ],
+        "selected_tags": [],
+        "scroll_position": 0.0,
+        "tag_details": {
+          "写实风格": {
+            "label": "写实风格",
+            "tab": "图片质量",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 1
+          },
+          "超真实风格": {
+            "label": "超真实风格",
+            "tab": "图片质量",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 2
+          },
+          "数码单反": {
+            "label": "数码单反",
+            "tab": "图片质量",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 3
+          }
+        }
+      }
+    }
+  },
+  "1": {
+    "output_text_state": {
+      "tag_blocks": [],
+      "text_content": "",
+      "cursor_position": "1.0",
+      "scroll_position": 0.0
+    },
+    "tag_ui_state": {
+      "head_tags": {
+        "visible_tags": [],
+        "selected_tags": [],
+        "scroll_position": 0.0
+      },
+      "tail_tags": {
+        "visible_tags": [],
+        "selected_tags": [],
+        "scroll_position": 0.0
+      }
+    },
+    "layout_state": {
+      "layout_mode": "waterfall",
+      "canvas_width": 0,
+      "canvas_height": 0
+    },
+    "last_updated": "2025-08-24T01:52:05.699516",
+    "tag_ui_states": {
+      "head": {
+        "visible_tags": [
+          "用iPhone拍摄",
+          "这张生活方式照片"
+        ],
+        "selected_tags": [],
+        "scroll_position": 0.0,
+        "tag_details": {
+          "用iPhone拍摄": {
+            "label": "用iPhone拍摄",
+            "tab": "照片风格",
+            "is_selected": false,
             "is_visible": true,
             "position": 1
           },
@@ -187,74 +217,6 @@
       "canvas_width": 0,
       "canvas_height": 0
     },
-    "last_updated": "2025-08-23T13:33:08.176564",
-    "tag_ui_states": {
-      "head": {
-        "visible_tags": [
-          "仰视视角"
-        ],
-        "selected_tags": [],
-        "scroll_position": 0.0,
-        "tag_details": {
-          "仰视视角": {
-            "label": "仰视视角",
-            "tab": "视角",
-            "is_selected": false,
-            "is_visible": true,
-            "position": 1
-          }
-        }
-      },
-      "tail": {
-        "visible_tags": [
-          "写实风格",
-          "数码单反"
-        ],
-        "selected_tags": [],
-        "scroll_position": 0.0,
-        "tag_details": {
-          "写实风格": {
-            "label": "写实风格",
-            "tab": "图片质量",
-            "is_selected": false,
-            "is_visible": true,
-            "position": 1
-          },
-          "数码单反": {
-            "label": "数码单反",
-            "tab": "图片质量",
-            "is_selected": false,
-            "is_visible": true,
-            "position": 2
-          }
-        }
-      }
-    }
-  },
-  "1": {
-    "output_text_state": {
-      "tag_blocks": [],
-      "text_content": "",
-      "cursor_position": "1.0",
-      "scroll_position": 0.0
-    },
-    "tag_ui_state": {
-      "head_tags": {
-        "visible_tags": [],
-        "selected_tags": [],
-        "scroll_position": 0.0
-      },
-      "tail_tags": {
-        "visible_tags": [],
-        "selected_tags": [],
-        "scroll_position": 0.0
-      }
-    },
-    "layout_state": {
-      "layout_mode": "waterfall",
-      "canvas_width": 0,
-      "canvas_height": 0
-    },
-    "last_updated": "2025-08-23T14:12:03.232956"
+    "last_updated": "2025-08-24T01:52:20.800917"
   }
 }

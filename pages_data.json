@@ -193,6 +193,15 @@
               "image": "images/仰视视角_1755367891.png",
               "usage_count": 14,
               "selected": false
+            },
+            "1111": {
+              "en": "1211",
+              "image": "images\\1111_1755931119.png",
+              "usage_count": 0,
+              "url": "https://huaban.com/pins/6797187033",
+              "title": "第二天-花瓣网",
+              "timestamp": 1755931119773,
+              "selected": false
             }
           },
           "相机距离": {
@@ -392,7 +401,7 @@
       "page_id": 2,
       "name": "分页 2",
       "created_time": "2025-08-23 01:00:06",
-      "input_text": "请输入要翻译的英文或中文内容...\n支持快捷键：\nCtrl+Enter 翻译\nCtrl+D 清空\nCtrl+T 创建标签",
+      "input_text": "二次元少女，樱花树下，微风，粉色樱花，柔和阳光，近景，细腻纹理",
       "output_text": "",
       "last_translation": "",
       "inserted_tags": {
@@ -406,6 +415,15 @@
               "en": "low angle view",
               "image": "images/仰视视角_1755367891.png",
               "usage_count": 14,
+              "selected": false
+            },
+            "1111": {
+              "en": "1211",
+              "image": "images\\1111_1755931119.png",
+              "usage_count": 0,
+              "url": "https://huaban.com/pins/6797187033",
+              "title": "第二天-花瓣网",
+              "timestamp": 1755931119773,
               "selected": false
             }
           },
