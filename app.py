@@ -19,6 +19,7 @@ from services.bridge import start_bridge, poll_from_browser
 from views.ui_main import build_ui
 from services.api import load_api_config
 from services.data_processor import process_pending_data
+from services.text_selection_translator import enable_system_selection_translation_global
 
 
 def run() -> None:
@@ -52,10 +53,20 @@ def run() -> None:
     root.geometry("1200x830")
     root.minsize(950, 650)
 
+    # 启用系统级划词翻译（Ctrl+T），保持在托盘时也可用
+    system_translator = enable_system_selection_translation_global(root)
+
     # 3) Setup the system tray. ``TrayManager`` will intercept the
     #    window close event and minimize to the tray. When the user
     #    selects "退出程序" from the tray menu the application exits.
     tray = TrayManager(root, app_name="MJ提示词工具", icon_path=None, close_to_tray=True)
+    # 确保退出程序时释放系统热键监听与弹窗
+    def _on_quit_cleanup():
+        try:
+            system_translator.destroy()
+        except Exception:
+            pass
+    tray.on_quit_callback = _on_quit_cleanup
     tray.start_tray()
 
     # 统一配置加载和数据处理

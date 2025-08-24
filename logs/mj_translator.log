@@ -90,3 +90,27 @@ Traceback (most recent call last):
     raise ClientError("The bucket_name is invalid, please check it.")
 oss2.exceptions.ClientError: {'status': -1, 'x-oss-request-id': '', 'details': 'ClientError: The bucket_name is invalid, please check it.'}
 2025-08-21 11:18:39 - mj_translator - INFO - 从 g:\MJ-translate\apis.json 加载旧API配置
+2025-08-24 13:43:23 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+T）
+2025-08-24 14:03:15 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+T）
+2025-08-24 14:16:32 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+T）
+2025-08-24 14:16:32 - mj_translator - ERROR - 注册全局热键失败（可能被其它程序占用）
+NoneType: None
+2025-08-24 14:52:04 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+T）
+2025-08-24 15:03:55 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+T）
+2025-08-24 15:26:21 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+T）
+2025-08-24 19:16:27 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+T）
+2025-08-24 19:21:30 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+T）
+2025-08-24 19:25:31 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+T）
+2025-08-24 20:00:52 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+T）
+2025-08-24 20:21:11 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+T）
+2025-08-24 20:51:19 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+T）
+2025-08-24 21:29:30 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+T）
+2025-08-24 21:34:05 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+T）
+2025-08-24 21:34:26 - mj_translator - INFO - 系统划词翻译热键已更新为：Ctrl+R
+2025-08-24 21:43:19 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+R）
+2025-08-24 21:43:28 - mj_translator - INFO - 系统划词翻译热键已更新为：Ctrl+T
+2025-08-24 21:43:36 - mj_translator - INFO - 系统划词翻译热键已更新为：Ctrl+R
+2025-08-24 21:43:44 - mj_translator - INFO - 系统划词翻译热键已更新为：Alt+Q
+2025-08-24 21:43:50 - mj_translator - INFO - 系统划词翻译热键已更新为：Ctrl+T
+2025-08-24 21:43:53 - mj_translator - INFO - 系统划词翻译热键已更新为：Ctrl+R
+2025-08-24 22:03:18 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+R）
