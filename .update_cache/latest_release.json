@@ -1,9 +1,9 @@
 {
-  "url": "https://api.github.com/repos/yuanxiao9889/MJ-translate/releases/241566193",
-  "assets_url": "https://api.github.com/repos/yuanxiao9889/MJ-translate/releases/241566193/assets",
-  "upload_url": "https://uploads.github.com/repos/yuanxiao9889/MJ-translate/releases/241566193/assets{?name,label}",
-  "html_url": "https://github.com/yuanxiao9889/MJ-translate/releases/tag/v1.0.2",
-  "id": 241566193,
+  "url": "https://api.github.com/repos/yuanxiao9889/MJ-translate/releases/242104633",
+  "assets_url": "https://api.github.com/repos/yuanxiao9889/MJ-translate/releases/242104633/assets",
+  "upload_url": "https://uploads.github.com/repos/yuanxiao9889/MJ-translate/releases/242104633/assets{?name,label}",
+  "html_url": "https://github.com/yuanxiao9889/MJ-translate/releases/tag/v1.0.6",
+  "id": 242104633,
   "author": {
     "login": "yuanxiao9889",
     "id": 217445063,
@@ -25,18 +25,18 @@
     "user_view_type": "public",
     "site_admin": false
   },
-  "node_id": "RE_kwDOPhMwgM4OZgHx",
-  "tag_name": "v1.0.2",
-  "target_commitish": "main",
-  "name": "v1.0.2",
+  "node_id": "RE_kwDOPhMwgM4Objk5",
+  "tag_name": "v1.0.6",
+  "target_commitish": "master",
+  "name": "v1.0.6",
   "draft": false,
   "immutable": false,
   "prerelease": false,
-  "created_at": "2025-08-21T16:10:47Z",
-  "updated_at": "2025-08-21T16:46:20Z",
-  "published_at": "2025-08-21T16:04:00Z",
+  "created_at": "2025-08-24T14:03:47Z",
+  "updated_at": "2025-08-24T14:07:15Z",
+  "published_at": "2025-08-24T14:06:41Z",
   "assets": [],
-  "tarball_url": "https://api.github.com/repos/yuanxiao9889/MJ-translate/tarball/v1.0.2",
-  "zipball_url": "https://api.github.com/repos/yuanxiao9889/MJ-translate/zipball/v1.0.2",
-  "body": "修复更新功能"
+  "tarball_url": "https://api.github.com/repos/yuanxiao9889/MJ-translate/tarball/v1.0.6",
+  "zipball_url": "https://api.github.com/repos/yuanxiao9889/MJ-translate/zipball/v1.0.6",
+  "body": "新增划词翻译，和浏览器右键弹窗"
 }

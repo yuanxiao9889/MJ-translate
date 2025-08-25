@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TagBall 裁剪层测试</title>
+  <link rel="stylesheet" href="overlay.css">
+  <style>
+    body { font-family: system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial; padding: 24px; }
+    .page-z-top { position: fixed; right: 10px; top: 10px; width: 140px; height: 140px; background: rgba(255,0,0,0.35); border: 1px solid rgba(255,0,0,0.6); z-index: 999999999; display: flex; align-items:center; justify-content:center; color:#900; font-weight:600; }
+  </style>
+</head>
+<body>
+  <h1>TagBall 裁剪层测试页</h1>
+  <p>点击下方按钮，模拟从图片创建标签：会打开标签弹窗，随后可点击“裁剪图片”进入裁剪层。</p>
+  <button id="btn" style="padding:10px 16px; font-size:14px; cursor:pointer;">模拟创建标签</button>
+  <div class="page-z-top">页面高层元素</div>
+
+  <script>
+  // 提供最小 chrome.runtime stub，供 content.js 注册监听
+  window.chrome = {
+    runtime: {
+      onMessage: {
+        addListener: function(fn){
+          (window.__listeners ||= []).push(fn);
+        }
+      }
+    }
+  };
+  </script>
+  <script src="content.js"></script>
+  <script>
+  function trigger(){
+    const msg = { type: "CREATE_TAG_FROM_IMAGE", imageUrl: "icons/icon128.png", pageUrl: location.href, pageTitle: document.title };
+    const sender = {};
+    const sendResponse = function(){};
+    (window.__listeners || []).forEach(fn => { try { fn(msg, sender, sendResponse); } catch(e){ console.error(e); } });
+  }
+  document.getElementById('btn').addEventListener('click', trigger);
+  </script>
+</body>
+</html>

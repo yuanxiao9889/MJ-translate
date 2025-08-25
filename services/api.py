@@ -80,20 +80,62 @@ current_api_index: Dict[str, int] = {}
 current_platform: str = "baidu"
 
 def load_api_config() -> None:
-    """Load API configuration from disk into ``api_config``.
+    """Load API configuration from credentials manager into ``api_config``.
 
-    If the file does not exist, a default structure with empty lists
-    for each supported platform is created. ``current_api_index`` is
-    reset to zero for each platform.
+    Loads credentials from the new credentials manager system and converts
+    them to the format expected by the translation functions.
     """
     global api_config, current_api_index, current_platform
-    default_config = {"baidu": [], "zhipu": [], "zhipu-glm45": []}
-    api_config = safe_json_load(API_CONFIG_FILE, default_config)
-    # Ensure new platforms exist
-    api_config.setdefault("zhipu-glm45", [])
-    # Reset current index per platform
-    for plat in api_config:
-        current_api_index[plat] = 0
+    
+    try:
+        from .credentials_manager import get_credentials_manager
+        cred_manager = get_credentials_manager()
+        credentials = cred_manager.get_credentials()
+        
+        # 转换新格式凭证到旧格式API配置
+        api_config = {
+            "baidu": [],
+            "zhipu": [],
+            "zhipu-glm45": []
+        }
+        
+        # 转换百度翻译凭证
+        for cred in credentials.get("baidu_translate", []):
+            if not cred.get("disabled", False):
+                api_config["baidu"].append({
+                    "app_id": cred.get("app_id", ""),
+                    "app_key": cred.get("app_key", ""),
+                    "disabled": cred.get("disabled", False)
+                })
+        
+        # 转换智谱AI凭证
+        for cred in credentials.get("zhipu_ai", []):
+            if not cred.get("disabled", False):
+                api_config["zhipu"].append({
+                    "api_key": cred.get("api_key", ""),
+                    "disabled": cred.get("disabled", False)
+                })
+        
+        # 转换智谱GLM-4.5凭证
+        for cred in credentials.get("zhipu_glm45", []):
+            if not cred.get("disabled", False):
+                api_config["zhipu-glm45"].append({
+                    "api_key": cred.get("api_key", ""),
+                    "disabled": cred.get("disabled", False)
+                })
+        
+        # Reset current index per platform
+        for plat in api_config:
+            current_api_index[plat] = 0
+        
+        logger.info(f"已从凭证管理器加载API配置: baidu={len(api_config['baidu'])}, zhipu={len(api_config['zhipu'])}, zhipu-glm45={len(api_config['zhipu-glm45'])}")
+        
+    except Exception as e:
+        logger.error(f"从凭证管理器加载API配置失败: {e}")
+        # 回退到空配置
+        api_config = {"baidu": [], "zhipu": [], "zhipu-glm45": []}
+        for plat in api_config:
+            current_api_index[plat] = 0
     
     # 加载用户保存的平台选择
     try:
@@ -105,8 +147,12 @@ def load_api_config() -> None:
         logger.warning(f"Failed to load platform config: {e}")
 
 def save_api_config() -> None:
-    """Persist the current API configuration to disk."""
-    safe_json_save(API_CONFIG_FILE, api_config)
+    """Save API configuration changes back to credentials manager.
+    
+    Note: This function is deprecated as credentials should be managed
+    through the credentials manager UI, not through direct API config changes.
+    """
+    logger.warning("save_api_config() is deprecated. Use credentials manager to modify credentials.")
 
 def get_next_api_info(platform: str) -> Tuple[Optional[Dict[str, Any]], Optional[int]]:
     """Return the next available API account for a given platform.
@@ -128,7 +174,9 @@ def mark_api_disabled(platform: str, idx: int) -> None:
     """Mark an API account as disabled and persist the change."""
     if 0 <= idx < len(api_config.get(platform, [])):
         api_config[platform][idx]["disabled"] = True
-        save_api_config()
+        # 注意：这里只是临时标记为禁用，不会持久化到凭证管理器
+        # 如需永久禁用，请通过凭证管理器UI操作
+        logger.warning(f"API账户 {platform}[{idx}] 已临时标记为禁用，重启后将恢复")
 
 def contains_chinese(text: str) -> bool:
     """Return True if the given text contains any Chinese characters."""
@@ -166,6 +214,7 @@ def translate_baidu(text: str) -> str:
 
     Handles account cycling and error handling. If all configured
     accounts are disabled or unusable, returns a human-readable message.
+    Supports bidirectional translation between Chinese and English.
     """
     def _baidu_translate():
         apis = api_config.get("baidu", [])
@@ -179,8 +228,13 @@ def translate_baidu(text: str) -> str:
             key = api.get("app_key")
             salt = random.randint(32768, 65536)
             q = text
-            from_lang = 'zh' if contains_chinese(q) else 'en'
-            to_lang = 'en' if from_lang == 'zh' else 'zh'
+            # 自动检测语言方向：包含中文则中译英，否则英译中
+            if contains_chinese(text):
+                from_lang = 'zh'
+                to_lang = 'en'
+            else:
+                from_lang = 'en'
+                to_lang = 'zh'
             sign = hashlib.md5((appid + q + str(salt) + key).encode()).hexdigest()
             url = "https://fanyi-api.baidu.com/api/trans/vip/translate"
             params = {
@@ -211,7 +265,9 @@ def translate_baidu(text: str) -> str:
     return safe_execute(_baidu_translate, default_return="[百度翻译异常: 未知错误]")
 
 def translate_zhipu(text: str) -> str:
-    """Translate using Zhipu open API with the GLM-4-Flash model."""
+    """Translate using Zhipu open API with the GLM-4-Flash model.
+    Supports bidirectional translation between Chinese and English.
+    """
     def _zhipu_translate():
         apis = api_config.get("zhipu", [])
         tries = len(apis)
@@ -223,10 +279,17 @@ def translate_zhipu(text: str) -> str:
             api_key = api.get("api_key")
             url = "https://open.bigmodel.cn/api/paas/v4/chat/completions"
             headers = {"Authorization": f"Bearer {api_key}"}
+            
+            # 根据输入语言选择翻译方向
+            if contains_chinese(text):
+                system_prompt = "请将用户提供的中文内容翻译成自然流畅的英文。只输出译文，不要任何额外说明。"
+            else:
+                system_prompt = "请将用户提供的英文内容翻译成自然流畅的中文。只输出译文，不要任何额外说明。"
+            
             payload = {
                 "model": "glm-4-flash",
                 "messages": [
-                    {"role": "system", "content": "你是一个高质量的中英互译助手，只输出翻译结果，不要其他说明。"},
+                    {"role": "system", "content": system_prompt},
                     {"role": "user", "content": text},
                 ],
             }
@@ -251,7 +314,9 @@ def translate_zhipu(text: str) -> str:
     return safe_execute(_zhipu_translate, default_return="[智谱翻译异常: 未知错误]")
 
 def translate_zhipu_glm45(text: str) -> str:
-    """Translate using Zhipu's GLM-4.5 model."""
+    """Translate using Zhipu's GLM-4.5 model.
+    Supports bidirectional translation between Chinese and English.
+    """
     def _zhipu_glm45_translate():
         apis = api_config.get("zhipu-glm45", [])
         tries = len(apis)
@@ -263,10 +328,17 @@ def translate_zhipu_glm45(text: str) -> str:
             api_key = api.get("api_key")
             url = "https://open.bigmodel.cn/api/paas/v4/chat/completions"
             headers = {"Authorization": f"Bearer {api_key}"}
+            
+            # 根据输入语言选择翻译方向
+            if contains_chinese(text):
+                system_prompt = "请将用户提供的中文内容翻译成自然流畅的英文。只输出译文，不要任何额外说明。"
+            else:
+                system_prompt = "请将用户提供的英文内容翻译成自然流畅的中文。只输出译文，不要任何额外说明。"
+            
             payload = {
                 "model": "glm-4.5-longtext",
                 "messages": [
-                    {"role": "system", "content": "你是一个高质量的中英互译助手，只输出翻译结果，不要其他说明。"},
+                    {"role": "system", "content": system_prompt},
                     {"role": "user", "content": text},
                 ],
             }

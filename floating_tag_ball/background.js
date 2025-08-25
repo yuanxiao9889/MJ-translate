@@ -79,6 +79,28 @@ async function processOutbox() {
 }
 chrome.alarms.onAlarm.addListener(a=>{ if (a.name==="outboxRetry") processOutbox(); });
 
+// 创建右键菜单
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.contextMenus.create({
+    id: "createMJTag",
+    title: "新建MJ标签",
+    contexts: ["image"]
+  });
+});
+
+// 处理右键菜单点击
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId === "createMJTag" && info.srcUrl) {
+    // 向content script发送消息，传递图片URL
+    chrome.tabs.sendMessage(tab.id, {
+      type: "CREATE_TAG_FROM_IMAGE",
+      imageUrl: info.srcUrl,
+      pageUrl: info.pageUrl,
+      pageTitle: tab.title
+    });
+  }
+});
+
 async function tryFetchSchema(settings) {
   const endpoints = [];
   if (settings.schemaEndpoint && settings.schemaEndpoint.trim()) endpoints.push(settings.schemaEndpoint.trim());

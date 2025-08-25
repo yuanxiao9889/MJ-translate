@@ -90,3 +90,109 @@ Traceback (most recent call last):
     raise ClientError("The bucket_name is invalid, please check it.")
 oss2.exceptions.ClientError: {'status': -1, 'x-oss-request-id': '', 'details': 'ClientError: The bucket_name is invalid, please check it.'}
 2025-08-21 11:18:39 - mj_translator - INFO - 从 g:\MJ-translate\apis.json 加载旧API配置
+2025-08-25 09:23:13 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+T）
+2025-08-25 09:50:03 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+T）
+2025-08-25 09:53:55 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+T）
+2025-08-25 09:53:55 - mj_translator - ERROR - 注册全局热键失败（可能被其它程序占用）
+NoneType: None
+2025-08-25 09:59:40 - mj_translator - INFO - 系统划词翻译热键已更新为：Ctrl+R
+2025-08-25 10:07:45 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+R）
+2025-08-25 11:18:46 - mj_translator - INFO - 系统划词翻译热键已更新为：Ctrl+Shift+N
+2025-08-25 14:49:16 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-25 14:50:05 - mj_translator - INFO - 从 G:\MJ-translate\apis.json 加载旧API配置
+2025-08-25 14:52:08 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-25 15:01:18 - mj_translator - INFO - 从 G:\MJ-translate\apis.json 加载旧API配置
+2025-08-25 15:01:18 - mj_translator - INFO - 成功从旧配置迁移凭据
+2025-08-25 15:01:18 - mj_translator - INFO - 已将 G:\MJ-translate\apis.json 重命名为 G:\MJ-translate\apis.json.migrated
+2025-08-25 15:15:21 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-25 15:18:37 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-25 15:18:37 - mj_translator - ERROR - 注册全局热键失败（可能被其它程序占用）
+NoneType: None
+2025-08-25 15:18:37 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-25 15:18:37 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-25 15:19:53 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-25 15:22:55 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-25 15:22:55 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-25 15:22:55 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-25 15:34:08 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-25 15:34:08 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-25 15:34:08 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-25 15:43:16 - mj_translator - WARNING - Baidu API account disabled due to error: 54004
+2025-08-25 15:43:16 - mj_translator - WARNING - API账户 baidu[0] 已临时标记为禁用，重启后将恢复
+2025-08-25 15:44:15 - mj_translator - ERROR - Zhipu API request failed: HTTPSConnectionPool(host='open.bigmodel.cn', port=443): Read timed out. (read timeout=15)
+Traceback (most recent call last):
+  File "G:\MJ-translate\.venv\Lib\site-packages\urllib3\connectionpool.py", line 534, in _make_request
+    response = conn.getresponse()
+  File "G:\MJ-translate\.venv\Lib\site-packages\urllib3\connection.py", line 565, in getresponse
+    httplib_response = super().getresponse()
+  File "C:\Users\YXX\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1430, in getresponse
+    response.begin()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\YXX\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 331, in begin
+    version, status, reason = self._read_status()
+                              ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\YXX\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 292, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\YXX\AppData\Local\Programs\Python\Python313\Lib\socket.py", line 719, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Users\YXX\AppData\Local\Programs\Python\Python313\Lib\ssl.py", line 1304, in recv_into
+    return self.read(nbytes, buffer)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\YXX\AppData\Local\Programs\Python\Python313\Lib\ssl.py", line 1138, in read
+    return self._sslobj.read(len, buffer)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+TimeoutError: The read operation timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "G:\MJ-translate\.venv\Lib\site-packages\requests\adapters.py", line 644, in send
+    resp = conn.urlopen(
+        method=request.method,
+    ...<9 lines>...
+        chunked=chunked,
+    )
+  File "G:\MJ-translate\.venv\Lib\site-packages\urllib3\connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+        method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]
+    )
+  File "G:\MJ-translate\.venv\Lib\site-packages\urllib3\util\retry.py", line 474, in increment
+    raise reraise(type(error), error, _stacktrace)
+          ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "G:\MJ-translate\.venv\Lib\site-packages\urllib3\util\util.py", line 39, in reraise
+    raise value
+  File "G:\MJ-translate\.venv\Lib\site-packages\urllib3\connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+        conn,
+    ...<10 lines>...
+        **response_kw,
+    )
+  File "G:\MJ-translate\.venv\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
+    self._raise_timeout(err=e, url=url, timeout_value=read_timeout)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "G:\MJ-translate\.venv\Lib\site-packages\urllib3\connectionpool.py", line 367, in _raise_timeout
+    raise ReadTimeoutError(
+        self, url, f"Read timed out. (read timeout={timeout_value})"
+    ) from err
+urllib3.exceptions.ReadTimeoutError: HTTPSConnectionPool(host='open.bigmodel.cn', port=443): Read timed out. (read timeout=15)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "g:\MJ-translate\services\api.py", line 297, in _zhipu_translate
+    res = requests.post(url, headers=headers, json=payload, timeout=15)
+  File "G:\MJ-translate\.venv\Lib\site-packages\requests\api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "G:\MJ-translate\.venv\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "G:\MJ-translate\.venv\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+  File "G:\MJ-translate\.venv\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+  File "G:\MJ-translate\.venv\Lib\site-packages\requests\adapters.py", line 690, in send
+    raise ReadTimeout(e, request=request)
+requests.exceptions.ReadTimeout: HTTPSConnectionPool(host='open.bigmodel.cn', port=443): Read timed out. (read timeout=15)
+2025-08-25 15:44:15 - mj_translator - WARNING - API账户 zhipu[0] 已临时标记为禁用，重启后将恢复

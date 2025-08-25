@@ -1,5 +1,0 @@
-requests
-semver
-customtkinter
-Pillow
-chardet

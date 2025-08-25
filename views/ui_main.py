@@ -1917,15 +1917,20 @@ def open_settings_popup(root):
     
     ctk.CTkLabel(update_frame, text="版本信息", font=("微软雅黑", 16, "bold")).pack(anchor="w", padx=20, pady=(20, 10))
     
-    try:
-        from services import __version__ as current_version
-    except ImportError:
-        current_version = "1.0.0"
-
-    ctk.CTkLabel(update_frame, text=f"当前版本: {current_version}", font=default_font).pack(anchor="w", padx=20, pady=5)
+    # 使用 UpdateManager 读取当前已安装版本，并通过变量绑定以便后续刷新
+    from services.update_manager import UpdateManager
+    version_var = tk.StringVar(value=f"当前版本: {UpdateManager().current_version}")
+    ctk.CTkLabel(update_frame, textvariable=version_var, font=default_font).pack(anchor="w", padx=20, pady=5)
     
-    # 使用新的模块化更新对话框
-    ctk.CTkButton(update_frame, text="🔄 检查更新", command=lambda: open_update_dialog(root), font=default_font, height=35, fg_color="#28a745").pack(anchor="w", padx=20, pady=20)
+    def refresh_version_label():
+        """在更新完成后刷新版本显示"""
+        try:
+            version_var.set(f"当前版本: {UpdateManager().current_version}")
+        except Exception:
+            version_var.set("当前版本: 读取失败")
+    
+    # 使用新的模块化更新对话框，并在更新完成后刷新版本信息
+    ctk.CTkButton(update_frame, text="🔄 检查更新", command=lambda: open_update_dialog(root, on_update_complete=refresh_version_label), font=default_font, height=35, fg_color="#28a745").pack(anchor="w", padx=20, pady=20)
     
     # === 标签页1: 基础设置 ===
     # 布局模式设置
@@ -2006,6 +2011,176 @@ def open_settings_popup(root):
                  font=default_font, text_color=("#666666", "#AAAAAA")).pack(anchor="w")
     ctk.CTkLabel(translation_desc_frame, text="• 翻译结果以浮动提示显示，不干扰正常操作", 
                  font=default_font, text_color=("#666666", "#AAAAAA")).pack(anchor="w")
+
+    # 自定义全局快捷键设置
+    try:
+        from services.text_selection_translator import get_current_system_hotkey, update_system_hotkey, can_register_hotkey
+    except Exception:
+        get_current_system_hotkey = None
+        update_system_hotkey = None
+        can_register_hotkey = None
+
+    current_hotkey = "Ctrl+T"
+    try:
+        if get_current_system_hotkey:
+            current_hotkey = get_current_system_hotkey() or "Ctrl+T"
+    except Exception:
+        pass
+
+    hotkey_frame = ctk.CTkFrame(translation_frame, fg_color="transparent")
+    hotkey_frame.pack(fill="x", padx=20, pady=(8, 10))
+
+    ctk.CTkLabel(hotkey_frame, text="全局快捷键：", font=default_font).pack(side="left")
+    hotkey_var = tk.StringVar(value=current_hotkey)
+    hotkey_entry = ctk.CTkEntry(hotkey_frame, textvariable=hotkey_var, width=140, font=default_font)
+    hotkey_entry.pack(side="left", padx=(10, 10))
+
+    def on_save_hotkey():
+        val = hotkey_var.get().strip()
+        if not val:
+            messagebox.showwarning("提示", "请输入快捷键，例如 Ctrl+T")
+            return
+
+        # 保存前预检：是否可解析、是否被占用，并获取规范化文本
+        normalized = val
+        if can_register_hotkey:
+            try:
+                ok, res = can_register_hotkey(val)
+            except Exception as e:
+                ok, res = False, f"校验失败：{e}"
+            if not ok:
+                messagebox.showwarning("不可用的快捷键", res)
+                return
+            normalized = res
+
+        # 若与当前配置一致则无需更新
+        current_val = None
+        try:
+            if get_current_system_hotkey:
+                current_val = (get_current_system_hotkey() or "").strip()
+        except Exception:
+            current_val = None
+        if (current_val or "") == normalized:
+            messagebox.showinfo("已是当前设置", f"当前全局快捷键已为：{normalized}")
+            return
+
+        # 应用并持久化
+        try:
+            if update_system_hotkey:
+                update_system_hotkey(normalized)
+            cfg = load_config()
+            cfg['system_hotkey'] = normalized
+            save_config(cfg)
+            messagebox.showinfo("成功", f"全局快捷键已更新为：{normalized}，并已立即生效。")
+        except ValueError as e:
+            messagebox.showerror("保存失败", f"无效的快捷键：{e}")
+        except Exception as e:
+            messagebox.showerror("保存失败", f"更新全局快捷键时发生错误：{e}")
+
+    save_btn = ctk.CTkButton(hotkey_frame, text="保存", font=default_font, height=35, command=on_save_hotkey)
+    save_btn.pack(side="left", padx=(0, 10))
+
+    # 录制快捷键功能
+    recording = {"active": False}
+    pressed = {"ctrl": False, "alt": False, "shift": False, "win": False}
+
+    def _reset_mods():
+        pressed.update({"ctrl": False, "alt": False, "shift": False, "win": False})
+
+    def _format_from_pressed(main_key: str) -> str:
+        parts = []
+        if pressed["ctrl"]: parts.append("Ctrl")
+        if pressed["alt"]: parts.append("Alt")
+        if pressed["shift"]: parts.append("Shift")
+        if pressed["win"]: parts.append("Win")
+        parts.append(main_key)
+        return "+".join(parts)
+
+    def _keysym_to_keyname(keysym: str) -> str | None:
+        ks = keysym
+        if ks == "Escape":
+            return "Esc"
+        if ks == "Return":
+            return "Enter"
+        if ks == "BackSpace":
+            return "Backspace"
+        if ks == "Tab":
+            return "Tab"
+        if ks == "space":
+            return "Space"
+        # F-keys
+        if ks.startswith("F") and ks[1:].isdigit():
+            return ks
+        # Single char
+        if len(ks) == 1:
+            ch = ks.upper()
+            if ch.isalnum():
+                return ch
+        return None
+
+    def _on_key_press(event):
+        if not recording["active"]:
+            return
+        sym = event.keysym
+        # 标记修饰键
+        if sym in ("Control_L", "Control_R", "Control"): pressed["ctrl"] = True
+        elif sym in ("Alt_L", "Alt_R", "Alt", "Meta_L", "Meta_R"): pressed["alt"] = True
+        elif sym in ("Shift_L", "Shift_R", "Shift"): pressed["shift"] = True
+        elif sym in ("Super_L", "Super_R", "Win_L", "Win_R"): pressed["win"] = True
+        else:
+            # 非修饰键作为主键
+            keyname = _keysym_to_keyname(sym)
+            if sym == "Escape" and not any(pressed.values()):
+                # 纯Esc视为取消
+                stop_recording()
+                return "break"
+            if keyname:
+                hotkey_var.set(_format_from_pressed(keyname))
+                stop_recording()
+                return "break"
+        return "break"
+
+    def _on_key_release(event):
+        if not recording["active"]:
+            return
+        sym = event.keysym
+        if sym in ("Control_L", "Control_R", "Control"): pressed["ctrl"] = False
+        elif sym in ("Alt_L", "Alt_R", "Alt", "Meta_L", "Meta_R"): pressed["alt"] = False
+        elif sym in ("Shift_L", "Shift_R", "Shift"): pressed["shift"] = False
+        elif sym in ("Super_L", "Super_R", "Win_L", "Win_R"): pressed["win"] = False
+        return "break"
+
+    def start_recording():
+        if recording["active"]:
+            return
+        recording["active"] = True
+        _reset_mods()
+        hotkey_entry.configure(state="disabled")
+        save_btn.configure(state="disabled")
+        record_btn.configure(text="录制中… 按组合键（Esc取消）", fg_color="#d39e00")
+        try:
+            popup.focus_force()
+        except Exception:
+            pass
+        popup.bind("<KeyPress>", _on_key_press)
+        popup.bind("<KeyRelease>", _on_key_release)
+
+    def stop_recording():
+        recording["active"] = False
+        hotkey_entry.configure(state="normal")
+        save_btn.configure(state="normal")
+        record_btn.configure(text="录制", fg_color="#3a7ebf")
+        try:
+            popup.unbind("<KeyPress>")
+            popup.unbind("<KeyRelease>")
+        except Exception:
+            pass
+
+    record_btn = ctk.CTkButton(hotkey_frame, text="录制", font=default_font, height=35, command=start_recording, fg_color="#3a7ebf")
+    record_btn.pack(side="left")
+
+    ctk.CTkLabel(translation_frame, text="格式示例：Ctrl+T, Ctrl+Shift+F, Alt+F7, Win+Space", 
+                 font=small_font, text_color=("#666666", "#AAAAAA")).pack(anchor="w", padx=20)
     
     # === 标签页2: 数据管理 ===
     # 数据导入导出
