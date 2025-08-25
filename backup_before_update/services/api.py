@@ -179,8 +179,9 @@ def translate_baidu(text: str) -> str:
             key = api.get("app_key")
             salt = random.randint(32768, 65536)
             q = text
-            from_lang = 'zh' if contains_chinese(q) else 'en'
-            to_lang = 'en' if from_lang == 'zh' else 'zh'
+            # 固定英译中方向
+            from_lang = 'en'
+            to_lang = 'zh'
             sign = hashlib.md5((appid + q + str(salt) + key).encode()).hexdigest()
             url = "https://fanyi-api.baidu.com/api/trans/vip/translate"
             params = {
@@ -213,6 +214,9 @@ def translate_baidu(text: str) -> str:
 def translate_zhipu(text: str) -> str:
     """Translate using Zhipu open API with the GLM-4-Flash model."""
     def _zhipu_translate():
+        # 仅英译中：如果包含中文，直接原样返回
+        if contains_chinese(text):
+            return text
         apis = api_config.get("zhipu", [])
         tries = len(apis)
         for _ in range(tries):
@@ -226,7 +230,7 @@ def translate_zhipu(text: str) -> str:
             payload = {
                 "model": "glm-4-flash",
                 "messages": [
-                    {"role": "system", "content": "你是一个高质量的中英互译助手，只输出翻译结果，不要其他说明。"},
+                    {"role": "system", "content": "请将用户提供的英文内容翻译成自然流畅的中文。只输出译文，不要任何额外说明。若输入不是英文，请原样输出。"},
                     {"role": "user", "content": text},
                 ],
             }
@@ -253,6 +257,9 @@ def translate_zhipu(text: str) -> str:
 def translate_zhipu_glm45(text: str) -> str:
     """Translate using Zhipu's GLM-4.5 model."""
     def _zhipu_glm45_translate():
+        # 仅英译中：如果包含中文，直接原样返回
+        if contains_chinese(text):
+            return text
         apis = api_config.get("zhipu-glm45", [])
         tries = len(apis)
         for _ in range(tries):
@@ -266,7 +273,7 @@ def translate_zhipu_glm45(text: str) -> str:
             payload = {
                 "model": "glm-4.5-longtext",
                 "messages": [
-                    {"role": "system", "content": "你是一个高质量的中英互译助手，只输出翻译结果，不要其他说明。"},
+                    {"role": "system", "content": "请将用户提供的英文内容翻译成自然流畅的中文。只输出译文，不要任何额外说明。若输入不是英文，请原样输出。"},
                     {"role": "user", "content": text},
                 ],
             }

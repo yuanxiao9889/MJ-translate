@@ -30,6 +30,74 @@ class UpdateManager:
                 return json.load(f)
         except (FileNotFoundError, json.JSONDecodeError):
             return {}
+    
+    def _get_proxy_config(self, test_github=False):
+        """获取代理配置
+        
+        Args:
+            test_github: 是否测试GitHub连接（用于下载时的严格测试）
+        """
+        user_proxies = {}
+        
+        # 检查环境变量中的代理配置
+        if os.environ.get('HTTP_PROXY') or os.environ.get('http_proxy'):
+            http_proxy = os.environ.get('HTTP_PROXY') or os.environ.get('http_proxy')
+            user_proxies['http'] = http_proxy
+            print(f"检测到HTTP代理: {http_proxy}")
+        if os.environ.get('HTTPS_PROXY') or os.environ.get('https_proxy'):
+            https_proxy = os.environ.get('HTTPS_PROXY') or os.environ.get('https_proxy')
+            user_proxies['https'] = https_proxy
+            print(f"检测到HTTPS代理: {https_proxy}")
+        
+        # 如果没有环境变量代理，尝试检测本地代理端口
+        if not user_proxies:
+            local_proxy_ports = ['4780', '7890', '1080', '8080']
+            for port in local_proxy_ports:
+                try:
+                    import socket
+                    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    sock.settimeout(1)
+                    result = sock.connect_ex(('127.0.0.1', int(port)))
+                    sock.close()
+                    if result == 0:
+                        # 测试代理是否真正可用
+                        proxy_url = f'http://127.0.0.1:{port}'
+                        if self._test_proxy_connectivity(proxy_url, test_github):
+                            user_proxies = {'http': proxy_url, 'https': proxy_url}
+                            print(f"检测到本地代理端口 {port}，使用代理: {proxy_url}")
+                            break
+                        else:
+                            print(f"端口 {port} 可用但代理测试失败，跳过")
+                except:
+                    continue
+        
+        return user_proxies
+    
+    def _test_proxy_connectivity(self, proxy_url, test_github=False):
+        """测试代理连通性
+        
+        Args:
+            proxy_url: 代理URL
+            test_github: 是否测试GitHub连接（用于下载时的严格测试）
+        """
+        try:
+            import requests
+            test_session = requests.Session()
+            test_session.proxies = {'http': proxy_url, 'https': proxy_url}
+            
+            # 基本连接测试
+            response = test_session.get('https://httpbin.org/ip', timeout=5)
+            if response.status_code != 200:
+                return False
+            
+            # 如果需要测试GitHub连接（下载时使用）
+            if test_github:
+                response = test_session.get('https://api.github.com', timeout=10)
+                return response.status_code == 200
+            
+            return True
+        except:
+            return False
 
     def _load_installed_version(self) -> str:
         """从项目根目录读取已安装版本号（installed_version.txt）。
@@ -75,6 +143,9 @@ class UpdateManager:
             'Accept': 'application/vnd.github.v3+json'
         }
         
+        # 获取代理配置（不进行GitHub严格测试）
+        user_proxies = self._get_proxy_config(test_github=False)
+        
         # 重试机制
         max_retries = 3
         for attempt in range(max_retries):
@@ -84,7 +155,7 @@ class UpdateManager:
                     api_url, 
                     headers=headers,
                     timeout=30,  # 30秒超时
-                    proxies={}  # 确保不使用代理
+                    proxies=user_proxies  # 使用检测到的代理配置
                 )
                 response.raise_for_status()
                 latest_release = response.json()
@@ -126,6 +197,7 @@ class UpdateManager:
         print("无法连接到GitHub API，尝试使用离线模式")
         return self._check_offline_update()
 
+
     def download_and_apply_update(self, progress_callback=None):
         """Downloads and applies the latest update with enhanced network robustness."""
         repo_owner = self.config.get('github_owner')
@@ -141,9 +213,10 @@ class UpdateManager:
         
         try:
             # 配置网络请求参数
+            user_proxies = self._get_proxy_config(test_github=False)
             session = requests.Session()
-            session.trust_env = False
-            session.proxies = {}
+            if user_proxies:
+                session.proxies = user_proxies
             headers = {
                 'User-Agent': 'MJ-Translator-Update-Checker/1.0',
                 'Accept': 'application/vnd.github.v3+json'
@@ -152,7 +225,7 @@ class UpdateManager:
             # Get latest release info
             if progress_callback:
                 progress_callback(5, "获取更新信息", "正在连接GitHub API...")
-            response = session.get(api_url, headers=headers, timeout=30, proxies={})
+            response = session.get(api_url, headers=headers, timeout=30, proxies=user_proxies if user_proxies else {})
             response.raise_for_status()
             latest_release = response.json()
             
@@ -282,3 +355,29 @@ class UpdateManager:
                     if dest_path.exists():
                         shutil.rmtree(dest_path)
                     shutil.copytree(source_path, dest_path)
+
+    def _save_release_info(self, release_data):
+        """保存发布信息到本地缓存供离线使用"""
+        try:
+            cache_dir = Path(__file__).parent.parent / '.update_cache'
+            cache_dir.mkdir(exist_ok=True)
+            cache_file = cache_dir / 'latest_release.json'
+            
+            with open(cache_file, 'w', encoding='utf-8') as f:
+                json.dump(release_data, f, indent=2, ensure_ascii=False)
+        except Exception as e:
+            print(f"警告: 保存发布信息缓存失败: {e}")
+    
+    def is_new_version_available(self, latest_version):
+        """Compares the latest version with the current version."""
+        if not latest_version:
+            return False
+        
+        try:
+            # 尝试使用语义化版本比较
+            return semver.compare(latest_version, self.current_version) > 0
+        except ValueError:
+            # 如果版本号不符合语义化版本规范，使用字符串比较
+            print(f"警告: 版本号 '{latest_version}' 不符合语义化版本规范，使用字符串比较")
+            # 简单的字符串比较，如果不同就认为有新版本
+            return latest_version != self.current_version

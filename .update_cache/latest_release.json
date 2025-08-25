@@ -1,9 +1,9 @@
 {
-  "url": "https://api.github.com/repos/yuanxiao9889/MJ-translate/releases/241787586",
-  "assets_url": "https://api.github.com/repos/yuanxiao9889/MJ-translate/releases/241787586/assets",
-  "upload_url": "https://uploads.github.com/repos/yuanxiao9889/MJ-translate/releases/241787586/assets{?name,label}",
-  "html_url": "https://github.com/yuanxiao9889/MJ-translate/releases/tag/v1.0.4",
-  "id": 241787586,
+  "url": "https://api.github.com/repos/yuanxiao9889/MJ-translate/releases/242248321",
+  "assets_url": "https://api.github.com/repos/yuanxiao9889/MJ-translate/releases/242248321/assets",
+  "upload_url": "https://uploads.github.com/repos/yuanxiao9889/MJ-translate/releases/242248321/assets{?name,label}",
+  "html_url": "https://github.com/yuanxiao9889/MJ-translate/releases/tag/v1.0.7",
+  "id": 242248321,
   "author": {
     "login": "yuanxiao9889",
     "id": 217445063,
@@ -25,18 +25,18 @@
     "user_view_type": "public",
     "site_admin": false
   },
-  "node_id": "RE_kwDOPhMwgM4OaWLC",
-  "tag_name": "v1.0.4",
+  "node_id": "RE_kwDOPhMwgM4OcGqB",
+  "tag_name": "v1.0.7",
   "target_commitish": "main",
-  "name": "",
+  "name": "V1.0.7",
   "draft": false,
   "immutable": false,
   "prerelease": false,
-  "created_at": "2025-08-22T10:35:31Z",
-  "updated_at": "2025-08-22T10:36:59Z",
-  "published_at": "2025-08-22T10:36:59Z",
+  "created_at": "2025-08-25T10:00:18Z",
+  "updated_at": "2025-08-25T12:22:28Z",
+  "published_at": "2025-08-25T12:21:22Z",
   "assets": [],
-  "tarball_url": "https://api.github.com/repos/yuanxiao9889/MJ-translate/tarball/v1.0.4",
-  "zipball_url": "https://api.github.com/repos/yuanxiao9889/MJ-translate/zipball/v1.0.4",
-  "body": "优化浏览器截图"
+  "tarball_url": "https://api.github.com/repos/yuanxiao9889/MJ-translate/tarball/v1.0.7",
+  "zipball_url": "https://api.github.com/repos/yuanxiao9889/MJ-translate/zipball/v1.0.7",
+  "body": "BUG修复"
 }

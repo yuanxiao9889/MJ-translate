@@ -15,7 +15,11 @@ import time
 class UpdateManager:
     def __init__(self):
         self.config = self._load_config()
-        self.current_version = current_version
+        # 优先从本地安装版本文件读取，若不存在则回退到打包内的 __version__
+        try:
+            self.current_version = self._load_installed_version() or current_version
+        except Exception:
+            self.current_version = current_version
         self.offline_mode = False
         self.manual_download_info = None
 
@@ -26,6 +30,56 @@ class UpdateManager:
                 return json.load(f)
         except (FileNotFoundError, json.JSONDecodeError):
             return {}
+
+    def _load_installed_version(self) -> str:
+        """从项目根目录读取已安装版本号（installed_version.txt）。
+        若文件不存在则返回空字符串，调用方需做回退处理。
+        """
+        try:
+            project_root = Path(__file__).parent.parent
+            ver_file = project_root / 'installed_version.txt'
+            if ver_file.exists():
+                return ver_file.read_text(encoding='utf-8').strip()
+        except Exception:
+            pass
+        return ""
+
+    def _save_release_info(self, release_data):
+        """保存发布信息到本地缓存供离线使用"""
+        try:
+            cache_dir = Path(__file__).parent.parent / '.update_cache'
+            cache_dir.mkdir(exist_ok=True)
+            cache_file = cache_dir / 'latest_release.json'
+            
+            with open(cache_file, 'w', encoding='utf-8') as f:
+                json.dump(release_data, f, indent=2, ensure_ascii=False)
+        except Exception as e:
+            print(f"警告: 保存发布信息缓存失败: {e}")
+
+    def _save_installed_version(self, version: str) -> None:
+        """将已安装版本号写入项目根目录的 installed_version.txt 以供主程序显示。"""
+        try:
+            if not version:
+                return
+            project_root = Path(__file__).parent.parent
+            ver_file = project_root / 'installed_version.txt'
+            ver_file.write_text(version.strip(), encoding='utf-8')
+        except Exception as e:
+            print(f"警告: 写入已安装版本失败: {e}")
+
+    def is_new_version_available(self, latest_version):
+        """Compares the latest version with the current version."""
+        if not latest_version:
+            return False
+        
+        try:
+            # 尝试使用语义化版本比较
+            return semver.compare(latest_version, self.current_version) > 0
+        except ValueError:
+            # 如果版本号不符合语义化版本规范，使用字符串比较
+            print(f"警告: 版本号 '{latest_version}' 不符合语义化版本规范，使用字符串比较")
+            # 简单的字符串比较，如果不同就认为有新版本
+            return latest_version != self.current_version
 
     def check_for_updates(self):
         """Checks for new releases on GitHub."""
@@ -97,99 +151,6 @@ class UpdateManager:
                     
         print("无法连接到GitHub API，尝试使用离线模式")
         return self._check_offline_update()
-
-    def is_new_version_available(self, latest_version):
-        """Compares the latest version with the current version."""
-        if not latest_version:
-            return False
-        
-        try:
-            # 尝试使用语义化版本比较
-            return semver.compare(latest_version, self.current_version) > 0
-        except ValueError:
-            # 如果版本号不符合语义化版本规范，使用字符串比较
-            print(f"警告: 版本号 '{latest_version}' 不符合语义化版本规范，使用字符串比较")
-            # 简单的字符串比较，如果不同就认为有新版本
-            return latest_version != self.current_version
-
-    def _get_download_url_with_fallback(self, latest_release):
-        """获取下载URL，使用多个备用方案"""
-        repo_owner = self.config.get('github_owner')
-        repo_name = self.config.get('github_repo')
-        tag_name = latest_release.get('tag_name', 'latest')
-        
-        # 方案1: 用户上传的assets
-        assets = latest_release.get('assets', [])
-        for asset in assets:
-            if asset['name'].endswith('.zip'):
-                return asset['browser_download_url'], asset['name'], asset.get('size', 0)
-        
-        # 方案2: 只使用可用的github.com域名（避免codeload.github.com DNS解析问题）
-        download_urls = [
-            f"https://github.com/{repo_owner}/{repo_name}/archive/refs/tags/{tag_name}.zip"
-        ]
-        
-        file_name = f"{repo_name}-{tag_name}.zip"
-        
-        # 测试每个URL的可达性
-        session = requests.Session()
-        session.trust_env = False
-        session.proxies = {}
-        headers = {
-            'User-Agent': 'MJ-Translator-Update-Checker/1.0'
-        }
-        
-        for url in download_urls:
-            try:
-                print(f"测试下载URL: {url}")
-                # 只发送HEAD请求测试连接
-                response = session.head(url, headers=headers, timeout=10)
-                if response.status_code in [200, 302]:
-                    print(f"✓ URL可用: {url}")
-                    return url, file_name, 0
-            except Exception as e:
-                print(f"✗ URL不可用: {url} - {e}")
-                continue
-        
-        raise Exception("所有下载URL都不可用，请检查网络连接")
-    
-    def _download_with_retry(self, url, file_path, headers=None, max_retries=3):
-        """带重试机制的下载"""
-        session = requests.Session()
-        session.trust_env = False
-        session.proxies = {}
-        
-        if not headers:
-            headers = {
-                'User-Agent': 'MJ-Translator-Update-Checker/1.0',
-                'Accept': 'application/octet-stream'
-            }
-        
-        for attempt in range(max_retries):
-            try:
-                print(f"下载尝试 {attempt + 1}/{max_retries}: {url}")
-                
-                response = session.get(url, stream=True, headers=headers, timeout=60)
-                response.raise_for_status()
-                
-                with open(file_path, 'wb') as f:
-                    for chunk in response.iter_content(chunk_size=8192):
-                        if chunk:
-                            f.write(chunk)
-                
-                print(f"✓ 下载成功: {file_path}")
-                return True
-                
-            except Exception as e:
-                print(f"✗ 下载失败 (尝试 {attempt + 1}): {e}")
-                if attempt < max_retries - 1:
-                    wait_time = (attempt + 1) * 2  # 递增等待时间
-                    print(f"等待 {wait_time} 秒后重试...")
-                    time.sleep(wait_time)
-                else:
-                    raise Exception(f"下载失败，已重试 {max_retries} 次: {e}")
-        
-        return False
 
     def download_and_apply_update(self, progress_callback=None):
         """Downloads and applies the latest update with enhanced network robustness."""
@@ -274,6 +235,15 @@ class UpdateManager:
             
             # Clean up
             self._cleanup_after_update(backup_dir, temp_dir)
+
+            # 记录已安装版本，供主程序显示（无需重启即可读取到新版本号）
+            try:
+                new_ver = str(latest_release.get('tag_name', '')).lstrip('v')
+                if new_ver:
+                    self._save_installed_version(new_ver)
+                    self.current_version = new_ver
+            except Exception as e:
+                print(f"警告: 更新版本号持久化失败: {e}")
             
             if progress_callback:
                 progress_callback(100, "更新完成", "更新已成功应用！")
@@ -338,245 +308,149 @@ class UpdateManager:
                     if dest_path.exists():
                         shutil.rmtree(dest_path)
                     shutil.copytree(source_path, dest_path)
-    
-    def _extract_and_apply_update(self, zip_path, project_root):
-        """Extracts the update zip and applies it to the project."""
-        project_root = Path(project_root)  # 确保project_root是Path对象
-        
-        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-            # Extract to temporary directory first
-            temp_extract_dir = tempfile.mkdtemp()
-            zip_ref.extractall(temp_extract_dir)
-            
-            # Find the actual project directory in the extracted files
-            extracted_items = os.listdir(temp_extract_dir)
-            if len(extracted_items) == 1 and os.path.isdir(os.path.join(temp_extract_dir, extracted_items[0])):
-                # If there's a single directory, use that as the source
-                source_dir = os.path.join(temp_extract_dir, extracted_items[0])
-            else:
-                # Otherwise, use the temp directory directly
-                source_dir = temp_extract_dir
-            
-            # Copy files from extracted directory to project root
-            skip_files = {"config.json"}
-            skip_dirs = {"backup_before_update", "manual_update", ".update_cache", "logs", "__pycache__", ".git"}
-            
-            for item in os.listdir(source_dir):
-                # 跳过不应覆盖的文件/目录
-                if item in skip_files or item in skip_dirs:
-                    continue
-            
-                source_item = os.path.join(source_dir, item)
-                dest_item = project_root / item
-                
-                try:
-                    if os.path.isfile(source_item):
-                        # 直接覆盖写入（若失败则跳过该文件，避免整体失败）
-                        shutil.copy2(source_item, dest_item)
-                    elif os.path.isdir(source_item):
-                        # 优先尝试就地覆盖，避免删除正在被占用的文件导致失败
-                        try:
-                            shutil.copytree(source_item, dest_item, dirs_exist_ok=True)
-                        except Exception:
-                            # 覆盖失败时再尝试删除并复制（带 onerror 处理）
-                            if dest_item.exists():
-                                try:
-                                    shutil.rmtree(dest_item, onerror=self._on_rm_error)
-                                except Exception:
-                                    # 最后退路：跳过该目录，避免整体更新失败
-                                    print(f"警告: 无法删除目录 {dest_item}，已跳过")
-                                    continue
-                                try:
-                                    shutil.copytree(source_item, dest_item)
-                                except Exception as e:
-                                    print(f"警告: 无法复制目录 {source_item} -> {dest_item}: {e}")
-                                    continue
-                except PermissionError as e:
-                    print(f"警告: 文件被占用，已跳过 {dest_item}: {e}")
-                    continue
-                except Exception as e:
-                    print(f"警告: 处理 {source_item} 时发生错误，已跳过: {e}")
-                    continue
-            
-            # Clean up temp extraction directory after all operations
-            try:
-                shutil.rmtree(temp_extract_dir, ignore_errors=True)
-            except Exception:
-                pass
-    
-    def _rollback_update(self, backup_dir):
-        """Rolls back to the backed up version."""
-        project_root = Path(__file__).parent.parent
-        
-        for item in backup_dir.iterdir():
-            dest_path = project_root / item.name
-            
-            if item.is_file():
-                shutil.copy2(item, dest_path)
-            elif item.is_dir():
-                if dest_path.exists():
-                    shutil.rmtree(dest_path)
-                shutil.copytree(item, dest_path)
-    
-    def _cleanup_after_update(self, backup_dir, temp_dir):
-        """Cleans up temporary files after successful update."""
-        # Remove backup directory
-        if backup_dir and backup_dir.exists():
-            shutil.rmtree(backup_dir, ignore_errors=True)
-        
-        # Remove temp directory
-        if temp_dir and os.path.exists(temp_dir):
-            shutil.rmtree(temp_dir, ignore_errors=True)
-    
-    def _save_release_info(self, release_data):
-        """保存发布信息到本地缓存"""
-        try:
-            cache_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.update_cache')
-            os.makedirs(cache_dir, exist_ok=True)
-            
-            cache_file = os.path.join(cache_dir, 'latest_release.json')
-            with open(cache_file, 'w', encoding='utf-8') as f:
-                json.dump(release_data, f, ensure_ascii=False, indent=2)
-            
-            print(f"发布信息已缓存到: {cache_file}")
-        except Exception as e:
-            print(f"警告: 无法缓存发布信息: {e}")
-    
+
     def _check_offline_update(self):
-        """检查离线更新"""
+        """检查离线缓存的更新信息"""
         try:
-            cache_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.update_cache')
-            cache_file = os.path.join(cache_dir, 'latest_release.json')
+            cache_dir = Path(__file__).parent.parent / '.update_cache'
+            cache_file = cache_dir / 'latest_release.json'
             
-            if os.path.exists(cache_file):
+            if cache_file.exists():
                 with open(cache_file, 'r', encoding='utf-8') as f:
                     release_data = json.load(f)
                 
                 latest_version = release_data.get('tag_name', '').lstrip('v')
-                release_notes = release_data.get('body', '')
-                
-                if self.is_new_version_available(latest_version):
-                    print(f"从缓存中发现新版本: {latest_version}")
-                    self.offline_mode = True
-                    self.manual_download_info = self._prepare_manual_download_info(release_data)
-                    return latest_version, release_notes
+                if latest_version and semver.compare(latest_version, self.current_version) > 0:
+                    return True, latest_version, release_data.get('body', ''), release_data.get('html_url', '')
+            
+            return False, self.current_version, '', ''
         except Exception as e:
-            print(f"警告: 检查离线更新失败: {e}")
+            print(f"检查离线更新缓存失败: {e}")
+            return False, self.current_version, '', ''
+
+    def _get_download_url_with_fallback(self, release_data):
+        """获取下载URL，支持多种下载源"""
+        assets = release_data.get('assets', [])
         
-        return None, None
-    
-    def _prepare_manual_download_info(self, release_data):
-        """准备手动下载信息"""
-        repo_owner = self.config.get('github_owner')
-        repo_name = self.config.get('github_repo')
-        tag_name = release_data.get('tag_name', 'latest')
+        # 查找zip文件
+        for asset in assets:
+            if asset['name'].endswith('.zip'):
+                return asset['browser_download_url'], asset['name'], asset.get('size', 0)
         
-        download_info = {
-            'version': tag_name,
-            'release_url': release_data.get('html_url', ''),
-            'download_urls': [
-                f"https://github.com/{repo_owner}/{repo_name}/archive/refs/tags/{tag_name}.zip"
-            ],
-            'manual_steps': [
-                f"1. 访问发布页面: {release_data.get('html_url', '')}",
-                f"2. 下载源代码ZIP文件",
-                f"3. 将下载的文件放置到: {os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'manual_update')}",
-                f"4. 重新运行更新程序"
-            ]
-        }
+        # 如果没有找到assets，使用源码下载
+        tag_name = release_data.get('tag_name', 'main')
+        repo_owner = self.config.get('github_owner', 'yuanxiao9889')
+        repo_name = self.config.get('github_repo', 'MJ-translate')
         
-        return download_info
-    
-    def show_manual_update_guide(self):
-        """显示手动更新指南"""
-        if not self.manual_download_info:
-            print("❌ 无手动更新信息可显示")
-            return
+        download_url = f"https://github.com/{repo_owner}/{repo_name}/archive/refs/tags/{tag_name}.zip"
+        file_name = f"{repo_name}-{tag_name.lstrip('v')}.zip"
         
-        print("\n" + "=" * 60)
-        print("🔄 手动更新指南")
-        print("=" * 60)
+        return download_url, file_name, 0
+
+    def _download_with_retry(self, url, download_path, headers, max_retries=3):
+        """带重试机制的下载"""
+        session = requests.Session()
+        session.trust_env = False
+        session.proxies = {}
         
-        print(f"检测到新版本: {self.manual_download_info['version']}")
-        print("由于网络问题，无法自动下载更新。")
-        print("\n请按照以下步骤手动更新:")
-        
-        for step in self.manual_download_info['manual_steps']:
-            print(f"  {step}")
-        
-        print("\n可用下载链接:")
-        for i, url in enumerate(self.manual_download_info['download_urls'], 1):
-            print(f"  {i}. {url}")
-        
-        # 检查是否已有手动下载的文件
-        manual_update_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'manual_update')
-        if os.path.exists(manual_update_dir):
-            zip_files = [f for f in os.listdir(manual_update_dir) if f.endswith('.zip')]
-            if zip_files:
-                print(f"\n✓ 发现手动下载的文件: {zip_files}")
-                print("重新运行更新程序以应用这些文件。")
-        else:
-            print(f"\n📁 请创建目录并放置下载文件: {manual_update_dir}")
-        
-        print("\n💡 网络问题解决建议:")
-        print("  - 更换DNS服务器（8.8.8.8, 114.114.114.114）")
-        print("  - 检查防火墙和杀毒软件设置")
-        print("  - 尝试使用移动热点网络")
-        print("  - 如在企业网络中，联系网络管理员")
+        for attempt in range(max_retries):
+            try:
+                response = session.get(url, headers=headers, timeout=60, stream=True, proxies={})
+                response.raise_for_status()
+                
+                with open(download_path, 'wb') as f:
+                    for chunk in response.iter_content(chunk_size=8192):
+                        if chunk:
+                            f.write(chunk)
+                
+                print(f"下载完成: {download_path}")
+                return
+                
+            except Exception as e:
+                print(f"下载失败 (尝试 {attempt + 1}/{max_retries}): {e}")
+                if attempt < max_retries - 1:
+                    print("正在重试...")
+                    time.sleep(2)
+                else:
+                    raise
 
     def _release_file_locks(self):
-        """释放日志等文件句柄，减少"另一个程序正在使用文件"的情况"""
+        """释放文件锁定，避免Windows下文件占用问题"""
         try:
-            import logging
-            root_logger = logging.getLogger()
-            # 复制列表以避免迭代过程中修改
-            for handler in list(root_logger.handlers):
-                try:
-                    handler.flush()
-                except Exception:
-                    pass
-                try:
-                    handler.close()
-                except Exception:
-                    pass
-                try:
-                    root_logger.removeHandler(handler)
-                except Exception:
-                    pass
-            
-            # 强制垃圾回收
             gc.collect()
-            
-            # Windows特定：尝试释放更多文件句柄
-            if os.name == 'nt':
+            time.sleep(0.5)
+        except Exception:
+            pass
+
+    def _extract_and_apply_update(self, zip_path, project_root):
+        """解压并应用更新"""
+        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            # 获取zip文件中的根目录名
+            names = zip_ref.namelist()
+            if names:
+                root_folder = names[0].split('/')[0]
+                
+                # 解压到临时目录
+                temp_extract_dir = tempfile.mkdtemp()
+                zip_ref.extractall(temp_extract_dir)
+                
+                # 复制文件到项目根目录
+                source_dir = Path(temp_extract_dir) / root_folder
+                if source_dir.exists():
+                    self._copy_update_files(source_dir, project_root)
+                
+                # 清理临时解压目录
+                shutil.rmtree(temp_extract_dir, ignore_errors=True)
+
+    def _copy_update_files(self, source_dir, dest_dir):
+        """复制更新文件到目标目录"""
+        for item in source_dir.rglob('*'):
+            if item.is_file():
+                rel_path = item.relative_to(source_dir)
+                dest_path = dest_dir / rel_path
+                
+                # 创建目标目录
+                dest_path.parent.mkdir(parents=True, exist_ok=True)
+                
+                # 复制文件
                 try:
-                    import sys
-                    sys.stdout.flush()
-                    sys.stderr.flush()
-                except Exception:
-                    pass
+                    shutil.copy2(item, dest_path)
+                except PermissionError:
+                    # 如果文件被占用，尝试修改权限后再复制
+                    try:
+                        os.chmod(dest_path, stat.S_IWRITE)
+                        shutil.copy2(item, dest_path)
+                    except Exception as e:
+                        print(f"警告: 无法更新文件 {dest_path}: {e}")
+
+    def _cleanup_after_update(self, backup_dir, temp_dir):
+        """更新后清理临时文件"""
+        try:
+            if temp_dir and os.path.exists(temp_dir):
+                shutil.rmtree(temp_dir, ignore_errors=True)
+        except Exception as e:
+            print(f"清理临时文件失败: {e}")
+
+    def _rollback_update(self, backup_dir):
+        """回滚更新"""
+        try:
+            project_root = Path(__file__).parent.parent
+            
+            for item in backup_dir.rglob('*'):
+                if item.is_file():
+                    rel_path = item.relative_to(backup_dir)
+                    dest_path = project_root / rel_path
+                    
+                    dest_path.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(item, dest_path)
                     
         except Exception as e:
-            print(f"警告: 释放文件句柄失败: {e}")
+            print(f"回滚失败: {e}")
 
-    def _on_rm_error(self, func, path, exc_info):
-        """Helper for shutil.rmtree to handle read-only or locked files on Windows."""
-        try:
-            # Try to make the path writable
-            os.chmod(path, stat.S_IWRITE)
-        except Exception:
-            pass
-        try:
-            # Retry the original operation
-            func(path)
-            return
-        except Exception:
-            pass
-        # As a last resort on Windows, schedule deletion on reboot
-        try:
-            if os.name == 'nt':
-                MOVEFILE_DELAY_UNTIL_REBOOT = 0x00000004
-                ctypes.windll.kernel32.MoveFileExW(ctypes.c_wchar_p(path), None, MOVEFILE_DELAY_UNTIL_REBOOT)
-        except Exception:
-            # Give up silently, we'll just skip this path
-            pass
+    def show_manual_update_guide(self):
+        """显示手动更新指南"""
+        print("\n📋 手动更新指南:")
+        print("1. 访问: https://github.com/yuanxiao9889/MJ-translate/releases")
+        print("2. 下载最新版本的zip文件")
+        print("3. 解压并替换当前程序文件")
+        print("4. 重启程序")

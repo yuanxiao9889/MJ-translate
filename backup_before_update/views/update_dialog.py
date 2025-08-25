@@ -32,6 +32,7 @@ class UpdateDialog:
         self.log_text = None
         self.check_button = None
         self.download_button = None
+        self.on_update_complete = None
         
     def show(self):
         """显示更新对话框"""
@@ -168,6 +169,12 @@ class UpdateDialog:
                     self._log_message("🔄 用户选择重启程序")
                 else:
                     self._log_message("📝 用户选择稍后重启")
+                # 通知主界面刷新版本显示
+                if hasattr(self, 'on_update_complete') and self.on_update_complete:
+                    try:
+                        self.on_update_complete()
+                    except Exception as e:
+                        self._log_message(f"⚠️ 刷新版本显示失败: {e}")
                 self.popup.destroy()
             
             def on_cancel():
@@ -213,7 +220,9 @@ class UpdateDialog:
                 
         threading.Thread(target=test_thread, daemon=True).start()
 
-def open_update_dialog(parent):
+def open_update_dialog(parent, on_update_complete=None):
     """打开更新对话框的便捷函数"""
     dialog = UpdateDialog(parent)
+    # 传入一个可选的更新完成回调，便于主界面刷新版本显示
+    dialog.on_update_complete = on_update_complete
     dialog.show()

@@ -505,6 +505,25 @@ class CredentialsManager:
             if migrated:
                 self._save_credentials(credentials)
                 logger.info("成功从旧配置迁移凭据")
+                
+                # 迁移成功后重命名旧配置文件，防止重复迁移
+                api_config_file = os.path.join(self.config_dir, "apis.json")
+                if os.path.exists(api_config_file):
+                    try:
+                        backup_file = os.path.join(self.config_dir, "apis.json.migrated")
+                        os.rename(api_config_file, backup_file)
+                        logger.info(f"已将 {api_config_file} 重命名为 {backup_file}")
+                    except Exception as e:
+                        logger.warning(f"重命名旧API配置文件失败: {e}")
+                
+                oss_config_file = os.path.join(self.config_dir, "oss_config.json")
+                if os.path.exists(oss_config_file):
+                    try:
+                        backup_file = os.path.join(self.config_dir, "oss_config.json.migrated")
+                        os.rename(oss_config_file, backup_file)
+                        logger.info(f"已将 {oss_config_file} 重命名为 {backup_file}")
+                    except Exception as e:
+                        logger.warning(f"重命名旧OSS配置文件失败: {e}")
             
             return True
             
