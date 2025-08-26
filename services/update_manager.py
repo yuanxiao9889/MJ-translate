@@ -197,6 +197,19 @@ class UpdateManager:
         print("无法连接到GitHub API，尝试使用离线模式")
         return self._check_offline_update()
 
+    def _save_release_info(self, latest_release):
+        """保存发布信息到缓存文件供离线使用"""
+        try:
+            cache_dir = Path(__file__).parent.parent / '.update_cache'
+            cache_dir.mkdir(exist_ok=True)
+            cache_file = cache_dir / 'latest_release.json'
+            
+            with open(cache_file, 'w', encoding='utf-8') as f:
+                json.dump(latest_release, f, ensure_ascii=False, indent=2)
+            
+            print(f"发布信息已缓存到: {cache_file}")
+        except Exception as e:
+            print(f"警告: 保存发布信息失败: {e}")
 
     def download_and_apply_update(self, progress_callback=None):
         """Downloads and applies the latest update with enhanced network robustness."""
