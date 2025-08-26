@@ -231,6 +231,54 @@ class UpdateManager:
             print(f"版本比较失败: {e}")
             # 如果版本比较失败，进行简单的字符串比较作为后备
             return latest_version != self.current_version
+    
+    def _get_download_url_with_fallback(self, latest_release):
+        """从GitHub release获取下载URL，支持多种下载源
+        
+        Args:
+            latest_release (dict): GitHub API返回的release信息
+            
+        Returns:
+            tuple: (download_url, file_name, file_size)
+        """
+        try:
+            # 优先使用assets中的文件
+            assets = latest_release.get('assets', [])
+            if assets:
+                # 查找zip文件
+                for asset in assets:
+                    if asset['name'].endswith('.zip'):
+                        return (
+                            asset['browser_download_url'],
+                            asset['name'],
+                            asset.get('size', 0)
+                        )
+                
+                # 如果没有zip文件，使用第一个asset
+                first_asset = assets[0]
+                return (
+                    first_asset['browser_download_url'],
+                    first_asset['name'],
+                    first_asset.get('size', 0)
+                )
+            
+            # 如果没有assets，使用源码下载链接
+            tag_name = latest_release.get('tag_name', '')
+            if tag_name:
+                repo_owner = self.config.get('github_owner')
+                repo_name = self.config.get('github_repo')
+                if repo_owner and repo_name:
+                    # 使用codeload下载源码zip
+                    download_url = f"https://codeload.github.com/{repo_owner}/{repo_name}/zip/refs/tags/{tag_name}"
+                    file_name = f"{repo_name}-{tag_name.lstrip('v')}.zip"
+                    return (download_url, file_name, 0)  # 源码下载无法预知大小
+            
+            # 如果都失败了，抛出异常
+            raise Exception("GitHub Release中没有找到可下载的文件")
+            
+        except Exception as e:
+            print(f"获取下载URL失败: {e}")
+            raise Exception(f"GitHub Release中没有找到可下载的文件: {e}")
 
     def download_and_apply_update(self, progress_callback=None):
         """Downloads and applies the latest update with enhanced network robustness."""
