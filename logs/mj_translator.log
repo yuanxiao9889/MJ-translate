@@ -213,3 +213,6 @@ requests.exceptions.ReadTimeout: HTTPSConnectionPool(host='open.bigmodel.cn', po
 NoneType: None
 2025-08-26 09:57:53 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
 2025-08-26 09:57:53 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-26 10:22:41 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-26 10:22:41 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-26 10:22:41 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
