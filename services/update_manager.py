@@ -210,6 +210,27 @@ class UpdateManager:
             print(f"发布信息已缓存到: {cache_file}")
         except Exception as e:
             print(f"警告: 保存发布信息失败: {e}")
+    
+    def is_new_version_available(self, latest_version):
+        """检查是否有新版本可用
+        
+        Args:
+            latest_version (str): 最新版本号
+            
+        Returns:
+            bool: 如果有新版本可用返回True，否则返回False
+        """
+        try:
+            # 清理版本号，移除'v'前缀
+            current = self.current_version.lstrip('v')
+            latest = latest_version.lstrip('v')
+            
+            # 使用semver进行版本比较
+            return semver.compare(latest, current) > 0
+        except Exception as e:
+            print(f"版本比较失败: {e}")
+            # 如果版本比较失败，进行简单的字符串比较作为后备
+            return latest_version != self.current_version
 
     def download_and_apply_update(self, progress_callback=None):
         """Downloads and applies the latest update with enhanced network robustness."""
