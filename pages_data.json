@@ -4,9 +4,9 @@
       "page_id": 2,
       "name": "分页 2",
       "created_time": "2025-08-23 01:00:06",
-      "input_text": "一个未来驾驶座舱，里面有一个单人座位，悬浮的科技面板，未来设计",
-      "output_text": "A futuristic driver's cabin, featuring a single seat and a floating technological panel, with a design of the future.",
-      "last_translation": "A futuristic driver's cabin, featuring a single seat and a floating technological panel, with a design of the future.",
+      "input_text": "Optional: This will be the word or token used to trigger your concept or character.\n\nWhen using a trigger word, If your captions do not contain the trigger word, it will be added automatically the beginning of the caption. If you do not have captions, the caption will become just the trigger word. If you want to have variable trigger words in your captions to put it in different spots, you can use the [trigger] placeholder in your captions. This will be automatically replaced with your trigger word.\n\nTrigger words will not automatically be added to your test prompts, so you will need to either add your trigger word manually or use the[trigger] placeholder in your test prompts as well.",
+      "output_text": ", 可选：这将是触发您的概念或角色的单词或标记。\n\n当使用触发词时，如果您的字幕不包含触发词，它将被自动添加到字幕的开头。如果您没有字幕，字幕将仅包含触发词。如果您想在字幕中使用可变的触发词并将其放置在不同的位置，您可以在字幕中使用[触发]占位符。这将自动被您的触发词替换。\n\n触发词不会自动添加到您的测试提示中，因此您需要手动添加您的触发词，或者在测试提示中也使用[触发]占位符。",
+      "last_translation": "可选：这将是触发您的概念或角色的单词或标记。\n\n当使用触发词时，如果您的字幕不包含触发词，它将被自动添加到字幕的开头。如果您没有字幕，字幕将仅包含触发词。如果您想在字幕中使用可变的触发词并将其放置在不同的位置，您可以在字幕中使用[触发]占位符。这将自动被您的触发词替换。\n\n触发词不会自动添加到您的测试提示中，因此您需要手动添加您的触发词，或者在测试提示中也使用[触发]占位符。",
       "inserted_tags": {
         "head": [],
         "tail": []
@@ -23,7 +23,7 @@
             "1111": {
               "en": "1211",
               "image": "images\\1111_1755931119.png",
-              "usage_count": 0,
+              "usage_count": 1,
               "url": "https://huaban.com/pins/6797187033",
               "title": "第二天-花瓣网",
               "timestamp": 1755931119773,

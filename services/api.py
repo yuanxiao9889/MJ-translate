@@ -471,3 +471,39 @@ def zhipu_text_expand(text: str, preset: str) -> str:
             mark_api_disabled("zhipu", idx)
             continue
     return "[本平台无可用智谱API账号]"
+
+def zhipu_chat_completion(messages, model: str = "glm-4-flash") -> str:
+    """Generic chat completion using Zhipu Open API.
+
+    messages: a list of {role, content} dicts (supports roles: system, user, assistant)
+    model: default to glm-4-flash for fast iteration
+    """
+    apis = api_config.get("zhipu", [])
+    tries = len(apis)
+    for _ in range(tries):
+        api, idx = get_next_api_info("zhipu")
+        if not api:
+            return "[本平台无可用智谱API账号]"
+        api_key = api.get("api_key")
+        url = "https://open.bigmodel.cn/api/paas/v4/chat/completions"
+        headers = {"Authorization": f"Bearer {api_key}"}
+        payload = {
+            "model": model,
+            "messages": messages,
+        }
+        try:
+            res = requests.post(url, headers=headers, json=payload, timeout=25)
+            result = res.json()
+            if "choices" in result and result["choices"]:
+                return result["choices"][0]["message"]["content"].strip()
+            elif 'code' in result and str(result['code']) in ['100004', '100005']:
+                # account disabled or rate limited, rotate
+                mark_api_disabled("zhipu", idx)
+                continue
+            else:
+                return f"[对话失败] {result.get('message', result)}"
+        except Exception as e:
+            logger.error(f"Zhipu chat request failed: {str(e)}")
+            mark_api_disabled("zhipu", idx)
+            continue
+    return "[本平台无可用智谱API账号]"

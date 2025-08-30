@@ -2,7 +2,7 @@
   "2": {
     "output_text_state": {
       "tag_blocks": [],
-      "text_content": "A futuristic driver's cabin, featuring a single seat and a floating technological panel, with a design of the future.\n",
+      "text_content": "可选：这将是触发您的概念或角色的单词或标记。\n\n当使用触发词时，如果您的字幕不包含触发词，它将被自动添加到字幕的开头。如果您没有字幕，字幕将仅包含触发词。如果您想在字幕中使用可变的触发词并将其放置在不同的位置，您可以在字幕中使用[触发]占位符。这将自动被您的触发词替换。\n\n触发词不会自动添加到您的测试提示中，因此您需要手动添加您的触发词，或者在测试提示中也使用[触发]占位符。\n",
       "cursor_position": "1.0",
       "scroll_position": 0.0
     },
@@ -23,7 +23,57 @@
       "canvas_width": 0,
       "canvas_height": 0
     },
-    "last_updated": "2025-08-26T00:12:57.336403"
+    "last_updated": "2025-08-30T22:52:33.152435",
+    "tag_ui_states": {
+      "head": {
+        "visible_tags": [
+          "仰视视角",
+          "1111"
+        ],
+        "selected_tags": [],
+        "scroll_position": 0.0,
+        "tag_details": {
+          "仰视视角": {
+            "label": "仰视视角",
+            "tab": "视角",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 1
+          },
+          "1111": {
+            "label": "1111",
+            "tab": "视角",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 2
+          }
+        }
+      },
+      "tail": {
+        "visible_tags": [
+          "写实风格",
+          "数码单反"
+        ],
+        "selected_tags": [],
+        "scroll_position": 0.0,
+        "tag_details": {
+          "写实风格": {
+            "label": "写实风格",
+            "tab": "图片质量",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 1
+          },
+          "数码单反": {
+            "label": "数码单反",
+            "tab": "图片质量",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 2
+          }
+        }
+      }
+    }
   },
   "1": {
     "output_text_state": {
@@ -54,7 +104,7 @@
   "3": {
     "output_text_state": {
       "tag_blocks": [],
-      "text_content": "This is a complex aircraft with multiple parts and components, resembling a high-tech means of transportation or combat equipment.\nThe main body of the spaceship is gray, with blue lines and decorations, conveying a sense of technology and modernity.\nAt the front of the spaceship is a transparent cockpit, where control devices and display screens can be seen.\nThe spaceship is equipped with some weapons, such as turrets and other offensive devices.\nThe overall design is very refined, with many small details and textures, showcasing the designer's dedication.\nThe primary colors are gray and blue, which pair up to create a cool and tech-savvy appearance.\nBlue is used mainly for highlights and certain detailed decorations, adding to the overall visual depth.\n",
+      "text_content": "",
       "cursor_position": "1.0",
       "scroll_position": 0.0
     },
@@ -75,57 +125,7 @@
       "canvas_width": 0,
       "canvas_height": 0
     },
-    "last_updated": "2025-08-26T00:12:56.025391",
-    "tag_ui_states": {
-      "head": {
-        "visible_tags": [
-          "仰视视角",
-          "1111"
-        ],
-        "selected_tags": [],
-        "scroll_position": 0.0,
-        "tag_details": {
-          "仰视视角": {
-            "label": "仰视视角",
-            "tab": "视角",
-            "is_selected": false,
-            "is_visible": true,
-            "position": 1
-          },
-          "1111": {
-            "label": "1111",
-            "tab": "视角",
-            "is_selected": false,
-            "is_visible": true,
-            "position": 2
-          }
-        }
-      },
-      "tail": {
-        "visible_tags": [
-          "写实风格",
-          "数码单反"
-        ],
-        "selected_tags": [],
-        "scroll_position": 0.0,
-        "tag_details": {
-          "写实风格": {
-            "label": "写实风格",
-            "tab": "图片质量",
-            "is_selected": false,
-            "is_visible": true,
-            "position": 1
-          },
-          "数码单反": {
-            "label": "数码单反",
-            "tab": "图片质量",
-            "is_selected": false,
-            "is_visible": true,
-            "position": 2
-          }
-        }
-      }
-    }
+    "last_updated": "2025-08-26T00:12:55.844377"
   },
   "2": {
     "output_text_state": {
@@ -151,7 +151,7 @@
       "canvas_width": 0,
       "canvas_height": 0
     },
-    "last_updated": "2025-08-26T00:12:34.907441",
+    "last_updated": "2025-08-30T22:48:38.009521",
     "tag_ui_states": {
       "head": {
         "visible_tags": [
@@ -202,31 +202,5 @@
         }
       }
     }
-  },
-  "3": {
-    "output_text_state": {
-      "tag_blocks": [],
-      "text_content": "",
-      "cursor_position": "1.0",
-      "scroll_position": 0.0
-    },
-    "tag_ui_state": {
-      "head_tags": {
-        "visible_tags": [],
-        "selected_tags": [],
-        "scroll_position": 0.0
-      },
-      "tail_tags": {
-        "visible_tags": [],
-        "selected_tags": [],
-        "scroll_position": 0.0
-      }
-    },
-    "layout_state": {
-      "layout_mode": "waterfall",
-      "canvas_width": 0,
-      "canvas_height": 0
-    },
-    "last_updated": "2025-08-26T00:12:55.844377"
   }
 }

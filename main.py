@@ -132,7 +132,7 @@ def save_expand_presets(presets):
 def show_expand_preset_dialog(callback=None):
     presets = load_expand_presets()
     win = ctk.CTkToplevel()
-    win.attributes('-topmost', True)
+    # 移除强制置顶，避免遮挡新扩写面板
     win.title("选择扩写预设")
     win.geometry("540x360")
     win.resizable(True, True)

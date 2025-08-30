@@ -206,3 +206,176 @@ requests.exceptions.ReadTimeout: HTTPSConnectionPool(host='open.bigmodel.cn', po
 2025-08-26 00:12:34 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
 2025-08-26 00:12:34 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
 2025-08-26 00:12:34 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-26 00:50:38 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-26 00:50:38 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-26 00:50:38 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-26 00:50:38 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-28 00:10:49 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-28 00:10:49 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-28 00:10:49 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-28 00:10:49 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-28 00:20:13 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-28 00:20:13 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-28 00:20:13 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-28 00:20:13 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-28 01:00:28 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-28 01:00:28 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-28 01:00:28 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-28 01:00:28 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-28 21:17:00 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-28 21:17:00 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-28 21:17:00 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-28 21:17:00 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-28 22:18:31 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-28 22:18:31 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-28 22:18:31 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-28 22:18:31 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-28 22:18:55 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-28 22:18:55 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-28 22:18:55 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-28 22:18:55 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-28 23:36:12 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-28 23:36:12 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-28 23:36:12 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-28 23:36:12 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-28 23:36:14 - mj_translator - ERROR - 打开扩写面板失败: 'NoneType' object has no attribute 'get'
+Traceback (most recent call last):
+  File "j:\MJ-translate\views\ui_main.py", line 863, in do_expand_text
+    open_expand_panel(parent.winfo_toplevel(), txt, _get_selected_tags, _apply_result)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "j:\MJ-translate\views\expand_panel.py", line 599, in open_expand_panel
+    panel = ExpandPanel(parent, initial_text, get_selected_tags_cb, on_apply)
+  File "j:\MJ-translate\views\expand_panel.py", line 164, in __init__
+    self._build_ui(initial_text)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "j:\MJ-translate\views\expand_panel.py", line 215, in _build_ui
+    self._update_preset_preview()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "j:\MJ-translate\views\expand_panel.py", line 325, in _update_preset_preview
+    idx = self.cb_preset._variable.get()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+2025-08-28 23:37:33 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-28 23:37:33 - mj_translator - ERROR - 注册全局热键失败（可能被其它程序占用）
+NoneType: None
+2025-08-28 23:37:33 - mj_translator - INFO - 从 J:\MJ-translate\apis.json 加载旧API配置
+2025-08-28 23:37:33 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-28 23:37:33 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-28 23:41:59 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-28 23:41:59 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-28 23:41:59 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-28 23:41:59 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-29 00:39:09 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-29 00:39:09 - mj_translator - ERROR - 注册全局热键失败（可能被其它程序占用）
+NoneType: None
+2025-08-29 00:39:09 - mj_translator - INFO - 从 J:\MJ-translate\apis.json 加载旧API配置
+2025-08-29 00:39:09 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-29 00:39:09 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-29 00:40:17 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-29 00:40:17 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-29 00:40:17 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-29 00:40:17 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-29 01:13:28 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-29 01:13:28 - mj_translator - ERROR - 注册全局热键失败（可能被其它程序占用）
+NoneType: None
+2025-08-29 01:13:28 - mj_translator - INFO - 从 J:\MJ-translate\apis.json 加载旧API配置
+2025-08-29 01:13:28 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-29 01:13:28 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-29 14:00:36 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-29 14:00:36 - mj_translator - INFO - 从 J:\MJ-translate\apis.json 加载旧API配置
+2025-08-29 14:00:36 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-29 14:00:36 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-29 14:22:37 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-29 14:22:37 - mj_translator - INFO - 从 J:\MJ-translate\apis.json 加载旧API配置
+2025-08-29 14:22:37 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-29 14:22:37 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-29 17:18:22 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-29 17:18:22 - mj_translator - INFO - 从 J:\MJ-translate\apis.json 加载旧API配置
+2025-08-29 17:18:22 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-29 17:18:22 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-29 19:19:49 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-29 19:19:49 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-29 19:19:49 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-29 19:19:49 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-29 19:35:00 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-29 19:35:00 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-29 19:35:00 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-29 19:35:00 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-29 23:37:54 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-29 23:37:54 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-29 23:37:54 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-29 23:37:54 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 11:04:12 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-30 11:04:12 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-30 11:04:12 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 11:04:12 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 11:06:57 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-30 11:06:57 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-30 11:06:57 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 11:06:57 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 12:42:55 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-30 12:42:55 - mj_translator - ERROR - 注册全局热键失败（可能被其它程序占用）
+NoneType: None
+2025-08-30 12:42:55 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-30 12:42:55 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 12:42:55 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 13:25:21 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-30 13:25:21 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-30 13:25:21 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 13:25:21 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 13:53:23 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-30 13:53:23 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-30 13:53:23 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 13:53:23 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 15:05:51 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-30 15:05:51 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-30 15:05:51 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 15:05:51 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 16:36:26 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-30 16:36:26 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-30 16:36:26 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 16:36:26 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 19:44:51 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-30 19:44:51 - mj_translator - ERROR - 注册全局热键失败（可能被其它程序占用）
+NoneType: None
+2025-08-30 19:44:51 - mj_translator - INFO - 从 J:\MJ-translate\apis.json 加载旧API配置
+2025-08-30 19:44:51 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 19:44:51 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 19:46:38 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-30 19:46:38 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-30 19:46:38 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 19:46:38 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 20:07:07 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-30 20:07:07 - mj_translator - ERROR - 注册全局热键失败（可能被其它程序占用）
+NoneType: None
+2025-08-30 20:07:07 - mj_translator - INFO - 从 J:\MJ-translate\apis.json 加载旧API配置
+2025-08-30 20:07:07 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 20:07:07 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 20:46:09 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-30 20:46:09 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-30 20:46:09 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 20:46:09 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 20:46:32 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-30 20:46:32 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-30 20:46:32 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 20:46:32 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 20:52:14 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-30 20:52:14 - mj_translator - ERROR - 注册全局热键失败（可能被其它程序占用）
+NoneType: None
+2025-08-30 20:52:14 - mj_translator - INFO - 从 J:\MJ-translate\apis.json 加载旧API配置
+2025-08-30 20:52:14 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 20:52:14 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 21:10:59 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-30 21:10:59 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-30 21:10:59 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 21:10:59 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 21:25:30 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-30 21:25:30 - mj_translator - ERROR - 注册全局热键失败（可能被其它程序占用）
+NoneType: None
+2025-08-30 21:25:30 - mj_translator - INFO - 从 J:\MJ-translate\apis.json 加载旧API配置
+2025-08-30 21:25:30 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 21:25:30 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 22:48:37 - mj_translator - INFO - 系统划词翻译已启用（Ctrl+Shift+N）
+2025-08-30 22:48:37 - mj_translator - INFO - 从 j:\MJ-translate\apis.json 加载旧API配置
+2025-08-30 22:48:37 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0
+2025-08-30 22:48:37 - mj_translator - INFO - 已从凭证管理器加载API配置: baidu=3, zhipu=2, zhipu-glm45=0

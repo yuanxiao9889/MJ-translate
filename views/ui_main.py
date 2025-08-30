@@ -17,17 +17,19 @@ from services.logger import logger, show_error_dialog, show_info_dialog, safe_ex
 from utils import smart_sync_tags
 from image_tools import select_and_crop_image
 from oss_sync import upload_all, download_all, save_tags_with_sync, load_tags_with_sync
-from main import show_expand_preset_dialog
+from views.expand_panel import open_expand_panel
 from views.page_manager import PageManager, TranslationPage
 from services.history_favorites import save_to_history, save_to_favorites
 from services.page_tag_manager import PageTagManager
 from services.tag_template_manager import TagTemplateManager
 from services.ui_state_manager import ui_state_manager
 from views.update_dialog import open_update_dialog
+from views.prompt_chat import open_prompt_chat_dialog
 # 收藏夹和历史记录函数现在在本文件中定义
 
 # 全局分页管理器
 page_manager = None
+# 提示词工程师聊天的最近一次可插入输出（已移除）
 
 def show_create_tag_dialog(en_content):
     """创建新标签的对话框"""
@@ -653,6 +655,7 @@ def create_translation_ui_components(parent, page):
         command=copy_input
     )
     input_copy_btn.pack(side="right", padx=3)
+
     
     # 括号格式控制行
     bracket_frame = ctk.CTkFrame(parent, fg_color="transparent")
@@ -834,16 +837,36 @@ def create_translation_ui_components(parent, page):
         if not txt or txt == placeholder_text.strip():
             messagebox.showinfo("提示", "请输入要扩写的内容")
             return
-        
-        def on_choose_preset(preset):
-            def async_expand():
-                expanded = zhipu_text_expand(txt, preset)
-                input_text.delete("0.0", ctk.END)
-                input_text.insert("end", expanded)
+
+        def _get_selected_tags():
+            try:
+                tag_manager = get_page_tag_manager()
+                return {
+                    "head": tag_manager.get_selected_tags("head"),
+                    "tail": tag_manager.get_selected_tags("tail"),
+                }
+            except Exception:
+                try:
+                    return {
+                        "head": page.inserted_tags.get("head", []),
+                        "tail": page.inserted_tags.get("tail", []),
+                    }
+                except Exception:
+                    return {"head": [], "tail": []}
+
+        def _apply_result(s: str):
+            input_text.delete("0.0", ctk.END)
+            input_text.insert("end", s)
+            try:
                 save_input_text()
-            threading.Thread(target=async_expand, daemon=True).start()
-        
-        show_expand_preset_dialog(callback=on_choose_preset)
+            except Exception:
+                pass
+
+        try:
+            open_expand_panel(parent.winfo_toplevel(), txt, _get_selected_tags, _apply_result)
+        except Exception as ex:
+            logger.error(f"打开扩写面板失败: {ex}")
+            messagebox.showerror("错误", f"无法打开扩写面板: {ex}")
     
     # 创建水平按钮框架
     btn_frame = ctk.CTkFrame(parent, fg_color="transparent")
@@ -877,6 +900,42 @@ def create_translation_ui_components(parent, page):
     
     image_btn = ctk.CTkButton(btn_frame, text="图片反推", font=default_font, fg_color="#19a8b9", command=do_image_caption)
     image_btn.pack(side="left")
+
+    # 提示词工程师聊天入口按钮
+    def open_prompt_engineer_chat():
+        # 仅支持直接插入翻译输入框
+        def _insert_to_input(text: str):
+            try:
+                if not text:
+                    messagebox.showinfo("提示", "无可插入内容")
+                    return
+                # 若当前是占位提示或为空，则先清空并切回正常文本颜色
+                try:
+                    current_text = input_text.get("0.0", ctk.END).strip()
+                except Exception:
+                    current_text = ""
+                if current_text == placeholder_text.strip() or current_text == "":
+                    input_text.delete("0.0", ctk.END)
+                    input_text.configure(text_color="black")
+                    input_text.insert("0.0", text)
+                else:
+                    input_text.insert("insert", text)
+                # 保存输入状态
+                try:
+                    save_input_text()
+                except Exception:
+                    pass
+                status_var.set("已插入到翻译输入框 ✓")
+                global_root.after(2000, lambda: status_var.set("就绪"))
+            except Exception as e:
+                messagebox.showerror("错误", f"插入失败：{e}")
+        try:
+            open_prompt_chat_dialog(global_root, on_insert_to_input=_insert_to_input)
+        except Exception as e:
+            show_error_dialog("打开失败", f"无法打开提示词工程师：{e}")
+
+    prompt_engineer_btn = ctk.CTkButton(btn_frame, text="提示词工程师", font=default_font, fg_color="#7a5ef3", command=open_prompt_engineer_chat)
+    prompt_engineer_btn.pack(side="left", padx=(6,0))
     
     def on_create_tag_shortcut(event=None):
         try:
