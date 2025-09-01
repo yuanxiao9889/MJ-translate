@@ -2,142 +2,6 @@
   "2": {
     "output_text_state": {
       "tag_blocks": [],
-      "text_content": "Wearing a pistol holster on the thigh, with a handgun inside the holster\n",
-      "cursor_position": "1.0",
-      "scroll_position": 0.0
-    },
-    "tag_ui_state": {
-      "head_tags": {
-        "visible_tags": [],
-        "selected_tags": [],
-        "scroll_position": 0.0
-      },
-      "tail_tags": {
-        "visible_tags": [],
-        "selected_tags": [],
-        "scroll_position": 0.0
-      }
-    },
-    "layout_state": {
-      "layout_mode": "waterfall",
-      "canvas_width": 0,
-      "canvas_height": 0
-    },
-    "last_updated": "2025-08-25T17:04:42.664225"
-  },
-  "1": {
-    "output_text_state": {
-      "tag_blocks": [],
-      "text_content": "Refer to the color scheme in Figure 1 and repaint Figure 2 accordingly.\n",
-      "cursor_position": "1.0",
-      "scroll_position": 0.0
-    },
-    "tag_ui_state": {
-      "head_tags": {
-        "visible_tags": [],
-        "selected_tags": [],
-        "scroll_position": 0.0
-      },
-      "tail_tags": {
-        "visible_tags": [],
-        "selected_tags": [],
-        "scroll_position": 0.0
-      }
-    },
-    "layout_state": {
-      "layout_mode": "waterfall",
-      "canvas_width": 0,
-      "canvas_height": 0
-    },
-    "last_updated": "2025-08-25T16:59:11.283530",
-    "tag_ui_states": {
-      "head": {
-        "visible_tags": [
-          "用iPhone拍摄",
-          "这张生活方式照片"
-        ],
-        "selected_tags": [],
-        "scroll_position": 0.0,
-        "tag_details": {
-          "用iPhone拍摄": {
-            "label": "用iPhone拍摄",
-            "tab": "照片风格",
-            "is_selected": false,
-            "is_visible": true,
-            "position": 1
-          },
-          "这张生活方式照片": {
-            "label": "这张生活方式照片",
-            "tab": "照片风格",
-            "is_selected": false,
-            "is_visible": true,
-            "position": 2
-          }
-        }
-      },
-      "tail": {
-        "visible_tags": [
-          "写实风格",
-          "超真实风格",
-          "数码单反"
-        ],
-        "selected_tags": [],
-        "scroll_position": 0.0,
-        "tag_details": {
-          "写实风格": {
-            "label": "写实风格",
-            "tab": "图片质量",
-            "is_selected": false,
-            "is_visible": true,
-            "position": 1
-          },
-          "超真实风格": {
-            "label": "超真实风格",
-            "tab": "图片质量",
-            "is_selected": false,
-            "is_visible": true,
-            "position": 2
-          },
-          "数码单反": {
-            "label": "数码单反",
-            "tab": "图片质量",
-            "is_selected": false,
-            "is_visible": true,
-            "position": 3
-          }
-        }
-      }
-    }
-  },
-  "3": {
-    "output_text_state": {
-      "tag_blocks": [],
-      "text_content": "This is a complex aircraft with multiple parts and components, resembling a high-tech means of transportation or combat equipment.\nThe main body of the spaceship is gray, with blue lines and decorations, conveying a sense of technology and modernity.\nAt the front of the spaceship is a transparent cockpit, where control devices and display screens can be seen.\nThe spaceship is equipped with some weapons, such as turrets and other offensive devices.\nThe overall design is very refined, with many small details and textures, showcasing the designer's dedication.\nThe primary colors are gray and blue, which pair up to create a cool and tech-savvy appearance.\nBlue is used mainly for highlights and certain detailed decorations, adding to the overall visual depth.\n",
-      "cursor_position": "1.0",
-      "scroll_position": 0.0
-    },
-    "tag_ui_state": {
-      "head_tags": {
-        "visible_tags": [],
-        "selected_tags": [],
-        "scroll_position": 0.0
-      },
-      "tail_tags": {
-        "visible_tags": [],
-        "selected_tags": [],
-        "scroll_position": 0.0
-      }
-    },
-    "layout_state": {
-      "layout_mode": "waterfall",
-      "canvas_width": 0,
-      "canvas_height": 0
-    },
-    "last_updated": "2025-08-25T17:04:40.481470"
-  },
-  "3": {
-    "output_text_state": {
-      "tag_blocks": [],
       "text_content": "",
       "cursor_position": "1.0",
       "scroll_position": 0.0
@@ -159,7 +23,7 @@
       "canvas_width": 0,
       "canvas_height": 0
     },
-    "last_updated": "2025-08-25T15:34:10.371923",
+    "last_updated": "2025-08-27T09:56:50.009658",
     "tag_ui_states": {
       "head": {
         "visible_tags": [
@@ -237,6 +101,32 @@
     },
     "last_updated": "2025-08-25T15:43:44.815484"
   },
+  "3": {
+    "output_text_state": {
+      "tag_blocks": [],
+      "text_content": "This is a complex aircraft with multiple parts and components, resembling a high-tech means of transportation or combat equipment.\nThe main body of the spaceship is gray, with blue lines and decorations, conveying a sense of technology and modernity.\nAt the front of the spaceship is a transparent cockpit, where control devices and display screens can be seen.\nThe spaceship is equipped with some weapons, such as turrets and other offensive devices.\nThe overall design is very refined, with many small details and textures, showcasing the designer's dedication.\nThe primary colors are gray and blue, which pair up to create a cool and tech-savvy appearance.\nBlue is used mainly for highlights and certain detailed decorations, adding to the overall visual depth.\n",
+      "cursor_position": "1.0",
+      "scroll_position": 0.0
+    },
+    "tag_ui_state": {
+      "head_tags": {
+        "visible_tags": [],
+        "selected_tags": [],
+        "scroll_position": 0.0
+      },
+      "tail_tags": {
+        "visible_tags": [],
+        "selected_tags": [],
+        "scroll_position": 0.0
+      }
+    },
+    "layout_state": {
+      "layout_mode": "waterfall",
+      "canvas_width": 0,
+      "canvas_height": 0
+    },
+    "last_updated": "2025-08-28T14:25:08.195945"
+  },
   "2": {
     "output_text_state": {
       "tag_blocks": [],
@@ -261,6 +151,74 @@
       "canvas_width": 0,
       "canvas_height": 0
     },
-    "last_updated": "2025-08-25T15:43:54.706819"
+    "last_updated": "2025-08-28T12:18:16.174843",
+    "tag_ui_states": {
+      "head": {
+        "visible_tags": [
+          "仰视视角"
+        ],
+        "selected_tags": [],
+        "scroll_position": 0.0,
+        "tag_details": {
+          "仰视视角": {
+            "label": "仰视视角",
+            "tab": "视角",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 1
+          }
+        }
+      },
+      "tail": {
+        "visible_tags": [
+          "写实风格",
+          "数码单反"
+        ],
+        "selected_tags": [],
+        "scroll_position": 0.0,
+        "tag_details": {
+          "写实风格": {
+            "label": "写实风格",
+            "tab": "图片质量",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 1
+          },
+          "数码单反": {
+            "label": "数码单反",
+            "tab": "图片质量",
+            "is_selected": false,
+            "is_visible": true,
+            "position": 2
+          }
+        }
+      }
+    }
+  },
+  "3": {
+    "output_text_state": {
+      "tag_blocks": [],
+      "text_content": "",
+      "cursor_position": "1.0",
+      "scroll_position": 0.0
+    },
+    "tag_ui_state": {
+      "head_tags": {
+        "visible_tags": [],
+        "selected_tags": [],
+        "scroll_position": 0.0
+      },
+      "tail_tags": {
+        "visible_tags": [],
+        "selected_tags": [],
+        "scroll_position": 0.0
+      }
+    },
+    "layout_state": {
+      "layout_mode": "waterfall",
+      "canvas_width": 0,
+      "canvas_height": 0
+    },
+    "last_updated": "2025-08-28T14:25:07.908185"
   }
 }

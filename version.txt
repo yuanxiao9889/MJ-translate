@@ -1,0 +1,5 @@
+{
+  "version": "1.1.1",
+  "install_time": "2025-09-01 08:48:16",
+  "install_timestamp": 1756687696
+}

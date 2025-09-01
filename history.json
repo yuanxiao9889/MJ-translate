@@ -1,5 +1,115 @@
 [
   {
+    "timestamp": "2025-08-27 18:35:20",
+    "input": "保持人物特征不变，，穿着背心，变成背视图",
+    "output": "Maintain the character's features unchanged, wearing a vest, and transform it into a back view."
+  },
+  {
+    "timestamp": "2025-08-27 18:32:15",
+    "input": "保持人物特征不变，变成背视图",
+    "output": "Maintain the character's features unchanged, transforming it into a back view."
+  },
+  {
+    "timestamp": "2025-08-27 17:01:26",
+    "input": "未来设计的外套，短款外套。露脐肚子有黑色的带子，外套内部是菱形，卡扣，皮带，外套是黑白拼色",
+    "output": "The future-designed jacket, a short coat. The crop top reveals the midriff with a black belt, the inside of the coat features diamond patterns and clips, a belt, and the coat is in a black and white color block."
+  },
+  {
+    "timestamp": "2025-08-27 16:49:02",
+    "input": "未来设计的外套，短款外套。露脐肚子有黑色的带子。外套上有方形的迷彩，外套内部是菱形，卡扣，皮带，外套是黑白拼色",
+    "output": "Future designed jackets, short jackets. There is a black band on the belly with exposed navel. The jacket has square camouflage on it, with diamond shaped interior, buckle, and belt. The jacket is black and white color blocked"
+  },
+  {
+    "timestamp": "2025-08-27 15:16:36",
+    "input": "保存机甲的特征不变，改成背视图，背后有引擎的喷气口",
+    "output": "Keep the characteristics of the mecha unchanged and change it to a back view with an engine jet on the back"
+  },
+  {
+    "timestamp": "2025-08-27 14:51:23",
+    "input": "保存人物特征不变，改成侧视图",
+    "output": "Save character features unchanged and change to side view"
+  },
+  {
+    "timestamp": "2025-08-27 14:13:05",
+    "input": "保存人物特征不变，改成背面视图",
+    "output": "Save the character features unchanged and change them to a back view"
+  },
+  {
+    "timestamp": "2025-08-27 14:13:05",
+    "input": "保存人物特征不变，改成背面视图",
+    "output": "Save the character features unchanged and change them to a back view"
+  },
+  {
+    "timestamp": "2025-08-27 14:01:34",
+    "input": "未来设计的外套，有这迷彩方格，黑灰白配色，有这蓝色的发光线条",
+    "output": "The jacket for future design features camouflage squares, black gray white color scheme, and blue glowing lines"
+  },
+  {
+    "timestamp": "2025-08-27 14:01:29",
+    "input": "未来设计的外套，有这迷彩方格，黑灰白配色，有这蓝色的发光线条",
+    "output": "The future外套 features this camouflage checkered pattern, with black, gray, and white color scheme, and these blue glowing lines."
+  },
+  {
+    "timestamp": "2025-08-27 10:24:57",
+    "input": "把这张照片转换成真人写真照片",
+    "output": "Convert this photo into a real-life portrait photo."
+  },
+  {
+    "timestamp": "2025-08-27 10:24:25",
+    "input": "turn this photo into a character figure. Behind it, place a box with the character’s image printed on it, and a computer showing the Blender modeling process on its screen. In front of the box, add a round plastic base with the character figure standing on it. set the scene indoors if possible",
+    "output": "将这张照片转换成角色形象。在其背后放置一个印有角色形象的盒子，屏幕上显示着Blender建模过程的电脑。在盒子前方，添加一个圆形塑料底座，角色形象就站在上面。如果可能的话，将场景设置在室内。"
+  },
+  {
+    "timestamp": "2025-08-27 10:22:26",
+    "input": "把这张图片的风格转换成真人写实风格照片",
+    "output": "Transform the style of this image into a realistic portrait photo."
+  },
+  {
+    "timestamp": "2025-08-27 10:10:09",
+    "input": "保存人物特征不变，把人物的外套改成短款，外套改成齐腰的长度，衣服外套要更时尚，未来的感觉，外套配色以白色加蓝色色为主，可以加入一些迷彩元素",
+    "output": "Maintain the character's features unchanged, altering the coat to a short jacket, with a waist-length cut. The outerwear should be more fashionable and futuristic. The color scheme of the coat should primarily be white and blue, with some camouflage elements added."
+  },
+  {
+    "timestamp": "2025-08-27 10:10:06",
+    "input": "保存人物特征不变，把人物的外套改成短款，外套改成齐腰的长度，衣服外套要更时尚，未来的感觉，外套配色以白色加蓝色色为主，可以加入一些迷彩元素",
+    "output": "Retain the character's features unchanged, modify the coat to a short-length jacket, making it waist-length. The outerwear should be more fashionable and futuristic. The coat color scheme should mainly be white and blue, with some camouflage elements added."
+  },
+  {
+    "timestamp": "2025-08-27 10:09:50",
+    "input": "保存人物特征不变，把人物的外套改成短款，外套齐腰的长度，衣服外套要更时尚，未来的感觉，外套配色以白色加蓝色色为主，可以加入一些迷彩元素",
+    "output": "Keep the character's features unchanged, change the overcoat to a short style, with a length that reaches the waist. The outerwear should be more fashionable and futuristic. The color scheme of the overcoat should be primarily white and blue, with some camouflage elements added."
+  },
+  {
+    "timestamp": "2025-08-27 10:06:03",
+    "input": "保存人物特征不变，把人物的外套改成短款齐腰的长度，衣服外套要更时尚，未来的感觉，外套配色以白色加蓝色色为主，可以加入一些迷彩元素",
+    "output": "Maintain the character's features unchanged, altering the coat to a short, waist-length design. The coat should be more fashionable and futuristic. The color scheme should focus on white and blue, with some camouflage elements incorporated."
+  },
+  {
+    "timestamp": "2025-08-27 10:04:52",
+    "input": "保存人物特征不变，把人物的外套改成短款齐腰的长度，衣服外套要更时尚，更科技未来的感觉，外套配色以白色加蓝色色为主，可以加入一些迷彩元素",
+    "output": "Keep the character's features unchanged, change the coat to a short, waist-length design. The coat should be more fashionable and futuristic, with a color scheme mainly in white and blue, and can incorporate some camouflage elements."
+  },
+  {
+    "timestamp": "2025-08-27 10:02:48",
+    "input": "保存人物特征不变，把人物的外套改成短款齐腰的长度，衣服外套要更时尚，更科技未来的感觉，外套黑色部分改成白色",
+    "output": "Retain the character's features unchanged, and alter the coat to a short, waist-length design. The coat should have a more fashionable and futuristic feel, with the black part changed to white."
+  },
+  {
+    "timestamp": "2025-08-27 09:58:52",
+    "input": "保存人物特征不变，把人物的外套改成短款齐腰的长度，衣服外套要更时尚，更科技未来的感觉",
+    "output": "Maintain the character's features unchanged, altering the coat to a short, waist-length design. The outerwear should be more fashionable and futuristic, with a sense of technology."
+  },
+  {
+    "timestamp": "2025-08-27 09:57:27",
+    "input": "保存人物特征不变，把人物的外套改成短款齐腰的长度",
+    "output": "Maintain the character's features unchanged, and alter the coat to a short, waist-length style."
+  },
+  {
+    "timestamp": "2025-08-27 09:57:22",
+    "input": "保存人物特征不变，把人物的外套改成短款齐腰的长度",
+    "output": "Maintain the character's features unchanged, changing the coat to a short, waist-length design."
+  },
+  {
     "timestamp": "2025-08-25 17:05:11",
     "input": "一个未来驾驶座舱，里面有一个单人座位，悬浮的科技面板，未来设计",
     "output": "A futuristic driver's cabin, featuring a single seat and a floating technological panel, with a design of the future."
